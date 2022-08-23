@@ -2,5 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def home(request):
-    # return HttpResponse('hello Sunil')
-    return render(request,'ems/base.html')
+    return render(request,'ems/home.html')
+
+def dashboard(request):
+    return render(request,'ems/dashboard.html')

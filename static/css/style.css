@@ -73,3 +73,27 @@
     max-width: 100%;
     height: auto;
   }
+/* ======UTILITY======= */
+.cursor-pointer{
+    cursor: pointer;
+}
+
+/* ========Navbar======= */
+.dropdown-item:hover{
+    background-color:#212529 !important;
+}
+
+
+/* ============SIDE NAVBAR========= */
+.offcanvas.offcanvas-start{
+    top: 56px !important;
+    width: 15rem !important;
+}
+.btn-close{
+    color: white !important;
+}
+
+.side-drop-down{
+    border: none !important;
+    border-width: none !important;
+}
