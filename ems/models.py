@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 
 class Department(models.Model):
     name=models.CharField(max_length=70)
@@ -8,4 +8,30 @@ class Department(models.Model):
 class Role(models.Model):
     name=models.CharField(max_length=70)
     description=models.TextField(max_length=200)
+
+class Address(models.Model):
+    address=models.CharField(max_length=150)
+    street=models.CharField(max_length=70)
+    locality=models.CharField(max_length=70)
+    city=models.CharField(max_length=50)
+    state=models.CharField(max_length=50)
+    pincode=models.FloatField(max_length=50)
+    country=models.CharField(max_length=50, default='India')
+
+
+
+class Employee(models.Model):
+    empid=models.AutoField(primary_key=True)
+    user=models.OneToOneField(User,on_delete=models.CASCADE)
+    name=models.CharField(max_length=50)
+    father_name=models.CharField(max_length=50)
+    dob=models.DateField()
+    email=models.EmailField(max_length=100)
+    mobile_no=models.IntegerField()
+    address=models.OneToOneField(Address, on_delete=models.SET_NULL,blank=True, null=True,)
+    designation=models.CharField(max_length=70)
+    role=models.OneToOneField(Role, on_delete=models.SET_NULL,blank=True, null=True,)
+    department=models.OneToOneField(Department, on_delete=models.SET_NULL,blank=True, null=True,)
+    joining_date=models.DateField()
+    status=models.CharField(max_length=15)
 
