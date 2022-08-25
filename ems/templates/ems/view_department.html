@@ -1,0 +1,31 @@
+{% extends './base.html' %}
+{% block title %}View Departments | EMS{% endblock title %}
+{% block body %}
+<div class="container py-4">
+    <div class="row d-flex align-items-center justify-content-center">
+        <div class="col-10">
+            <h3 class="my-3 derpartment-title">All Departments</h3>
+            <table class="table table-bordered department-table">
+                <tr>
+                    <th>SN</th>
+                    <th>Name</th>
+                    <th>Descripiton</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                {% for department in departments %}
+                <tr>
+                    <td>{{forloop.counter}}.</td>
+                    <td>{{department.name}}</td>
+                    <td>{{department.description}}</td>
+                    <td><a href="{{department.id}}" class="edit"><i class='bx bx-edit'></i></a></td>
+                    <td><a href="{{department.id}}" class="delete"><span class="material-symbols-outlined">
+                        delete
+                        </span></a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock body %}

@@ -111,4 +111,26 @@
 /* =========DEPARTMENT SECTION========= */
 .derpartment-title{
   font-size: var(--h3-font-size);
+  background-color: #dadada70;
+  padding: 1rem;
+  border-radius: 3px;
+}
+.department-table tr th{
+  font-size: var(--normal-font);
+  font-weight: var(--font-black);
+}
+
+.department-table tr td{
+  font-size: var(--small-font-size);
+  font-weight:600;
+}
+
+.department-table tr td .edit i{
+  font-size: 16px !important;
+  text-align: center;
+}
+
+.department-table tr td .delete span
+{
+  font-size: 16px !important;
 }
