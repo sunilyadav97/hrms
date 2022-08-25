@@ -18,7 +18,7 @@
                     <td>{{forloop.counter}}.</td>
                     <td>{{department.name}}</td>
                     <td>{{department.description}}</td>
-                    <td><a href="{{department.id}}" class="edit"><i class='bx bx-edit'></i></a></td>
+                    <td><a href="{{department.id}}" class="edit" data-bs-toggle="modal" data-bs-target="#edit-department" ><i class='bx bx-edit'></i></a></td>
                     <td><a href="{% url 'ems:delete-department' department.id %}" class="delete"><span class="material-symbols-outlined">
                         delete
                         </span></a></td>
@@ -28,4 +28,37 @@
         </div>
     </div>
 </div>
+
+<!-- ========MODALS======= -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="edit-department" tabindex="-1" aria-labelledby="department-label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="department-label">Edit Department</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="" method="post">
+                {% csrf_token %}
+            <div class="mb-3">
+                <label for="department-name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="department-name"
+                    name="department-name" value="">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Descripiton</label>
+                <textarea class="form-control" id="description" rows="2"
+                    name="department-description"></textarea>
+            </div>
+            <div class="d-grid">
+                <button class="btn btn-success" type="submit">Save</button>
+            </div>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
 {% endblock body %}

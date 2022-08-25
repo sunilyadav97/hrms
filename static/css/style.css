@@ -134,3 +134,9 @@
 {
   font-size: 16px !important;
 }
+
+/* edit Department */
+#department-label{
+  font-size: var(--h3-font-size) !important;
+  font-weight: var(--font-bold);
+}
