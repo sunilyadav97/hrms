@@ -5,5 +5,6 @@ urlpatterns=[
     path('',home,name='home'),
     path('dashboard/',home,name='dashboard'),
     path('create-department/',createDepartment,name='create-department'),
-    path('view-department/',viewDepartment,name='view-department'),
+    path('view-departments/',viewDepartment,name='view-department'),
+    path('delete-department/<pk>/',deleteDepartment,name='delete-department'),
 ]

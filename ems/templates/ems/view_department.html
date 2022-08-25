@@ -19,7 +19,7 @@
                     <td>{{department.name}}</td>
                     <td>{{department.description}}</td>
                     <td><a href="{{department.id}}" class="edit"><i class='bx bx-edit'></i></a></td>
-                    <td><a href="{{department.id}}" class="delete"><span class="material-symbols-outlined">
+                    <td><a href="{% url 'ems:delete-department' department.id %}" class="delete"><span class="material-symbols-outlined">
                         delete
                         </span></a></td>
                 </tr>

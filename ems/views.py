@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from .models import *
 
@@ -29,3 +29,11 @@ def viewDepartment(request):
     except Exception as e:
         print('View Department Exception : ',e)
     return render(request,'ems/view_department.html',context)
+
+def deleteDepartment(request,pk):
+    try:
+        Department.objects.get(id=pk).delete()
+        
+        return redirect(viewDepartment)
+    except Exception as e:
+        print('Delete Department Exception : ',e)
