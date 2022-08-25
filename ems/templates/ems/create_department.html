@@ -1,0 +1,27 @@
+{% extends './base.html' %}
+{% block title %}Create Department | EMS {% endblock title %}
+{% block body %}
+<div class="container py-4">
+    <div class="row d-flex align-items-center justify-content-center ">
+        <div class="col-8">
+            <h3 class="text-center my-3 derpartment-title">Create New Department</h3>
+            <form action="" method="post">
+                {% csrf_token %}
+            <div class="mb-3">
+                <label for="department-name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="department-name" placeholder="Enter Name....."
+                    name="department-name">
+            </div>
+            <div class="mb-3">
+                <label for="discription" class="form-label">Discripiton</label>
+                <textarea class="form-control" id="discription" rows="3" placeholder="Write Discription....."
+                    name="department-discription"></textarea>
+            </div>
+            <div class="d-grid">
+                <button class="btn btn-primary" type="submit">Create</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+{% endblock body %}

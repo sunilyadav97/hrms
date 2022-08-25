@@ -61,6 +61,15 @@
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
   }
+  input:focus{
+    box-shadow: none !important;
+    border: 1px solid black !important;
+  }
+  textarea:focus{
+    box-shadow: none !important;
+    border: 1px solid black !important;
+
+  }
   h1, h2, h3 {
     font-weight: var(--font-bold);
   }
@@ -96,4 +105,10 @@
 .side-drop-down{
     border: none !important;
     border-width: none !important;
+}
+
+
+/* =========DEPARTMENT SECTION========= */
+.derpartment-title{
+  font-size: var(--h3-font-size);
 }
