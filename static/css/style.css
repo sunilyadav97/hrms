@@ -57,11 +57,18 @@
   }
   body,
   button,
+  label,
+  select,
   input {
     font-family: var(--body-font);
     font-size: var(--normal-font-size);
   }
+  
   input:focus{
+    box-shadow: none !important;
+    border: 1px solid black !important;
+  }
+  select:focus{
     box-shadow: none !important;
     border: 1px solid black !important;
   }
@@ -139,4 +146,16 @@
 #department-label{
   font-size: var(--h3-font-size) !important;
   font-weight: var(--font-bold);
+}
+
+/* =======EMPLOYEE SECTION======== */
+.employee-title{
+  font-size: var(--h3-font-size);
+  background-color: #dadada70;
+  padding: 1rem;
+  border-radius: 3px;
+}
+
+.add-employee div{
+  margin-bottom: 0.6rem !important;
 }

@@ -22,6 +22,8 @@ class Address(models.Model):
     state=models.CharField(max_length=50)
     pincode=models.FloatField(max_length=50)
     country=models.CharField(max_length=50, default='India')
+    def __str__(self):
+        return self.city
 
 
 
@@ -39,4 +41,6 @@ class Employee(models.Model):
     department=models.OneToOneField(Department, on_delete=models.SET_NULL,blank=True, null=True,)
     joining_date=models.DateField()
     status=models.CharField(max_length=15)
+    def __str__(self):
+        return self.name
 

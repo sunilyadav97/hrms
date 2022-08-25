@@ -10,4 +10,6 @@ urlpatterns=[
     path('create-role/',createRole,name='create-role'),
     path('view-roles/',viewRole,name='view-role'),
     path('delete-role/<pk>/',deleteRole,name='delete-role'),
+    path('employee-register/',addEmployee,name='employee-add'),
+    
 ]
