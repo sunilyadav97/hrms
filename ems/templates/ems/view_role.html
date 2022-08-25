@@ -1,0 +1,64 @@
+{% extends './base.html' %}
+{% block title %}View Roles | EMS{% endblock title %}
+{% block body %}
+<div class="container py-4">
+    <div class="row d-flex align-items-center justify-content-center">
+        <div class="col-10">
+            <h3 class="my-3 derpartment-title">All Roles</h3>
+            <table class="table table-bordered department-table">
+                <tr>
+                    <th>SN</th>
+                    <th>Name</th>
+                    <th>Descripiton</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                {% for role in roles %}
+                <tr>
+                    <td>{{forloop.counter}}.</td>
+                    <td>{{role.name}}</td>
+                    <td>{{role.description}}</td>
+                    <td><a href="{{role.id}}" class="edit" data-bs-toggle="modal" data-bs-target="#edit-role" ><i class='bx bx-edit'></i></a></td>
+                    <td><a href="{% url 'ems:delete-role' role.id %}" class="delete"><span class="material-symbols-outlined">
+                        delete
+                        </span></a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ========MODALS======= -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="edit-role" tabindex="-1" aria-labelledby="department-label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="department-label">Edit Role</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="" method="post">
+                {% csrf_token %}
+            <div class="mb-3">
+                <label for="role-name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="role-name"
+                    name="role-name" value="">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Descripiton</label>
+                <textarea class="form-control" id="description" rows="2"
+                    name="role-description"></textarea>
+            </div>
+            <div class="d-grid">
+                <button class="btn btn-success" type="submit">Save</button>
+            </div>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+{% endblock body %}
