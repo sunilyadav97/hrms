@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse,HttpResponseRedirect
 from django.urls import reverse
+from django.contrib import messages
 from .models import *
 
 def home(request):
@@ -18,8 +19,7 @@ def createDepartment(request):
         department_name=request.POST['department-name']
         department_description=request.POST['department-description']
         obj=Department.objects.create(name=department_name,description=department_description)
-        print(obj)
-        
+        messages.success(request,'New Department created Successfully!')
         return redirect('ems:view-department')
     return render(request,'ems/create_department.html',context)
 
@@ -35,7 +35,7 @@ def viewDepartment(request):
 def deleteDepartment(request,pk):
     try:
         Department.objects.get(id=pk).delete()
-        
+        messages.success(request,'Department Deleted Successfully!')
         return redirect(reverse('ems:view-role'))
     except Exception as e:
         print('Delete Department Exception : ',e)
@@ -48,7 +48,7 @@ def createRole(request):
         role_description=request.POST['role-description']
         obj=Role.objects.create(name=role_name,description=role_description)
         print(obj)
-        
+        messages.success(request,'Created New Role Successfully!')
         return redirect('ems:view-role')
     return render(request,'ems/create_role.html',context)
 
@@ -65,7 +65,7 @@ def deleteRole(request,pk):
     try:
         Role.objects.get(id=pk).delete()
         print(pk)
+        messages.success(request,'Deleted Role Successfully!')
         return redirect(reverse('ems:view-role'))
-    
     except Exception as e:
         print('Delete Role Exception : ',e)

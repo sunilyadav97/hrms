@@ -77,8 +77,10 @@
                         Department
                     </a>
                     <ul class="dropdown-menu bg-dark side-drop-down">
-                        <li><a class="dropdown-item text-light" href="{% url 'ems:create-department' %}">Create Department</a></li>
-                        <li><a class="dropdown-item text-light" href="{% url 'ems:view-department' %}">View Departments</a></li>
+                        <li><a class="dropdown-item text-light" href="{% url 'ems:create-department' %}">Create
+                                Department</a></li>
+                        <li><a class="dropdown-item text-light" href="{% url 'ems:view-department' %}">View
+                                Departments</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -107,7 +109,17 @@
     </div>
 
     <main>
-{% block body %}{% endblock body %}
+       
+                 {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} mb-0 alert-dismissible fade show w-50 m-auto mt-3" role="alert">
+                        <strong>Message: </strong> {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </button>
+                    </div>
+                    {% endfor %}
+
+        </div>
+        {% block body %}{% endblock body %}
     </main>
 
     <!-- =============BOOSTRAP CDN JS LINK============== -->
