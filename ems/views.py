@@ -19,6 +19,15 @@ def createDepartment(request):
     if request.method == 'POST':
         department_name=request.POST['department-name']
         department_description=request.POST['department-description']
+       
+        text=str(department_name).upper()
+        department_pool=Department.objects.all()
+        for d in department_pool:
+            loopstr=str(d).upper()
+            if text == loopstr:
+                messages.warning(request,'This '+department_name+' Department Already Exits')
+                return redirect('ems:create-department')
+        
         obj=Department.objects.create(name=department_name,description=department_description)
         messages.success(request,'New Department created Successfully!')
         return redirect('ems:view-department')
@@ -37,7 +46,7 @@ def deleteDepartment(request,pk):
     try:
         Department.objects.get(id=pk).delete()
         messages.success(request,'Department Deleted Successfully!')
-        return redirect(reverse('ems:view-role'))
+        return redirect(reverse('ems:view-department'))
     except Exception as e:
         print('Delete Department Exception : ',e)
         
@@ -47,6 +56,14 @@ def createRole(request):
     if request.method == 'POST':
         role_name=request.POST['role-name']
         role_description=request.POST['role-description']
+        text=str(role_name).upper()
+        role_pool=Role.objects.all()
+        for r in role_pool:
+            item=str(r).upper()
+            if text == item:
+                messages.warning(request,'This '+role_name+' Role Already Exits')
+                return redirect('ems:create-role')
+            
         obj=Role.objects.create(name=role_name,description=role_description)
         print(obj)
         messages.success(request,'Created New Role Successfully!')
@@ -65,8 +82,7 @@ def viewRole(request):
 def deleteRole(request,pk):
     try:
         Role.objects.get(id=pk).delete()
-        print(pk)
-        messages.success(request,'Deleted Role Successfully!')
+        messages.success(request,'Role Deleted Successfully!')
         return redirect(reverse('ems:view-role'))
     except Exception as e:
         print('Delete Role Exception : ',e)
@@ -106,22 +122,34 @@ def addEmployee(request):
                 if user and role and department and status == 'default':
                     messages.warning(request,'All fields are mandotry')
                     return redirect('ems:employee-add')
-                address_obj=Address.objects.create(
-                    address=address,
-                    street=street,
-                    locality=locality,
-                    city=city,
-                    state=state,
-                    pincode=pincode,
-                    country=country
-                )
-                print('Address Obj : ',address_obj)
+                
                 user_obj=User.objects.get(username=user)
-                print('user obj :',user_obj)
+                check_employee=Employee.objects.filter(user=user_obj).exists()
+                
+                if check_employee:
+                    messages.warning(request,'This user already in use Please Create new user!')
+                    return redirect('ems:employee-add')
+                
+                check_address=Address.objects.filter(user=user_obj).exists()
+                if check_address:
+                    address_obj=Address.objects.get(user=user_obj)
+                else:
+                    address_obj=Address.objects.create(
+                        address=address,
+                        street=street,
+                        locality=locality,
+                        city=city,
+                        state=state,
+                        pincode=pincode,
+                        country=country
+                    )
+                    
+                print('Address Obj : ',address_obj)
                 d_obj=Department.objects.get(name=department)
                 print('Department Obj',d_obj)
                 role_obj=Role.objects.get(name=role)
                 print('Role Obj',role_obj)
+                
                 emp_obj=Employee.objects.create(
                     user=user_obj,
                     name=full_name,

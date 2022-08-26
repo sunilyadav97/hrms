@@ -2,19 +2,20 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Department(models.Model):
-    name=models.CharField(max_length=70)
+    name=models.CharField(max_length=70, unique=True)
     description=models.TextField(max_length=200)
     
     def __str__(self):
         return self.name
     
 class Role(models.Model):
-    name=models.CharField(max_length=70)
+    name=models.CharField(max_length=70, unique=True)
     description=models.TextField(max_length=200)
     def __str__(self):
         return self.name
 
 class Address(models.Model):
+    user=models.OneToOneField(User,on_delete=models.CASCADE, blank=True,null=True)
     address=models.CharField(max_length=150)
     street=models.CharField(max_length=70)
     locality=models.CharField(max_length=70)
