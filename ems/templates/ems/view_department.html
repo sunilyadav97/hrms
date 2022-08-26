@@ -18,7 +18,7 @@
                     <td>{{forloop.counter}}.</td>
                     <td>{{department.name}}</td>
                     <td>{{department.description}}</td>
-                    <td><a href="{{department.id}}" class="edit" data-bs-toggle="modal" data-bs-target="#edit-department" ><i class='bx bx-edit'></i></a></td>
+                    <td><a href="{% url 'ems:view-department' %}" class="edit" data-bs-toggle="modal" data-bs-target="#edit-department" ><i class='bx bx-edit' onclick="editDepartment({{department.id}},'{{department.name}}','{{department.description}}')"></i></a></td>
                     <td><a href="{% url 'ems:delete-department' department.id %}" class="delete"><span class="material-symbols-outlined">
                         delete
                         </span></a></td>
@@ -40,12 +40,13 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form action="" method="post">
+            <form action="" method="post" >
                 {% csrf_token %}
+                <input type="text" hidden name="id" id="department-id">
             <div class="mb-3">
                 <label for="department-name" class="form-label">Name</label>
                 <input type="text" class="form-control" id="department-name"
-                    name="department-name" value="">
+                    name="department-name" >
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Descripiton</label>

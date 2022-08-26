@@ -44,6 +44,17 @@ def viewDepartment(request):
     try:
         departments = Department.objects.all()
         context['departments'] = departments
+        if request.method=='POST':
+            id=request.POST['id']
+            name=request.POST['department-name']
+            des=request.POST['department-description']
+            obj=Department.objects.get(id=id)
+            if obj.name !=name or obj.description !=des :
+                obj.name=name
+                obj.description=des
+                obj.save()
+                messages.success(request,'Updated successfully!')
+
     except Exception as e:
         print('View Department Exception : ', e)
     return render(request, 'ems/view_department.html', context)
@@ -84,6 +95,16 @@ def viewRole(request):
     try:
         roles = Role.objects.all()
         context['roles'] = roles
+        if request.method=='POST':
+            id=request.POST['id']
+            name=request.POST['role-name']
+            des=request.POST['role-description']
+            obj=Role.objects.get(id=id)
+            if obj.name !=name or obj.description !=des :
+                obj.name=name
+                obj.description=des
+                obj.save()
+                messages.success(request,'Updated successfully!')
     except Exception as e:
         print('View Role Exception : ', e)
     return render(request, 'ems/view_role.html', context)
@@ -276,3 +297,4 @@ def employeeDetail(request, empid):
     except Exception as e:
         print('Employee Detail Exception : ', e)
     return render(request, 'ems/employee_detail.html', context)
+

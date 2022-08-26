@@ -18,7 +18,7 @@
                     <td>{{forloop.counter}}.</td>
                     <td>{{role.name}}</td>
                     <td>{{role.description}}</td>
-                    <td><a href="{{role.id}}" class="edit" data-bs-toggle="modal" data-bs-target="#edit-role" ><i class='bx bx-edit'></i></a></td>
+                    <td><a href="{% url 'ems:view-role' %}" class="edit" data-bs-toggle="modal" data-bs-target="#edit-role" onclick="editRole({{role.id}},'{{role.name}}','{{role.description}}')" ><i class='bx bx-edit'></i></a></td>
                     <td><a href="{% url 'ems:delete-role' role.id %}" class="delete"><span class="material-symbols-outlined">
                         delete
                         </span></a></td>
@@ -42,6 +42,7 @@
         <div class="modal-body">
             <form action="" method="post">
                 {% csrf_token %}
+                <input type="text" hidden name="id" id="department-id">
             <div class="mb-3">
                 <label for="role-name" class="form-label">Name</label>
                 <input type="text" class="form-control" id="role-name"

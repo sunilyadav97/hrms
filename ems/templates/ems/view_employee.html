@@ -21,7 +21,7 @@
                     <td>{{employee.father_name}}</td>
                     <td>{{employee.department}}</td>
                     <td>{{employee.role}}</td>
-                    <td><a href="#" class="delete"><span class="material-symbols-outlined">
+                    <td><a href="#" class="delete"><span class="material-symbols-outlined" onclick="deleteEm()">
                         delete</span></a></td>
                 </tr>
                 {% endfor %}
@@ -29,5 +29,26 @@
         </div>
     </div>
 </div>
+
+<script>
+    const aalert=(message,type)=>{
+        const wrapper = document.createElement('div')
+        wrapper.innerHTML = [
+          `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+          `   <div>${message}</div>`,
+          '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+          '</div>'
+        ].join('')
+      
+        alertPlaceholder.append(wrapper)
+    }
+    function deleteEm(){
+        confirm("You can't get it back")
+        console.log('hello')
+        
+    }
+
+
+</script>
   
 {% endblock body %}
