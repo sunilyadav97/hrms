@@ -135,6 +135,7 @@ def addEmployee(request):
                     address_obj=Address.objects.get(user=user_obj)
                 else:
                     address_obj=Address.objects.create(
+                        user=user_obj,
                         address=address,
                         street=street,
                         locality=locality,
@@ -173,3 +174,27 @@ def addEmployee(request):
     except Exception as e:
         print('Add Employee Exception : ',e)
     return render(request,'ems/add_employee.html',context)
+
+
+def viewEmployee(request):
+    context={}
+    try:
+        employees=Employee.objects.all()
+        context['employees']=employees
+    except Exception as e:
+        print('View Employee Exception : ',e)
+        
+    return render(request,'ems/view_employee.html',context)
+
+def employeeDetail(request,empid):
+    context={}
+    try:
+        employee_obj=Employee.objects.get(empid=empid)
+        user_obj=User.objects.get(username=employee_obj.user)
+        context['employee_obj']=employee_obj
+        addres_obj=Address.objects.get(user=user_obj)
+        context['address_obj']=addres_obj
+        # context['address_obj']=addres_obj
+    except Exception as e:
+        print('Employee Detail Exception : ', e)
+    return render(request,'ems/employee_detail.html',context)

@@ -36,7 +36,7 @@ class Employee(models.Model):
     dob=models.DateField()
     email=models.EmailField(max_length=100)
     mobile_no=models.IntegerField()
-    address=models.OneToOneField(Address, on_delete=models.SET_NULL,blank=True, null=True,)
+    address=models.OneToOneField(Address, on_delete=models.CASCADE,blank=True, null=True,)
     designation=models.CharField(max_length=70)
     role=models.ForeignKey(Role, on_delete=models.SET_NULL,blank=True, null=True,)
     department=models.ForeignKey(Department, on_delete=models.SET_NULL,blank=True, null=True,)

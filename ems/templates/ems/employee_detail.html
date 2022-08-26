@@ -1,0 +1,162 @@
+{% extends './base.html' %}
+{% block title %} {{employee_obj.name}}'s Detail EMS{% endblock title %}
+{% block body %}
+<div class="container py-4">
+    <div class="row d-felx justify-content-center align-items-center">
+        <div class="col-9">
+            <h3 class="employee-title my-2">Employee Detail</h3>
+            <div class="d-grid my-4">
+                <button class="btn btn-warning" onclick="edit()">Edit Details</button>
+            </div>
+            <form action="" method="post" class="mt-4 add-employee">
+                {% csrf_token %}
+                <div class="row gy-1">
+
+                    <div class="mb-3 col-12 col-sm-6">
+                        <label for="select-user" class="form-label">User</label>
+                        <select readonly class="form-select employee_detail" aria-label="Default select example" id="select-user" required
+                            name="select-user">
+                            <option value="{{user.username}}" selected >{{user.username}}</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 col-12 col-sm-6">
+                        <label for="fname" class="form-label">Name</label>
+                        <input type="text" class="form-control employee_detail" id="fname"
+                            name="employee-name" required value="{{employee_obj.name}}">
+                    </div>
+
+
+
+                    <div class="mb-3 col-12 col-sm-6">
+                        <label for="father-name" class="form-label">Father Name</label>
+                        <input type="text" class="form-control employee_detail" id="father-name" 
+                            name="father-name" required value="{{employee_obj.father_name}}" readonly>
+                    </div>
+                    <div class="mb-3 col-12 col-sm-6">
+                        <label for="dob" class="form-label">Date of Birth</label>
+                        <input type="text" class="form-control employee_detail" value="{{employee_obj.dob | date}}" id="dob" name="employee-dob" required>
+                    </div>
+
+
+
+                    <div class="mb-3 col-12 col-sm-6">
+                        <label for="email" class="form-label">Phone No.</label>
+                        <input type="number" class="form-control employee_detail" id="email" value="{{employee_obj.mobile_no}}"
+                            name="phone-number" required>
+                    </div>
+                    <div class="mb-3 col-12 col-sm-6">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control employee_detail" id="email" value="{{employee_obj.email}}" name="email" required>
+                    </div>
+
+
+
+                    <div class="mb-3 col-12 col-sm-6">
+                        <label for="address" class="form-label">Address</label>
+                        <input type="text" class="form-control employee_detail" id="address" value="{{address_obj.address}}" name="address" required>
+                    </div>
+                    <div class="mb-3 col-12 col-sm-6">
+                        <label for="street" class="form-label">Street</label>
+                        <input type="text" class="form-control employee_detail" id="street" value="{{address_obj.street}}" name="street" required>
+                    </div>
+
+
+                    <div class="mb-3 col-12 col-sm-6">
+                        <label for="locality" class="form-label">Locality</label>
+                        <input type="text" class="form-control employee_detail" id="locality" value="{{address_obj.locality}}" 
+                            name="locality" required>
+                    </div>
+                    <div class="mb-3 col-12 col-sm-6">
+                        <label for="city" class="form-label">City / District</label>
+                        <input type="text" class="form-control employee_detail" id="city" value="{{address_obj.city}}" 
+                            name="city" required>
+                    </div>
+
+                    <div class="mb-3 col-12 col-sm-6">
+                        <label for="state" class="form-label">State</label>
+                        <input type="text" class="form-control employee_detail" id="state" value="{{address_obj.state}}"  name="state" required>
+                    </div>
+                    <div class="mb-3 col-12 col-sm-6">
+                        <label for="pincode" class="form-label">Pin Code</label>
+                        <input type="number" class="form-control employee_detail" id="pincode" value="{{address_obj.pincode}}" 
+                            name="pincode" required>
+                    </div>
+
+                    <div class="mb-3 col-12 col-sm-6">
+                        <label for="country" class="form-label">Country</label>
+                        <input type="text" class="form-control employee_detail" id="country" value="{{address_obj.country}}"  name="country" required>
+                    </div>
+
+
+                    <div class="mb-3 col-12 col-sm-6">
+                        <label for="designation" class="form-label">Designation</label>
+                        <input type="text" class="form-control employee_detail" id="designation" required value="{{employee_obj.designation}}" 
+                            name="designation">
+                    </div>
+                    <div class="mb-3 col-12 col-sm-6">
+                        <label for="select-department" class="form-label">Select Department</label>
+                        <select class="form-select employee_detail" aria-label="Default select example" id="select-department" name="select-department" required>
+                        
+                            <option value="{{employee_obj.department}}" selected>{{employee_obj.department}}</option>
+                        </select>
+                    </div>
+
+
+                    <div class="mb-3 col-12 col-sm-6">
+                        <label for="select-role" class="form-label">Select Role</label>
+                        <select class="form-select employee_detail" aria-label="Default select example" id="select-role"
+                            name="select-role" required>
+                            <option value="{{employee_obj.role}}" selected>{{employee_obj.role}}</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 col-12 col-sm-6">
+                        <label for="joining-date" class="form-label">Joining Date</label>
+                        <input type="text" class="form-control employee_detail" id="dob" name="joining-date" required value="{{employee_obj.joining_date}}">
+                    </div>
+
+                    <div class="mb-3 col-12 col-sm-6">
+                        <label for="select-status" class="form-label">Select Status</label>
+                        <select class="form-select employee_detail" aria-label="Default select example" id="select-status"
+                            name="select-status" required>
+                            <option value="{{employee_obj.role}}" selected>{{employee_obj.status}}</option>
+                            
+                        </select>
+
+                    </div>
+                    <div class="d-grid mt-4">
+                        <button type="submit" class="btn btn-primary" id="update-btn">Save Changes</button>
+                    </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    var employeeDetails=document.querySelectorAll('.employee_detail')
+    employeeDetails.forEach(e=>{
+        e.setAttribute('readonly','readonly')
+        e.setAttribute('disabled','disabled')
+    })
+    var btn=document.getElementById('update-btn')
+    btn.setAttribute('hidden','hidden')
+    var edtiStatus=false
+
+    function edit(){
+        if (edtiStatus == false){
+            employeeDetails.forEach(e=>{
+                e.removeAttribute('readonly','readonly')
+                e.removeAttribute('disabled','disabled')
+            })
+            btn.removeAttribute('hidden','hidden')
+            edtiStatus=true
+        }/*else{
+            employeeDetails.forEach(e=>{
+                e.setAttribute('readonly','readonly')
+                e.setAttribute('disabled','disabled')
+            })
+            btn.setAttribute('hidden','hidden')
+            var edtiStatus=false
+        }*/
+    }
+</script>
+
+{% endblock body %}

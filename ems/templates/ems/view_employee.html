@@ -1,0 +1,33 @@
+{% extends './base.html' %}
+{% block title %}View Employee | EMS{% endblock title %}
+{% block body %}
+<div class="container py-4">
+    <div class="row d-flex align-items-center justify-content-center">
+        <div class="col-10">
+            <h3 class="my-3 derpartment-title">All employees</h3>
+            <table class="table table-bordered department-table">
+                <tr>
+                    <th>SN</th>
+                    <th>Name</th>
+                    <th>Father Name</th>
+                    <th>Department</th>
+                    <th>Role</th>
+                    <th>Delete</th>
+                </tr>
+                {% for employee in employees %}
+                <tr>
+                    <td>{{forloop.counter}}.</td>
+                    <td><a class="text-dark" href="{% url 'ems:employee-detail' employee.empid %}">{{employee.name}}</a></td>
+                    <td>{{employee.father_name}}</td>
+                    <td>{{employee.department}}</td>
+                    <td>{{employee.role}}</td>
+                    <td><a href="#" class="delete"><span class="material-symbols-outlined">
+                        delete</span></a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+  
+{% endblock body %}
