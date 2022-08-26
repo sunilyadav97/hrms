@@ -13,10 +13,10 @@
                 <div class="row gy-1">
 
                     <div class="mb-3 col-12 col-sm-6">
-                        <label for="select-user" class="form-label">User</label>
+                        <label for="select-user" class="form-label">User </label>
                         <select readonly class="form-select employee_detail" aria-label="Default select example"
                             id="select-user" required name="select-user">
-                            <option value="{{user.username}}" selected>{{user.username}}</option>
+                            <option value="{{employee_obj.user}}" selected>{{employee_obj.user}}</option>
                         </select>
                     </div>
                     <div class="mb-3 col-12 col-sm-6">
@@ -44,6 +44,11 @@
                         <label for="email" class="form-label">Phone No.</label>
                         <input type="number" class="form-control employee_detail" id="email"
                             value="{{employee_obj.mobile_no}}" name="phone-number" required>
+                    </div>
+                    <div class="mb-3 col-6">
+                        <label for="ephone" class="form-label">Emergency Phone No. <span class="text-muted">(optional)</span> </label>
+                        <input type="number" value="{{employee_obj.emergency_mobile_no}}" class="form-control employee_detail" id="ephone" placeholder="None"
+                            name="ephone-number">
                     </div>
                     <div class="mb-3 col-12 col-sm-6">
                         <label for="email" class="form-label">Email</label>
@@ -76,12 +81,12 @@
                             name="city" required>
                     </div>
 
-                    <div class="mb-3 col-12 col-sm-6">
+                    <div class="mb-3 col-6 col-sm-3">
                         <label for="state" class="form-label">State</label>
                         <input type="text" class="form-control employee_detail" id="state" value="{{address_obj.state}}"
                             name="state" required>
                     </div>
-                    <div class="mb-3 col-12 col-sm-6">
+                    <div class="mb-3 col-6 col-sm-3">
                         <label for="pincode" class="form-label">Pin Code</label>
                         <input type="number" class="form-control employee_detail" id="pincode"
                             value="{{address_obj.pincode|floatformat:'0'}}" name="pincode" required>
@@ -146,7 +151,7 @@
                             <option value="Not working">Not Working</option>
                             {% else %}
                             <option value="{{employee_obj.role}}" selected>{{employee_obj.status}}</option>
-                            <option value="Not working" >Working</option>
+                            <option value="Working" >Working</option>
                             {% endif %}
                         </select>
 

@@ -114,6 +114,8 @@ def addEmployee(request):
             father_name = request.POST['father-name']
             dob = request.POST['employee-dob']
             phone_number = request.POST['phone-number']
+            ephone_number= request.POST['ephone-number']
+            print('ephone ',ephone_number)
             email = request.POST['email']
             address = request.POST['address']
             street = request.POST['street']
@@ -136,7 +138,7 @@ def addEmployee(request):
                 user_obj = User.objects.get(username=user)
                 check_employee = Employee.objects.filter(
                     user=user_obj).exists()
-
+                print('user obj ',user_obj)
                 if check_employee:
                     messages.warning(
                         request, 'This user already in use Please Create new user!')
@@ -170,6 +172,7 @@ def addEmployee(request):
                     dob=dob,
                     email=email,
                     mobile_no=phone_number,
+                   emergency_mobile_no=ephone_number,
                     address=address_obj,
                     designation=designation,
                     role=role_obj,
@@ -180,6 +183,7 @@ def addEmployee(request):
                 print('Employee Obj : ', emp_obj)
                 messages.success(
                     request, 'New Employee Reigsterd Successfully!')
+                return redirect('ems:employee-view')
             else:
                 print('fail')
                 messages.warning(request, 'All fields are mandotry')
@@ -218,6 +222,8 @@ def employeeDetail(request, empid):
             father_name = request.POST['father-name']
             dob = request.POST['employee-dob']
             phone_number = request.POST['phone-number']
+            ephone_number= request.POST['ephone-number']
+            print('ephone ',ephone_number)
             email = request.POST['email']
             address = request.POST['address']
             street = request.POST['street']
@@ -235,12 +241,18 @@ def employeeDetail(request, empid):
             if full_name and father_name and dob and email and phone_number and address and street and locality and city and state and pincode and country and designation and department and role and joining_date and status:
                 
                 d_obj = Department.objects.get(name=department)
+                if ephone_number == '':
+                    employee_obj.emergency_mobile_no=None
+                else:
+                    employee_obj.emergency_mobile_no=ephone_number
+                    
                 r_obj = Role.objects.get(name=role)
                 employee_obj.name = full_name
                 employee_obj.father_name = father_name
                 employee_obj.dob = dob
                 employee_obj.email = email
                 employee_obj.mobile_no = phone_number
+                
                 employee_obj.role = r_obj
                 employee_obj.department = d_obj
                 employee_obj.designation = designation
