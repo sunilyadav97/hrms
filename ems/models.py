@@ -38,8 +38,8 @@ class Employee(models.Model):
     mobile_no=models.IntegerField()
     address=models.OneToOneField(Address, on_delete=models.SET_NULL,blank=True, null=True,)
     designation=models.CharField(max_length=70)
-    role=models.OneToOneField(Role, on_delete=models.SET_NULL,blank=True, null=True,)
-    department=models.OneToOneField(Department, on_delete=models.SET_NULL,blank=True, null=True,)
+    role=models.ForeignKey(Role, on_delete=models.SET_NULL,blank=True, null=True,)
+    department=models.ForeignKey(Department, on_delete=models.SET_NULL,blank=True, null=True,)
     joining_date=models.DateField()
     status=models.CharField(max_length=15)
     def __str__(self):
