@@ -20,17 +20,17 @@
     <!-- ==========CUSTOM STYLE SHEET============ -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-    {% block css %}{% endblock css %}
+    <style> {% block css %}{% endblock css %} </style>
 
 </head>
 
 <body>
-
+    
 
     <header class="shadow-sm">
         <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
             <div class="container">
-                <a class="navbar-brand" href="#">EMS</a>
+                <a class="navbar-brand" href="{% url 'ems:ems' %}">EMS</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -46,7 +46,7 @@
                                 <button class="btn btn-outline-warning" type="submit">Search</button>
                             </form>
                         </li>
-                        <li class="nav-item dropdown">
+                        {% comment %} <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle active" href="#" role="button" data-bs-toggle="dropdown"
                                 aria-expanded="false">
                                 testuser
@@ -55,7 +55,7 @@
                                 <li><a class="dropdown-item text-light" href="#">Logout</a></li>
                                 <li><a class="dropdown-item text-light" href="#">Login</a></li>
                             </ul>
-                        </li>
+                        </li> {% endcomment %}
                     </ul>
                 </div>
             </div>
@@ -70,7 +70,8 @@
         </div>
         <div class="offcanvas-body">
             <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="/dashboard">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'home:home' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'ems:ems' %}">Dashboard</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -103,16 +104,6 @@
                         <li><a class="dropdown-item text-light" href="{% url 'ems:employee-view' %}">View EM</a></li>
                     </ul>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        user
-                    </a>
-                    <ul class="dropdown-menu bg-dark side-drop-down">
-                        <li><a class="dropdown-item text-light" href="#">Action</a></li>
-                        <li><a class="dropdown-item text-light" href="#">Another action</a></li>
-                    </ul>
-                </li>
 
             </ul>
         </div>
@@ -128,10 +119,9 @@
                     </div>
                     {% endfor %}
 
-        </div>
         {% block body %}{% endblock body %}
-    </main>
 
+    </main>
     <!-- =============BOOSTRAP CDN JS LINK============== -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"

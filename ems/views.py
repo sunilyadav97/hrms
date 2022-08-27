@@ -7,9 +7,6 @@ from .models import *
 from django.contrib.auth.models import User
 
 
-def home(request):
-    context = {}
-    return render(request, 'ems/home.html', context)
 
 
 def dashboard(request):
