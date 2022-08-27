@@ -24,7 +24,7 @@ Attendance
                         <th>Attendance Status</th>
                         <th>Date</th>
                     </tr>
-                    {% for item in attendance_em %}
+                    {% for item in attendances %}
                     <tr>
                         <td>{{forloop.counter}}</td>
                         <td>{{item.employee.name}}</td>
@@ -74,11 +74,11 @@ Attendance
                         <th>Present</th>
                     </tr>
 
-                    {% for item in attendance_em %}
+                    {% for item in employees %}
                     <tr>
-                        <input type="text" hidden name="empid{{forloop.counter}}" value="{{item.employee.empid}}">
+                        <input type="text" hidden name="empid{{forloop.counter}}" value="{{item.empid}}">
                         <td>{{forloop.counter}}</td>
-                        <td>{{item.employee}}</td>
+                        <td>{{item.name}}</td>
                         <td><input type="time" name="intime{{forloop.counter}}" class="form-control"></td>
                         <td><input type="time" name="outtime{{forloop.counter}}" class="form-control"></td>
                         <td>

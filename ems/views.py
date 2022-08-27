@@ -298,22 +298,29 @@ def employeeDetail(request, empid):
 def attendance(request):
     context={}
     try:
-        attendance_em=list()
-        att_em_objs=Attendance.objects.all()
-        for item in att_em_objs:
-            if item.employee.status == 'Working':
-                attendance_em.append(item)
-        context['attendance_em']=attendance_em
+        em_list=list()
+        employees=Employee.objects.all()
+        attendances=Attendance.objects.all()
+        for item in employees:
+            if item.status == 'Working':
+                em_list.append(item)
+        context['attendances']=attendances
+        context['employees']=em_list
         
         if request.method == 'POST':
             date=request.POST['date']
             print(date)
-            for i in range(1,len(attendance_em)+1):
+            for i in range(1,len(em_list)+1):
                 empid=request.POST['empid'+str(i)]
                 intime=request.POST['intime'+str(i)]
                 outtime=request.POST['outtime'+str(i)]
                 attendance_status=request.POST['attendance-status'+str(i)]
-                
+                if intime == '':
+                    intime=None
+                    
+                if outtime == '':
+                    outtime=None
+                    
                 emp_obj=Employee.objects.get(empid=empid)
                 att_obj=Attendance.objects.create(
                     employee=emp_obj,

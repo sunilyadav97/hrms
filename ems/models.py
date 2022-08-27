@@ -49,8 +49,8 @@ class Employee(models.Model):
 
 class Attendance(models.Model):
     employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
-    intime=models.TimeField()
-    outtime=models.TimeField()
+    intime=models.TimeField(blank=True, null=True)
+    outtime=models.TimeField(blank=True,null=True)
     present=models.BooleanField(default=False)
     date=models.DateField()
     def __str__(self):
