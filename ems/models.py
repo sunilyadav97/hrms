@@ -53,9 +53,14 @@ class AttendanceEmployee(models.Model):
     outtime=models.TimeField()
     present=models.BooleanField(default=False)
     date=models.DateField()
+    def __str__(self):
+        return self.employee.name
     
 class Attendance(models.Model):
     attendance_employee=models.ForeignKey(AttendanceEmployee,on_delete=models.CASCADE)
     date=models.DateField()
+    
+    def __str__(self):
+        return self.date
 
 
