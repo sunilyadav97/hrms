@@ -47,11 +47,15 @@ class Employee(models.Model):
         return self.name
     
 
-class AttendenceEmployee(models.Model):
+class AttendanceEmployee(models.Model):
     employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
     intime=models.TimeField()
     outtime=models.TimeField()
     present=models.BooleanField(default=False)
+    date=models.DateField()
+    
+class Attendance(models.Model):
+    attendance_employee=models.ForeignKey(AttendanceEmployee,on_delete=models.CASCADE)
     date=models.DateField()
 
 

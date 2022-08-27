@@ -5,5 +5,6 @@ admin.site.register(Department)
 admin.site.register(Role)
 admin.site.register(Employee)
 admin.site.register(Address)
-admin.site.register(AttendenceEmployee)
+admin.site.register(AttendanceEmployee)
+admin.site.register(Attendance)
 
