@@ -17,7 +17,7 @@
                 {% for employee in employees %}
                 <tr>
                     <td>{{forloop.counter}}.</td>
-                    <td><a class="text-dark" href="{% url 'ems:employee-detail' employee.empid %}">{{employee.name}}</a></td>
+                    <td><a class="" href="{% url 'ems:employee-detail' employee.empid %}">{{employee.name}}</a></td>
                     <td>{{employee.father_name}}</td>
                     <td>{{employee.department}}</td>
                     <td>{{employee.role}}</td>

@@ -45,4 +45,13 @@ class Employee(models.Model):
     status=models.CharField(max_length=15)
     def __str__(self):
         return self.name
+    
+
+class AttendenceEmployee(models.Model):
+    employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
+    intime=models.TimeField()
+    outtime=models.TimeField()
+    present=models.BooleanField(default=False)
+    date=models.DateField()
+
 

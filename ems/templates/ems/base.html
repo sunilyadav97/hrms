@@ -20,7 +20,13 @@
     <!-- ==========CUSTOM STYLE SHEET============ -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-    <style> {% block css %}{% endblock css %} </style>
+    <style> {% block css %}{% endblock css %} 
+        .c-btn{
+            background-color: transparent;
+            border: none;
+            color: white;
+        }
+    </style>
 
 </head>
 
@@ -66,7 +72,9 @@
         aria-labelledby="staticBackdropLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">Menu</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            <button type="button" class="c-btn" data-bs-dismiss="offcanvas" aria-label="Close"><span class="material-symbols-outlined">
+                close
+                </span></button>
         </div>
         <div class="offcanvas-body">
             <ul class="navbar-nav">
@@ -118,6 +126,7 @@
                         </button>
                     </div>
                     {% endfor %}
+
 
         {% block body %}{% endblock body %}
 
