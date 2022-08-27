@@ -12,5 +12,6 @@ urlpatterns=[
     path('employee-register/',addEmployee,name='employee-add'),
     path('employee-view/',viewEmployee,name='employee-view'),
     path('employee-detail/<empid>/',employeeDetail,name='employee-detail'),
+    path('attendance',attendance,name='attendance'),
     
 ]

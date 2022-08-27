@@ -1,0 +1,104 @@
+{% extends './base.html' %}
+{% block title%}
+Attendance
+{% endblock title%}
+{% block css%}
+
+{% endblock css%}
+{% block body %}
+
+<section class="py-4">
+
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-sm-8 my-3 col-12">
+                <h3 class="derpartment-title my-3">All Attendance <button type="button" class="btn btn-warning float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Add Attendance
+                </button></h3>
+                <table class="table table-dark table-striped">
+                    <tr>
+                        <th>SN</th>
+                        <th>Name</th>
+                        <th>In-Time</th>
+                        <th>Out-Time</th>
+                        <th>Attendance Status</th>
+                        <th>Date</th>
+                    </tr>
+                    {% for item in attendance_em %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{item.employee.name}}</td>
+                        <td>{{item.intime | time:"H:i"}}</td>
+                        <td>{{item.outtime | time}}</td>
+                        {% if  item.present %}
+                        <td class="text-success fw-semibold">Present</td>
+                        {% else %}
+                        <td class="text-danger fw-semibold">Absent</td>
+                           {% endif %} 
+                        <td>{{item.date}}</td>
+                    </tr>
+                    {% endfor %}
+                  </table>
+            </div>
+            
+        </div>
+    </div>
+
+</section>
+
+
+
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" >
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h4 class="modal-title fw-semibodl" id="exampleModalLabel">Create Attendance</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    {% csrf_token %}
+                <div class="mb-3">
+                    <label for="date" class="form-label">Date</label>
+                    <input type="date" id="date" class="form-control" name="date" required>
+                  </div>
+                <table class="table table-borderless">
+                    <tr>
+                        <th>SN.</th>
+                        <th>Name</th>
+                        <th>In-Time</th>
+                        <th>Out-Time</th>
+                        <th>Present</th>
+                    </tr>
+
+                    {% for item in attendance_em %}
+                    <tr>
+                        <input type="text" hidden name="empid{{forloop.counter}}" value="{{item.employee.empid}}">
+                        <td>{{forloop.counter}}</td>
+                        <td>{{item.employee}}</td>
+                        <td><input type="time" name="intime{{forloop.counter}}" class="form-control"></td>
+                        <td><input type="time" name="outtime{{forloop.counter}}" class="form-control"></td>
+                        <td>
+                            <select class="form-select" aria-label="Default select example" name="attendance-status{{forloop.counter}}">
+                                <option value="True">Yes</option>
+                                <option value="False">No</option>
+                              </select>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success">Save</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock body %}
