@@ -163,10 +163,3 @@
 
 /* ========Attendance====== */
 
-.modal-content{
-  width:700px !important;
-  position: absolute;
-  left: -90px;
-  transition: ease;
-  overflow: auto;
-}

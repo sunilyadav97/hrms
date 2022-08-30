@@ -3,7 +3,16 @@
 Attendance
 {% endblock title%}
 {% block css%}
-
+.modal-content{
+width:700px !important;
+position: absolute;
+left: -90px;
+transition: ease;
+overflow: auto;
+}
+.editinput-width{
+    width:8rem !important;
+}
 {% endblock css%}
 {% block body %}
 
@@ -11,36 +20,54 @@ Attendance
 
     <div class="container">
         <div class="row d-flex justify-content-center">
-            <div class="col-sm-8 my-3 col-12">
-                <h3 class="derpartment-title my-3">All Attendance <button type="button" class="btn btn-warning float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Add Attendance
-                </button></h3>
-                <table class="table table-dark table-striped">
+            <div class="col-sm-8 col-md-10 my-3 col-12 overflow-auto">
+                <h3 class="derpartment-title my-3">All Attendance <button type="button"
+                        class="btn btn-success float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                        Add Attendance
+                    </button></h3>
+                <table class="table border">
                     <tr>
                         <th>SN</th>
                         <th>Name</th>
                         <th>In-Time</th>
                         <th>Out-Time</th>
                         <th>Attendance Status</th>
-                        <th>Date</th>
+                        <th class="me-4">Date</th>
+                        <th class="me-4">Edit</th>
                     </tr>
-                    {% for item in attendances %}
+                </table>
+
+                {% for nest in nested_attendence %}
+                <div class="d-flex align-items-center my-2 mb-3 justify-content-between">
+                    <span class="bg-secondary p-1 px-2 rounded text-light">Date: {{nest.1.date| date:"d-m-Y"}}</span>
+                </div>
+                <table class="table border">
+                    {% for item in nest %}
                     <tr>
                         <td>{{forloop.counter}}</td>
                         <td>{{item.employee.name}}</td>
-                        <td>{{item.intime | time:"H:i"}}</td>
+                        <td>{{item.intime | time}}</td>
                         <td>{{item.outtime | time}}</td>
-                        {% if  item.present %}
-                        <td class="text-success fw-semibold">Present</td>
+                        {% if item.present %}
+                        <td class="text-success fw-semibold ">Present</td>
                         {% else %}
-                        <td class="text-danger fw-semibold">Absent</td>
-                           {% endif %} 
-                        <td>{{item.date}}</td>
+                        <td class="text-danger fw-semibold ">Absent</td>
+                        {% endif %}
+                        <td>{{item.date | date:"d-m-Y"}}</td>
+                        <td class="text-primary">
+                            <i class='bx bx-edit'
+                                onclick="editAttendance('{{item.employee.name}}','{{item.intime | time}}','{{item.outtime | time}}','{{item.present}}','{{item.date|date}}')"
+                                data-bs-toggle="modal" data-bs-target="#editmodal"></i>
+                        </td>
                     </tr>
+
                     {% endfor %}
-                  </table>
+                </table>
+
+                {% endfor %}
+
             </div>
-            
+
         </div>
     </div>
 
@@ -52,7 +79,7 @@ Attendance
 
 <!-- Modal -->
 <div class="modal " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" >
+    <div class="modal-dialog">
         <div class="modal-content ">
             <div class="modal-header">
                 <h4 class="modal-title fw-semibodl" id="exampleModalLabel">Create Attendance</h4>
@@ -61,44 +88,108 @@ Attendance
             <div class="modal-body">
                 <form action="" method="post">
                     {% csrf_token %}
-                <div class="mb-3">
-                    <label for="date" class="form-label">Date</label>
-                    <input type="date" id="date" class="form-control" name="date" required>
-                  </div>
-                <table class="table table-borderless">
-                    <tr>
-                        <th>SN.</th>
-                        <th>Name</th>
-                        <th>In-Time</th>
-                        <th>Out-Time</th>
-                        <th>Present</th>
-                    </tr>
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Date</label>
+                        <input type="date" id="date" class="form-control" name="date" required>
+                    </div>
+                    <table class="table table-borderless">
+                        <tr>
+                            <th>SN.</th>
+                            <th>Name</th>
+                            <th>In-Time</th>
+                            <th>Out-Time</th>
+                            <th>Present</th>
+                        </tr>
 
-                    {% for item in employees %}
-                    <tr>
-                        <input type="text" hidden name="empid{{forloop.counter}}" value="{{item.empid}}">
-                        <td>{{forloop.counter}}</td>
-                        <td>{{item.name}}</td>
-                        <td><input type="time" name="intime{{forloop.counter}}" class="form-control"></td>
-                        <td><input type="time" name="outtime{{forloop.counter}}" class="form-control"></td>
-                        <td>
-                            <select class="form-select" aria-label="Default select example" name="attendance-status{{forloop.counter}}">
-                                <option value="True">Yes</option>
-                                <option value="False">No</option>
-                              </select>
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </table>
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-success">Save</button>
-                </div>
-            </form>
+                        {% for item in employees %}
+                        <tr>
+                            <input type="text" hidden name="empid{{forloop.counter}}" value="{{item.empid}}">
+                            <td>{{forloop.counter}}</td>
+                            <td>{{item.name}}</td>
+                            <td><input type="time" name="intime{{forloop.counter}}" class="form-control"></td>
+                            <td><input type="time" name="outtime{{forloop.counter}}" class="form-control"></td>
+                            <td>
+                                <select class="form-select" aria-label="Default select example"
+                                    name="attendance-status{{forloop.counter}}">
+                                    <option value="True" id="option1">Yes</option>
+                                    <option value="False" id="option2">No</option>
+                                </select>
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                    </table>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
 
 
+
+<!-- Attendance Edit Modal -->
+<div class="modal fade" id="editmodal" tabindex="-1" aria-labelledby="editmodalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editmodalLabel">Edit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-borderless">
+                    <tr>
+                        <th>Name</th>
+                        <th>In-Time</th>
+                        <th>Out-Time</th>
+                        <th>Present</th>
+                    </tr>
+                    <tr>
+                        <input type="text" hidden name="" value="">
+                        <td id="emName"></td>
+                        <td><input type="text" name="" class="form-control editinput-width" id="emintime"></td>
+                        <td><input type="text" name="" class="form-control editinput-width" id="emouttime"></td>
+                        <td>
+                            <select class="form-select" aria-label="Default select example"
+                                name="attendance-status">
+                                <option value="True">Yes</option>
+                                <option value="False">No</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function editAttendance(obj, obj2, obj3, obj4, obj5) {
+        console.log(obj)
+        console.log(obj2)
+        console.log(obj3)
+        console.log(obj4)
+        console.log(obj5)
+
+        document.getElementById('emName').innerHTML = obj
+        document.getElementById('emintime').value = obj2
+        document.getElementById('emouttime').value = obj3
+        if (obj4){
+            console.log(boj3)
+            document.getElementById('option1').setAttribute('selected','selected')
+        }else{
+            document.getElementById('option2').setAttribute('selected','selected')
+
+        }
+
+    }
+</script>
 
 {% endblock body %}

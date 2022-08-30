@@ -299,14 +299,36 @@ def attendance(request):
     context={}
     try:
         em_list=list()
+        attendance_dates=list()
+        nested_attendance=list()
         employees=Employee.objects.all()
-        attendances=Attendance.objects.all()
+        attendances_objs=Attendance.objects.all()
+
+        # Getting All Attendance Dates
+        for attend in attendances_objs:
+            if attend.date in attendance_dates:
+                pass
+            else:
+                attendance_dates.append(attend.date)
+        attendance_dates.reverse()
+     
+         
+        # Getting Particular Date QuerySets        
+        for i in attendance_dates:
+            obj=Attendance.objects.filter(date=i)
+            nested_attendance.append(obj)
+            
+        
+        # Getting working Employee for make attendance
         for item in employees:
             if item.status == 'Working':
                 em_list.append(item)
-        context['attendances']=attendances
-        context['employees']=em_list
+                
         
+
+        context['employees']=em_list
+        context['nested_attendence']=nested_attendance
+       
         if request.method == 'POST':
             date=request.POST['date']
             print(date)
@@ -332,6 +354,7 @@ def attendance(request):
                 print(att_obj)
                 print(i,'empid-',empid,'intime-',intime,'outime-',outtime,'present-',attendance_status)
             messages.success(request,'Attendance Added successfully!')
+            return redirect('ems:attendance')
     except Exception as e:
         print('Attendance Exception ',e)
         
