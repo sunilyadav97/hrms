@@ -62,7 +62,7 @@ class Leave(models.Model):
     date_to=models.DateField()
     description=models.CharField(max_length=150)
     type=models.CharField(max_length=70)
-    reply=models.CharField(max_length=100)
+    reply=models.CharField(max_length=100,null=True,blank=True)
     status=models.CharField(max_length=20)
 
     def __str__(self):

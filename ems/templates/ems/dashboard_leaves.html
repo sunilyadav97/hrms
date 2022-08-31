@@ -1,0 +1,86 @@
+{% extends './base.html' %}
+{% block title %}Create Leave | EMS {% endblock title %}
+{% block css %}
+.delete span {
+    font-size: 16px !important;
+  }
+{% endblock css%}
+{% block body %}
+<div class="container py-4">
+    <div class="row d-flex align-items-center justify-content-center ">
+       
+        <div class="col-lg-10 col-12 my-5">
+            <h3 class="my-3 derpartment-title">All Leaves</h3>
+            <table class="table table-bordered">
+                <tr>
+                    <th>SN</th>
+                    <th>Name</th>
+                    <th>From date</th>
+                    <th>From to</th>
+                    <th>Descripiton</th>
+                    <th>Reply</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Approve/Reject</th>
+                    
+                </tr>
+                {% for leave in leaves %}
+                <tr class="my-4">
+                    <td>{{forloop.counter}}</td>
+                    <td>{{leave.employee.name}}</td>
+                    <td>{{leave.date_from | date:'d/M/Y'}}</td>
+                    <td>{{leave.date_to | date:'d/M/Y'}}</td>
+                    <td>{{leave.description}}</td>
+                    <td>{{leave.reply}}</td>
+                    <td>{{leave.type}}</td>
+                    {% if leave.status == 'Pending' %}
+                    <td class="bg-danger text-white">{{leave.status}}</td>
+                    {% else %}
+                    <td class="text-white bg-success">{{leave.status}}</td>
+                    {% endif %}
+                    
+                    <td><a href="" data-bs-toggle="modal" data-bs-target="#leavemodal">Approve/Reject</a></td>
+                    {% comment %} <td><a href="{% url 'ems:leave-delete' leave.id %}" class="delete"><span class="material-symbols-outlined">
+                        delete
+                        </span></a></td> {% endcomment %}
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="leavemodal" tabindex="-1" aria-labelledby="leavemodalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="leavemodalLabel">Leave</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="">
+            <div class="mb-3">
+                <label for="leave-type" class="form-label">Approve/Reject</label>
+                <select class="form-select" aria-label="Default select example" name="type" id="leave-type">
+                    <option selected value="accept">Accept</option>
+                    <option value="Reject">Reject</option>
+                  </select>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Status</label>
+                <textarea class="form-control" id="description" rows="3" placeholder="Write Discription....."
+                    name="description"></textarea>
+            </div>
+            <div class="d-grid">
+
+                <button type="button" class="btn btn-success">Save</button>
+            </div>
+          </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
+{% endblock body %}

@@ -438,7 +438,7 @@ def createLeave(request):
                 date_to=date_to,
                 type=type,
                 description=description,
-                status='Pending'
+                status='Pending',
             )
             if obj:
                 messages.success(request,'Leave Created Successfully!')           
@@ -459,3 +459,15 @@ def deleteLeave(request, pk):
         print('Delete Attendance Exception : ', e)
         messages.warning(request,'Something Wend Wrong!')
         return redirect('ems:leave-create')
+    
+    
+def dashboardLeaves(request):
+    context={}
+    try:
+        leaves=Leave.objects.all().order_by('-id')
+        context['leaves']=leaves
+    except Exception as e:
+        print('Dashboard Leaves Exception : ',e)
+    return render(request,'ems/dashboard_leaves.html',context)
+
+    
