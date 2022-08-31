@@ -150,7 +150,7 @@ def addEmployee(request):
 
             if user and full_name and father_name and dob and email and phone_number and address and street and locality and city and state and pincode and country and designation and department and role and joining_date and status:
                 if user and role and department and status == 'default':
-                    messages.warning(request, 'All fields are mandotry')
+                    messages.warning(request, 'All fields are mandouttimery')
                     return redirect('ems:employee-add')
 
                 user_obj = User.objects.get(username=user)
@@ -204,7 +204,7 @@ def addEmployee(request):
                 return redirect('ems:employee-view')
             else:
                 print('fail')
-                messages.warning(request, 'All fields are mandotry')
+                messages.warning(request, 'All fields are mandouttimery')
 
     except Exception as e:
         print('Add Employee Exception : ', e)
@@ -302,7 +302,7 @@ def attendance(request):
         attendance_dates=list()
         nested_attendance=list()
         employees=Employee.objects.all()
-        attendances_objs=Attendance.objects.all()
+        attendances_objs=Attendance.objects.all().order_by('-date')
 
         # Getting All Attendance Dates
         for attend in attendances_objs:
@@ -310,12 +310,11 @@ def attendance(request):
                 pass
             else:
                 attendance_dates.append(attend.date)
-        attendance_dates.reverse()
      
          
         # Getting Particular Date QuerySets        
         for i in attendance_dates:
-            obj=Attendance.objects.filter(date=i)
+            obj=Attendance.objects.filter(date=i).order_by('date')
             nested_attendance.append(obj)
             
         
@@ -359,5 +358,39 @@ def attendance(request):
         print('Attendance Exception ',e)
         
     return render(request,'ems/attendance.html',context)
+
+
+def editAttendance(request):
+    try:
+        if request.method == 'POST':
+            id=request.POST['attendance-id']
+            intime=request.POST['intime']
+            outtime=request.POST['outtime']
+            date=request.POST['date']
+            attendence_status=request.POST['attendance-status']
+
+            obj=Attendance.objects.get(id=id)
+            if intime and outtime != '':
+                obj.intime=intime
+                obj.outtime=outtime
+            elif not intime == '':
+                obj.intime=intime
+            elif not outtime == '':
+                obj.outtime=outtime
+            if attendence_status == 'False':
+                obj.intime=None
+                obj.outtime=None     
+                           
+            obj.present=attendence_status
+            obj.date=date
+            obj.save()
+            
+            messages.success(request,'Updated Successfully!')
+            return redirect('ems:attendance')
+
+    except Exception as e:
+        print('Edit Attendance Exception : ',e)
+        messages.warning(request,"Please don't Change Date Time Format")
+    return redirect('ems:attendance')
     
 

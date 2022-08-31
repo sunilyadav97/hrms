@@ -13,5 +13,6 @@ urlpatterns=[
     path('employee-view/',viewEmployee,name='employee-view'),
     path('employee-detail/<empid>/',employeeDetail,name='employee-detail'),
     path('attendance',attendance,name='attendance'),
+    path('attendance-edit',editAttendance,name='edit-attendance'),
     
 ]
