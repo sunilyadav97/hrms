@@ -25,7 +25,7 @@ overflow: auto;
                         class="btn btn-success float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
                         Add Attendance
                     </button></h3>
-                <table class="table border">
+                <table class="table border border-1 border-dark">
                     <tr>
                         <th>SN</th>
                         <th>Name</th>
@@ -34,6 +34,7 @@ overflow: auto;
                         <th>Attendance Status</th>
                         <th class="me-4">Date</th>
                         <th class="me-4">Edit</th>
+                        <th class="me-4">Delete</th>
                     </tr>
                 </table>
 
@@ -64,6 +65,9 @@ overflow: auto;
                                 onclick="editAttendance('{{item.employee.name}}','{{item.intime | time:'G'}}','{{item.outtime| time:'G'}}','{{item.present}}','{{item.date| date:'Y-m-d'}}','{{item.id}}')"
                                 data-bs-toggle="modal" data-bs-target="#editmodal"></i>
                         </td>
+                        <td><a href="{% url 'ems:attendance-delete' item.id %}" class="attedance-delete"><span class="material-symbols-outlined">
+                            delete
+                            </span></a></td>
                     </tr>
 
                     {% endfor %}

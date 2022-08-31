@@ -14,5 +14,6 @@ urlpatterns=[
     path('employee-detail/<empid>/',employeeDetail,name='employee-detail'),
     path('attendance',attendance,name='attendance'),
     path('attendance-edit',editAttendance,name='edit-attendance'),
+    path('attendance-delete/<pk>/',deleteAttendance,name='attendance-delete'),
     
 ]

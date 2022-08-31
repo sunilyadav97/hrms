@@ -394,3 +394,12 @@ def editAttendance(request):
     return redirect('ems:attendance')
     
 
+def deleteAttendance(request, pk):
+    try:
+        Attendance.objects.get(id=pk).delete()
+        messages.success(request, 'Deleted Successfully!')
+        return redirect(reverse('ems:attendance'))
+    except Exception as e:
+        print('Delete Attendance Exception : ', e)
+        messages.warning(request,'Something Wend Wrong!')
+        return redirect('ems:attendance')
