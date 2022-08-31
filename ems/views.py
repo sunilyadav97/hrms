@@ -1,3 +1,4 @@
+from tkinter import E
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.http import HttpResponse, HttpResponseRedirect
@@ -416,3 +417,45 @@ def deleteAttendance(request, pk):
         return redirect('ems:attendance')
     
     
+    
+# Leave Functions 
+
+def createLeave(request):
+    context={}
+    try:
+        em_obj=Employee.objects.get(user=request.user)
+        leaves=Leave.objects.filter(employee=em_obj).order_by('-id')
+        context['leaves']=leaves
+        if request.method == 'POST':
+            date_from=request.POST['date-from']
+            date_to=request.POST['date-to']
+            type=request.POST['type']
+            description=request.POST['description']
+           
+            obj=Leave.objects.create(
+                employee=em_obj,
+                date_from=date_from,
+                date_to=date_to,
+                type=type,
+                description=description,
+                status='Pending'
+            )
+            if obj:
+                messages.success(request,'Leave Created Successfully!')           
+                return redirect('ems:leave-create')
+            else:
+                messages.warning(request,'Something Went Wrong!')
+                return redirect('ems:leave-create')
+    except Exception as e:
+        print('Create Leave Exception : ',e)
+    return render(request,'ems/create_leave.html',context)
+
+def deleteLeave(request, pk):
+    try:
+        Leave.objects.get(id=pk).delete()
+        messages.success(request, 'Deleted Successfully!')
+        return redirect(reverse('ems:leave-create'))
+    except Exception as e:
+        print('Delete Attendance Exception : ', e)
+        messages.warning(request,'Something Wend Wrong!')
+        return redirect('ems:leave-create')

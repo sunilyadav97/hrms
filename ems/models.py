@@ -64,6 +64,8 @@ class Leave(models.Model):
     type=models.CharField(max_length=70)
     reply=models.CharField(max_length=100)
     status=models.CharField(max_length=20)
-    
+
+    def __str__(self):
+        return self.employee.name
 
 

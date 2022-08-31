@@ -1,0 +1,77 @@
+{% extends './base.html' %}
+{% block title %}Create Leave | EMS {% endblock title %}
+{% block css %}
+.delete span {
+    font-size: 16px !important;
+  }
+{% endblock css%}
+{% block body %}
+<div class="container py-4">
+    <div class="row d-flex align-items-center justify-content-center ">
+        <div class="col-12 col-sm-8">
+            <h3 class=" my-3 derpartment-title">Leave form</h3>
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="date-from" class="form-label">From date</label>
+                    <input type="date" class="form-control" id="date-from" name="date-from">
+                </div>
+                <div class="mb-3">
+                    <label for="date-from" class="form-label">To date</label>
+                    <input type="date" class="form-control" id="date-from" name="date-to">
+                </div>
+                <div class="mb-3">
+                    <label for="leave-type" class="form-label">Type of Leave</label>
+                    <select class="form-select" aria-label="Default select example" name="type" id="leave-type">
+                        <option selected value="week">Week</option>
+                        <option value="month">Month</option>
+                        <option value="annual">Annual</option>
+                      </select>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Descripiton</label>
+                    <textarea class="form-control" id="description" rows="3" placeholder="Write Discription....."
+                        name="description"></textarea>
+                </div>
+                <div class="d-grid">
+                    <button class="btn btn-primary" type="submit">Create</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-10 col-12 my-5">
+            <h3 class="my-3 derpartment-title">All Leaves</h3>
+            <table class="table table-bordered">
+                <tr>
+                    <th>SN</th>
+                    <th>From date</th>
+                    <th>From to</th>
+                    <th>Descripiton</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Reply</th>
+                    <th>Delete</th>
+                </tr>
+                {% for leave in leaves %}
+                <tr class="my-4">
+                    <td>{{forloop.counter}}</td>
+                    <td>{{leave.date_from | date:'d/M/Y'}}</td>
+                    <td>{{leave.date_to | date:'d/M/Y'}}</td>
+                    <td>{{leave.description}}</td>
+                    <td>{{leave.type}}</td>
+                    {% if leave.status == 'Pending' %}
+                    <td class="bg-danger text-white">{{leave.status}}</td>
+                    {% else %}
+                    <td class="text-white bg-success">{{leave.status}}</td>
+                    {% endif %}
+                    <td>{{leave.reply}}</td>
+                    
+                    <td><a href="{% url 'ems:leave-delete' leave.id %}" class="delete"><span class="material-symbols-outlined">
+                        delete
+                        </span></a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock body %}

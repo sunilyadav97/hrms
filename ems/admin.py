@@ -7,4 +7,5 @@ admin.site.register(Employee)
 admin.site.register(Address)
 
 admin.site.register(Attendance)
+admin.site.register(Leave)
 
