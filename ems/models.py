@@ -56,5 +56,14 @@ class Attendance(models.Model):
     def __str__(self):
         return self.employee.name
     
+class Leave(models.Model):
+    employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
+    date_from=models.DateField()
+    date_to=models.DateField()
+    description=models.CharField(max_length=150)
+    type=models.CharField(max_length=70)
+    reply=models.CharField(max_length=100)
+    status=models.CharField(max_length=20)
+    
 
 
