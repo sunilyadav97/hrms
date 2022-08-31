@@ -295,6 +295,17 @@ def employeeDetail(request, empid):
         print('Employee Detail Exception : ', e)
     return render(request, 'ems/employee_detail.html', context)
 
+def deleteEmployee(request, empid):
+    try:
+        Employee.objects.get(empid=empid).delete()
+        messages.success(request, 'Employee Deleted Successfully!')
+        return redirect(reverse('ems:employee-view'))
+    except Exception as e:
+        print('Delete Employee Exception : ', e)
+        messages.warning(request,'Something Went Wrong!')
+    return redirect('ems:employee-view')
+
+
 def attendance(request):
     context={}
     try:
@@ -403,3 +414,5 @@ def deleteAttendance(request, pk):
         print('Delete Attendance Exception : ', e)
         messages.warning(request,'Something Wend Wrong!')
         return redirect('ems:attendance')
+    
+    

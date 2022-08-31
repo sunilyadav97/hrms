@@ -12,6 +12,7 @@ urlpatterns=[
     path('employee-register/',addEmployee,name='employee-add'),
     path('employee-view/',viewEmployee,name='employee-view'),
     path('employee-detail/<empid>/',employeeDetail,name='employee-detail'),
+    path('employee-delete/<empid>/',deleteEmployee,name='employee-delete'),
     path('attendance',attendance,name='attendance'),
     path('attendance-edit',editAttendance,name='edit-attendance'),
     path('attendance-delete/<pk>/',deleteAttendance,name='attendance-delete'),

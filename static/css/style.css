@@ -162,7 +162,10 @@
 }
 
 /* ========Attendance====== */
-
+.attendance-table{
+  
+}
 .attedance-delete span {
   font-size: 16px !important;
 }
+

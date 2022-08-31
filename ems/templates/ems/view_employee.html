@@ -21,7 +21,7 @@
                     <td>{{employee.father_name}}</td>
                     <td>{{employee.department}}</td>
                     <td>{{employee.role}}</td>
-                    <td><a href="#" class="delete"><span class="material-symbols-outlined" onclick="deleteEm()">
+                    <td><a href="{% url 'ems:employee-delete' employee.empid %}" class="delete"><span class="material-symbols-outlined">
                         delete</span></a></td>
                 </tr>
                 {% endfor %}
