@@ -25,6 +25,7 @@ def home(request):
                         obj.set_password(password)
                         obj.save()
                         messages.success(request,'You have Registered successfully!')
+                        return redirect('home:login')
                     else:
                         messages.warning(request,'Somthing Went wrong!')
     except Exception as e:
@@ -52,4 +53,4 @@ def signin(request):
 def signout(request):
     logout(request)
     messages.success(request,'Logout Succeesfully!')
-    return redirect('home:home')
+    return redirect('home:login')

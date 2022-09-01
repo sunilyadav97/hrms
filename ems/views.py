@@ -1,6 +1,7 @@
 
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.urls import reverse
 from django.contrib import messages
@@ -9,12 +10,17 @@ from django.contrib.auth.models import User
 
 
 
-
 def dashboard(request):
+    try:
+        if not request.user.is_authenticated:
+            messages.warning(request,'Please Login!')
+            return redirect('home:login')
+    except Exception as e:
+        print('EMS Dashboard Exception : ',e)
     context = {}
     return render(request, 'ems/dashboard.html', context)
 
-
+@login_required()
 def createDepartment(request):
     context = {}
     if request.method == 'POST':
@@ -36,7 +42,7 @@ def createDepartment(request):
         return redirect('ems:view-department')
     return render(request, 'ems/create_department.html', context)
 
-
+@login_required()
 def viewDepartment(request):
     context = {}
     try:
@@ -57,7 +63,7 @@ def viewDepartment(request):
         print('View Department Exception : ', e)
     return render(request, 'ems/view_department.html', context)
 
-
+@login_required()
 def deleteDepartment(request, pk):
     try:
         Department.objects.get(id=pk).delete()
@@ -66,7 +72,7 @@ def deleteDepartment(request, pk):
     except Exception as e:
         print('Delete Department Exception : ', e)
 
-
+@login_required()
 def createRole(request):
     context = {}
     if request.method == 'POST':
@@ -87,7 +93,7 @@ def createRole(request):
         return redirect('ems:view-role')
     return render(request, 'ems/create_role.html', context)
 
-
+@login_required()
 def viewRole(request):
     context = {}
     try:
@@ -107,7 +113,7 @@ def viewRole(request):
         print('View Role Exception : ', e)
     return render(request, 'ems/view_role.html', context)
 
-
+@login_required()
 def deleteRole(request, pk):
     try:
         Role.objects.get(id=pk).delete()
@@ -116,7 +122,7 @@ def deleteRole(request, pk):
     except Exception as e:
         print('Delete Role Exception : ', e)
 
-
+@login_required()
 def addEmployee(request):
     context = {}
     try:
@@ -211,7 +217,7 @@ def addEmployee(request):
         print('Add Employee Exception : ', e)
     return render(request, 'ems/add_employee.html', context)
 
-
+@login_required()
 def viewEmployee(request):
     context = {}
     try:
@@ -222,7 +228,7 @@ def viewEmployee(request):
 
     return render(request, 'ems/view_employee.html', context)
 
-
+@login_required()
 def employeeDetail(request, empid):
     context = {}
     try:
@@ -295,7 +301,7 @@ def employeeDetail(request, empid):
     except Exception as e:
         print('Employee Detail Exception : ', e)
     return render(request, 'ems/employee_detail.html', context)
-
+@login_required()
 def deleteEmployee(request, empid):
     try:
         Employee.objects.get(empid=empid).delete()
@@ -306,7 +312,7 @@ def deleteEmployee(request, empid):
         messages.warning(request,'Something Went Wrong!')
     return redirect('ems:employee-view')
 
-
+@login_required()
 def attendance(request):
     context={}
     try:
@@ -371,7 +377,7 @@ def attendance(request):
         
     return render(request,'ems/attendance.html',context)
 
-
+@login_required()
 def editAttendance(request):
     try:
         if request.method == 'POST':
@@ -405,7 +411,7 @@ def editAttendance(request):
         messages.warning(request,"Please don't Change Date Time Format")
     return redirect('ems:attendance')
     
-
+@login_required()
 def deleteAttendance(request, pk):
     try:
         Attendance.objects.get(id=pk).delete()
@@ -419,7 +425,7 @@ def deleteAttendance(request, pk):
     
     
 # Leave Functions 
-
+@login_required()
 def createLeave(request):
     context={}
     try:
@@ -449,7 +455,7 @@ def createLeave(request):
     except Exception as e:
         print('Create Leave Exception : ',e)
     return render(request,'ems/create_leave.html',context)
-
+@login_required()
 def deleteLeave(request, pk):
     try:
         Leave.objects.get(id=pk).delete()
@@ -460,12 +466,16 @@ def deleteLeave(request, pk):
         messages.warning(request,'Something Wend Wrong!')
         return redirect('ems:leave-create')
     
-    
+@login_required()    
 def dashboardLeaves(request):
     context={}
     try:
         leaves=Leave.objects.all().order_by('-id')
         context['leaves']=leaves
+        if request.method == 'POST':
+            status=request.POST['status']
+            reply=request.POST['reply']
+            id=request.POST['id']
     except Exception as e:
         print('Dashboard Leaves Exception : ',e)
     return render(request,'ems/dashboard_leaves.html',context)
