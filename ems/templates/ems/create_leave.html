@@ -59,6 +59,9 @@
                     <td>{{leave.description}}</td>
                     <td>{{leave.type}}</td>
                     {% if leave.status == 'Pending' %}
+                    <td class="bg-warning text-dark">{{leave.status}}</td>
+                    {% elif leave.status == 'Rejected' %}
+                    
                     <td class="bg-danger text-white">{{leave.status}}</td>
                     {% else %}
                     <td class="text-white bg-success">{{leave.status}}</td>

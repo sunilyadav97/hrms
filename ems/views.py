@@ -476,6 +476,12 @@ def dashboardLeaves(request):
             status=request.POST['status']
             reply=request.POST['reply']
             id=request.POST['id']
+            obj=Leave.objects.get(id=id)
+            obj.status=status
+            obj.reply=reply
+            obj.save()
+            messages.success(request,'Leave updated successfully!')
+            return redirect('ems:dashboard-leaves')
     except Exception as e:
         print('Dashboard Leaves Exception : ',e)
     return render(request,'ems/dashboard_leaves.html',context)

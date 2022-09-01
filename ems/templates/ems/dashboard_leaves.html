@@ -34,17 +34,18 @@
                     <td>{{leave.reply}}</td>
                     <td>{{leave.type}}</td>
                     {% if leave.status == 'Pending' %}
-                    <td class="bg-danger text-white">{{leave.status}}</td>
+                    <td class="bg-warning text-dark">{{leave.status}}</td>
+                    {% elif leave.status == 'Rejected' %}
+                    <td class="text-white bg-danger">{{leave.status}}</td>
                     {% else %}
                     <td class="text-white bg-success">{{leave.status}}</td>
                     {% endif %}
                     
-                    <td><a href="" data-bs-toggle="modal" data-bs-target="#leavemodal" >Approve/Reject</a></td>
-                    {% comment %} <td><a href="{% url 'ems:leave-delete' leave.id %}" class="delete"><span class="material-symbols-outlined">
-                        delete
-                        </span></a></td> {% endcomment %}
+                    <td><a href="" data-bs-toggle="modal" data-bs-target="#leavemodal" onclick="leave({{leave.id}})">Approve/Reject</a></td>
+                   
                 </tr>
                 {% endfor %}
+                
             </table>
         </div>
     </div>
@@ -59,22 +60,24 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <form action="">
+          <form action="" method="post">
+            {% csrf_token %}
+            <input type="text" hidden name="id" id="leave-id">
             <div class="mb-3">
                 <label for="leave-type" class="form-label">Approve/Reject</label>
-                <select class="form-select" aria-label="Default select example" name="type" id="leave-type">
-                    <option selected value="accept">Accept</option>
-                    <option value="Reject">Reject</option>
+                <select class="form-select" aria-label="Default select example" name="status" id="leave-type">
+                    <option selected value="Accepted">Accept</option>
+                    <option value="Rejected">Reject</option>
                   </select>
             </div>
             <div class="mb-3">
-                <label for="description" class="form-label">Status</label>
+                <label for="description" class="form-label">Reply</label>
                 <textarea class="form-control" id="description" rows="3" placeholder="Write Discription....."
-                    name="description"></textarea>
+                    name="reply"></textarea>
             </div>
             <div class="d-grid">
 
-                <button type="button" class="btn btn-success">Save</button>
+                <button type="submit" class="btn btn-success">Save</button>
             </div>
           </form>
         </div>
@@ -82,5 +85,12 @@
       </div>
     </div>
   </div>
+
+  <script>
+    function leave(id)
+    {
+      document.getElementById('leave-id').value=id
+    }
+  </script>
   
 {% endblock body %}
