@@ -7,6 +7,7 @@ from django.urls import reverse
 from django.contrib import messages
 from .models import *
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 
 
@@ -126,10 +127,17 @@ def deleteRole(request, pk):
 def addEmployee(request):
     context = {}
     try:
-        users = User.objects.all()
+        users = User.objects.filter(~Q(is_superuser=True))
+        new_users=list()
+        # checking employee is created of users
+        for u in users:
+            obj=Employee.objects.filter(user=u).exists()
+            if not obj:
+                new_users.append(u)
+                
         roles = Role.objects.all()
         departments = Department.objects.all()
-        context['users'] = users
+        context['users'] = new_users
         context['roles'] = roles
         context['departments'] = departments
 
@@ -140,7 +148,6 @@ def addEmployee(request):
             dob = request.POST['employee-dob']
             phone_number = request.POST['phone-number']
             ephone_number= request.POST['ephone-number']
-            print('ephone ',ephone_number)
             email = request.POST['email']
             address = request.POST['address']
             street = request.POST['street']
@@ -157,7 +164,7 @@ def addEmployee(request):
 
             if user and full_name and father_name and dob and email and phone_number and address and street and locality and city and state and pincode and country and designation and department and role and joining_date and status:
                 if user and role and department and status == 'default':
-                    messages.warning(request, 'All fields are mandouttimery')
+                    messages.warning(request, '*All fields are Mandatory')
                     return redirect('ems:employee-add')
 
                 user_obj = User.objects.get(username=user)
