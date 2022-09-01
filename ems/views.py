@@ -12,8 +12,11 @@ from django.db.models import Q
 
 
 def dashboard(request):
+    context={}
     try:
-        if not request.user.is_authenticated:
+        if request.user.is_authenticated:
+            return render(request,'ems/profile.html',context)
+        else:
             messages.warning(request,'Please Login!')
             return redirect('home:login')
     except Exception as e:
