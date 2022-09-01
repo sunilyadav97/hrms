@@ -8,10 +8,13 @@
             <div class="d-grid my-4">
                 <button class="btn btn-warning" onclick="edit()">Edit Details</button>
             </div>
+            <div class="profile-image">
+                <img src="{{employee_obj.imageURL}}" alt="" class="rounded">
+            </div>
             <form action="" method="post" class="mt-4 add-employee">
                 {% csrf_token %}
                 <div class="row gy-1">
-
+                
                     <div class="mb-3 col-12 col-sm-6">
                         <label for="select-user" class="form-label">User </label>
                         <select readonly class="form-select employee_detail" aria-label="Default select example"

@@ -161,6 +161,14 @@
   margin-bottom: 0.6rem !important;
 }
 
+.profile-image img{
+  /* border-radius: 50%; */
+  height: 100px;
+  width: 100px;
+  object-fit: cover;
+  object-position: center;
+
+}
 /* ========Attendance====== */
 .attendance-table{
   

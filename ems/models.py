@@ -33,6 +33,7 @@ class Employee(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     name=models.CharField(max_length=50)
     father_name=models.CharField(max_length=50)
+    avtar=models.ImageField(upload_to='employee_profile_images', null=True, blank=True)
     dob=models.DateField()
     email=models.EmailField(max_length=100)
     mobile_no=models.IntegerField()
@@ -45,7 +46,13 @@ class Employee(models.Model):
     status=models.CharField(max_length=15)
     def __str__(self):
         return self.name
-    
+    @property
+    def imageURL(self):
+        try:
+            url=self.avtar.url
+        except:
+            url=''
+        return url
 
 class Attendance(models.Model):
     employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
