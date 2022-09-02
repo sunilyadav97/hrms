@@ -26,7 +26,7 @@ def dashboard(request):
             return redirect('home:login')
     except Exception as e:
         print('EMS Dashboard Exception : ',e)
-        
+        messages.success(request,'Somthing Went Wrong! Please Try after some time')
     return redirect('/')
 
 def profile(request):
@@ -526,7 +526,23 @@ def deleteAttendance(request, pk):
         messages.warning(request,'Something Wend Wrong!')
         return redirect('ems:attendance')
     
+@login_required()
+def allAttendances(request):
+    context={}
+    try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
+            emp_obj=Employee.objects.get(user=request.user)
+            attendances=Attendance.objects.filter(employee=emp_obj).order_by('-date')
+            context['attendances']=attendances
+        else:
+            return redirect('ems:ems')
+
+    except Exception as e:
+        print('All Attendance of Employee Execption : ',e)
     
+    return render(request,'ems/all_attendances.html',context)
     
 # Leave Functions 
 @login_required()
@@ -556,7 +572,7 @@ def createLeave(request):
             )
             if obj:
                 messages.success(request,'Leave Created Successfully!')           
-                return redirect('ems:leave-create')
+                return redirect('ems:all-leaves')
             else:
                 messages.warning(request,'Something Went Wrong!')
                 return redirect('ems:leave-create')
@@ -598,4 +614,19 @@ def dashboardLeaves(request):
         print('Dashboard Leaves Exception : ',e)
     return render(request,'ems/dashboard_leaves.html',context)
 
+def allLeaves(request):
+    context={}
+    try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
+            emp_obj=Employee.objects.get(user=request.user)
+            leaves=Leave.objects.filter(employee=emp_obj).order_by('-id')
+            context['leaves']=leaves
+        else:
+            return redirect('ems:ems')
+    except Exception as e:
+        print('All leaves Exception : ',e)
+        
+    return render(request,'ems/all_leaves.html',context)
     

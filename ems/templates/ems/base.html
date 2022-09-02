@@ -64,6 +64,8 @@
                <li class="nav-item"><a class="nav-link" href="{% url 'ems:profile' %}">Profile</a></li>
                <li class="nav-item"><a class="nav-link" href="{% url 'ems:ems' %}">Home</a></li>
                {% endif %}
+
+               {% if request.user.is_superuser %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
@@ -97,7 +99,10 @@
                     </ul>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:attendance' %}">Attendance</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'ems:leave-create' %}">Create Leave</a></li>
+                {% endif %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'ems:leave-create' %}">Leave</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'ems:all-attendance' %}">Attendance</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'home:logout' %}">Logout</a></li>
             </ul>
         </div>
     </div>

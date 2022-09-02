@@ -21,5 +21,7 @@ urlpatterns=[
     path('leaves/',dashboardLeaves,name='dashboard-leaves'),
     path('profile/',profile,name='profile'),
     path('profile-edit/',editProfile,name='profile-edit'),
+    path('all-leaves/',allLeaves,name='all-leaves'),
+    path('all-attendance/',allAttendances,name='all-attendance'),
     
 ]

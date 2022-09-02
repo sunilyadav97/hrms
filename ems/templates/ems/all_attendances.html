@@ -1,0 +1,45 @@
+{% extends './base.html' %}
+{% block title %} {{request.user | title}} | Leaves {% endblock title %}
+{% block css %}
+.delete span {
+    font-size: 16px !important;
+  }
+{% endblock css%}
+{% block body %}
+<section class="py-5">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-12 col-sm-10">
+                <h3 class="derpartment-title my-3">All Attendance</h3>
+            <table class="table border border-1 ">
+                <tr>
+                    <th>SN</th>
+                    <th>Name</th>
+                    <th>In-Time</th>
+                    <th>Out-Time</th>
+                    <th>Attendance Status</th>
+                    <th class="">Date</th>
+                   
+                </tr>
+                {% for item in attendances %}
+                <tr>
+                    <td>{{forloop.counter}}.</td>
+                    <td>{{item.employee.name}}</td>
+                    <td>{{item.intime | time}}</td>
+                    <td>{{item.outtime | time}}</td>
+                    {% if item.present %}
+                    <td class="text-success fw-semibold ">Present</td>
+                    {% else %}
+                    <td class="text-danger fw-semibold ">Absent</td>
+                    {% endif %}
+                    <td>{{item.date | date:"d-m-Y"}}</td>
+                    
+                </tr>
+
+            {% endfor %}
+            </table>
+        </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

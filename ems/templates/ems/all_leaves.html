@@ -1,0 +1,67 @@
+{% extends './base.html' %}
+{% block title %} {{request.user | title}} | Leaves {% endblock title %}
+{% block css %}
+.delete span {
+    font-size: 16px !important;
+  }
+{% endblock css%}
+{% block body %}
+
+<section>
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-10 col-12 my-5">
+                <h3 class="my-3 derpartment-title">All Leaves</h3>
+                <a href="{% url 'ems:leave-create' %}" class="mb-2">Create New Leave</a>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>SN</th>
+                        <th>From date</th>
+                        <th>From to</th>
+                        <th>Descripiton</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Reply</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for leave in leaves %}
+                    <tr class="my-4">
+                        <td>{{forloop.counter}}.</td>
+                        <td>{{leave.date_from | date:'d/M/Y'}}</td>
+                        <td>{{leave.date_to | date:'d/M/Y'}}</td>
+                        <td>{{leave.description}}</td>
+                        <td>{{leave.type}}</td>
+                        {% if leave.status == 'Pending' %}
+                        <td class="bg-warning text-dark">{{leave.status}}</td>
+                        {% elif leave.status == 'Rejected' %}
+                        
+                        <td class="bg-danger text-white">{{leave.status}}</td>
+                        {% else %}
+                        <td class="text-white bg-success">{{leave.status}}</td>
+                        {% endif %}
+
+                        {% if leave.reply == None %}
+                        <td></td>
+                        {% else %}
+                        <td>{{leave.reply}}</td>
+                        {% endif %}
+                        {% if leave.status == 'Accepted' %}
+                        <td>
+                            <span class="delete disabled text-muted cursor-pointer"><span class="material-symbols-outlined">
+                                delete
+                            </span></span>
+                        </td>
+                        {% else %}
+                        <td><a href="{% url 'ems:leave-delete' leave.id %}" class="delete"><span class="material-symbols-outlined">
+                            delete
+                        </span></a></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock body %}
