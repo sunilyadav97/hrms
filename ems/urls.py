@@ -18,6 +18,7 @@ urlpatterns=[
     path('attendance-delete/<pk>/',deleteAttendance,name='attendance-delete'),
     path('leave-create/',createLeave,name='leave-create'),
     path('leave-delete/<pk>/',deleteLeave,name='leave-delete'),
-    path('leaves',dashboardLeaves,name='dashboard-leaves'),
+    path('leaves/',dashboardLeaves,name='dashboard-leaves'),
+    path('profile/',profile,name='profile'),
     
 ]

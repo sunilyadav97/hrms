@@ -5,12 +5,10 @@
     <div class="row d-felx justify-content-center align-items-center">
         <div class="col-9">
             <h3 class="employee-title my-2">Employee Detail</h3>
-            <div class="d-grid my-4">
-                <button class="btn btn-warning" onclick="edit()">Edit Details</button>
-            </div>
-            <div class="profile-image">
+            <div class="profile-image my-3">
                 <img src="{{employee_obj.imageURL}}" alt="" class="rounded">
             </div>
+                <button class="btn btn-warning" onclick="edit()">Edit Details</button>
             <form action="" method="post" class="mt-4 add-employee">
                 {% csrf_token %}
                 <div class="row gy-1">
@@ -108,7 +106,7 @@
                             value="{{employee_obj.designation}}" name="designation">
                     </div>
                     <div class="mb-3 col-12 col-sm-6">
-                        <label for="select-department" class="form-label">Select Department</label>
+                        <label for="select-department" class="form-label">Department</label>
                         <select class="form-select employee_detail" aria-label="Default select example"
                             id="select-department" name="select-department" required>
 
@@ -126,7 +124,7 @@
 
 
                     <div class="mb-3 col-12 col-sm-6">
-                        <label for="select-role" class="form-label">Select Role</label>
+                        <label for="select-role" class="form-label">Role</label>
                         <select class="form-select employee_detail" aria-label="Default select example" id="select-role"
                             name="select-role" required>
                             {% for role in roles %}
@@ -146,7 +144,7 @@
                     </div>
 
                     <div class="mb-3 col-12 col-sm-6">
-                        <label for="select-status" class="form-label">Select Status</label>
+                        <label for="select-status" class="form-label">Status</label>
                         <select class="form-select employee_detail" aria-label="Default select example"
                             id="select-status" name="select-status" required>
                             {% if employee_obj.status == 'Working' %}

@@ -15,14 +15,42 @@ def dashboard(request):
     context={}
     try:
         if request.user.is_authenticated:
-            return render(request,'ems/profile.html',context)
+            if not request.user.is_superuser:
+                return render(request,'ems/ems_home.html',context)
+            else:
+                return render(request, 'ems/dashboard.html', context)               
         else:
             messages.warning(request,'Please Login!')
             return redirect('home:login')
     except Exception as e:
         print('EMS Dashboard Exception : ',e)
-    context = {}
-    return render(request, 'ems/dashboard.html', context)
+        
+    return redirect('/')
+
+def profile(request):
+    context={}
+    try:
+        if request.user.is_authenticated:
+            if not request.user.is_superuser:
+                try:
+                    profile=Employee.objects.get(user=request.user)
+                    address=Address.objects.get(user=request.user)
+                    context['profile']=profile
+                    context['address']=address
+                except Exception as e:
+                    print('Profile Inside Exception : ',e)
+                    messages.warning(request, 'Profile Not found Please contact Admin')
+                    return redirect('ems:ems')
+
+                return render(request,'ems/profile.html',context)
+            else:
+                return redirect('ems:ems')
+        else:
+            messages.warning(request,'Please Login!')
+            return redirect('home:login')
+    except Exception as e:
+        print('Profile Exception : ',e)
+    return redirect('/')
 
 @login_required()
 def createDepartment(request):

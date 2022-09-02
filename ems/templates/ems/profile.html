@@ -1,5 +1,93 @@
 {% extends './base.html' %}
 {% block title %}{{request.user.username}} | EMS{% endblock title %}
 {% block body %}
-Profile
+<section class="py-4">
+    <div class="container">
+        <div class="row d-flex justify-content-between">
+            <div class="col-7 ">
+                <h3 class="text-center">Profile</h3>
+                <!-- <div class="avtar d-flex align-items-center flex-column">
+                    <img src="{{profile.imageURL}}" alt="" class="rounded">
+                    <h5 class="m-2 profile-title"><b>Username - </b>{{profile.user.username}}</h5>
+                </div> -->
+                <div class="personal-info">
+                    <table class="table table-bordered border-primary border-2">
+                        
+                        <tr>
+                            <td colspan="2">
+                                <div class="avtar d-flex align-items-center flex-column">
+                                    <img src="{{profile.imageURL}}" alt="" class="rounded">
+                                    <h5 class="m-2 profile-title"><b>Username - </b>{{profile.user.username}}</h5>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                              <h6 class="text-center profile-title">Personal Info</h6>
+                            </td>
+                        </tr>
+                        <tr>
+                        
+                            <td><b>Name - </b>{{profile.name}}</td>
+                            <td><b>Father Name - </b>{{profile.father_name}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Date of Birth - </b>{{profile.dob}}</td>
+                            <td><b>Phone No. - </b>{{profile.mobile_no}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Emergency Phone No. - </b>{{profile.emergency_mobile_no}}</td>
+                            <td><b>Email- </b>{{profile.email}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Address - </b>{{address.address}}</td>
+                            <td><b>Street No. - </b>{{address.street}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Locality - </b>{{address.locality}}</td>
+                            <td><b>City - </b>{{address.city}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>State - </b>{{address.state}}</td>
+                            <td><b>Pin Code - </b>{{address.pincode}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Country - </b>{{address.country}}</td>
+                            <td><b>Designation - </b>{{profile.designation}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Department - </b>{{profile.department}}</td>
+                            <td><b>Role - </b>{{profile.role}}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Joining Date - </b>{{profile.joining_date}}</td>
+                            <td><b>Status - </b>{{profile.status}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            <div class="col-4 ">
+                <div class="row">
+                    <div class="col-10 border border-dark  py-3 px-2">
+                        <h3 class="events-title text-center mb-2">Upcomming Events</h3>
+                        <ul>
+                            <li>Lorem ipsum dolor sit amet consectetur</li>
+                            <li>adipisicing elit. Saepe corporis est ad quae</li>
+                            <li>perspiciatis molestiae ducimus harum nemo, quaerat</li>
+                            <li>perspiciatis molestiae ducimus harum nemo, quaerat</li>
+                            <li>perspiciatis molestiae ducimus harum </li>
+                        </ul>
+                        
+                    </div>
+                    <div class="col-10 border border-dark my-2 py-3 px-2">
+                        <h3 class="events-title text-center mb-2">Upcomming Celebrations</h3>
+                        <ul>
+                            <li>Annversary</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock body %}
