@@ -16,6 +16,8 @@ def dashboard(request):
     try:
         if request.user.is_authenticated:
             if not request.user.is_superuser:
+                profile_obj=Employee.objects.get(user=request.user)
+                context['profile']=profile_obj
                 return render(request,'ems/ems_home.html',context)
             else:
                 return render(request, 'ems/dashboard.html', context)               
@@ -55,6 +57,9 @@ def profile(request):
 @login_required()
 def createDepartment(request):
     context = {}
+    if not request.user.is_superuser:
+        profile_obj=Employee.objects.get(user=request.user)
+        context['profile']=profile_obj
     if request.method == 'POST':
         department_name = request.POST['department-name']
         department_description = request.POST['department-description']
@@ -78,6 +83,9 @@ def createDepartment(request):
 def viewDepartment(request):
     context = {}
     try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
         departments = Department.objects.all()
         context['departments'] = departments
         if request.method=='POST':
@@ -107,6 +115,9 @@ def deleteDepartment(request, pk):
 @login_required()
 def createRole(request):
     context = {}
+    if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
     if request.method == 'POST':
         role_name = request.POST['role-name']
         role_description = request.POST['role-description']
@@ -129,6 +140,9 @@ def createRole(request):
 def viewRole(request):
     context = {}
     try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
         roles = Role.objects.all()
         context['roles'] = roles
         if request.method=='POST':
@@ -158,8 +172,12 @@ def deleteRole(request, pk):
 def addEmployee(request):
     context = {}
     try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
         users = User.objects.filter(~Q(is_superuser=True))
         new_users=list()
+        
         # checking employee is created of users
         for u in users:
             obj=Employee.objects.filter(user=u).exists()
@@ -259,6 +277,9 @@ def addEmployee(request):
 def viewEmployee(request):
     context = {}
     try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
         employees = Employee.objects.all()
         context['employees'] = employees
     except Exception as e:
@@ -270,6 +291,9 @@ def viewEmployee(request):
 def employeeDetail(request, empid):
     context = {}
     try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
         employee_obj = Employee.objects.get(empid=empid)
         user_obj = User.objects.get(username=employee_obj.user)
         department_obj = Department.objects.all()
@@ -354,6 +378,9 @@ def deleteEmployee(request, empid):
 def attendance(request):
     context={}
     try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
         em_list=list()
         attendance_dates=list()
         nested_attendance=list()
@@ -467,6 +494,10 @@ def deleteAttendance(request, pk):
 def createLeave(request):
     context={}
     try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
+            
         em_obj=Employee.objects.get(user=request.user)
         leaves=Leave.objects.filter(employee=em_obj).order_by('-id')
         context['leaves']=leaves
@@ -508,6 +539,10 @@ def deleteLeave(request, pk):
 def dashboardLeaves(request):
     context={}
     try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
+            
         leaves=Leave.objects.all().order_by('-id')
         context['leaves']=leaves
         if request.method == 'POST':

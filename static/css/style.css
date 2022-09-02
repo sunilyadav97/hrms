@@ -180,6 +180,13 @@
   object-fit: cover;
   object-position: center;
 }
+.profile-side{
+  height: 60px;
+  width: 60px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 5px;
+}
 .profile-title{
   font-weight: var(--font-bold);
   font-size: var(--normal-font);
