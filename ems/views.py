@@ -55,6 +55,45 @@ def profile(request):
     return redirect('/')
 
 @login_required()
+def editProfile(request):
+    context={}
+    try:
+        if not request.user.is_superuser:
+            emp_obj=Employee.objects.get(user=request.user)
+            address_obj=Address.objects.get(user=request.user)
+            context['employee']=emp_obj
+            context['address']=address_obj
+            if request.method == 'POST':
+                
+                name=request.POST['name']
+                father_name=request.POST['father-name']
+                phone=request.POST['phone']
+                ephone=request.POST['ephone']
+                email=request.POST['email']
+                dob=request.POST['dob']
+                try:
+                   avtar=request.FILES['profile-pic']
+                   emp_obj.avtar=avtar
+                except:
+                    pass 
+                emp_obj.name=name
+                emp_obj.father_name=father_name
+                emp_obj.mobile_no=phone
+                emp_obj.emergency_mobile_no=ephone
+                emp_obj.email=email
+                emp_obj.dob=dob
+                emp_obj.save()
+                messages.success(request,'Updated Successfully')
+                return redirect('ems:profile')
+                
+        else:
+            return redirect('ems:ems') 
+    except Exception as e:
+        print('Edit Profile Exception : ',e)
+
+    return render(request,'ems/edit_profile.html',context)
+    
+@login_required()
 def createDepartment(request):
     context = {}
     if not request.user.is_superuser:
@@ -209,10 +248,10 @@ def addEmployee(request):
             department = request.POST['select-department']
             role = request.POST['select-role']
             joining_date = request.POST['joining-date']
-            status = request.POST['select-status']
+            
 
-            if user and full_name and father_name and dob and email and phone_number and address and street and locality and city and state and pincode and country and designation and department and role and joining_date and status:
-                if user and role and department and status == 'default':
+            if user and full_name and father_name and dob and email and phone_number and address and street and locality and city and state and pincode and country and designation and department and role and joining_date:
+                if user and role and department == 'default':
                     messages.warning(request, '*All fields are Mandatory')
                     return redirect('ems:employee-add')
 
@@ -259,7 +298,7 @@ def addEmployee(request):
                     role=role_obj,
                     department=d_obj,
                     joining_date=joining_date,
-                    status=status
+                    status='Working'
                 )
                 print('Employee Obj : ', emp_obj)
                 messages.success(

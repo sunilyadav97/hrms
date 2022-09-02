@@ -20,5 +20,6 @@ urlpatterns=[
     path('leave-delete/<pk>/',deleteLeave,name='leave-delete'),
     path('leaves/',dashboardLeaves,name='dashboard-leaves'),
     path('profile/',profile,name='profile'),
+    path('profile-edit/',editProfile,name='profile-edit'),
     
 ]

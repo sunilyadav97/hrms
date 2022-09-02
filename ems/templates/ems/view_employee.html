@@ -8,6 +8,7 @@
             <table class="table table-bordered department-table">
                 <tr>
                     <th>SN</th>
+                    <th>Profile</th>
                     <th>Name</th>
                     <th>Father Name</th>
                     <th>Department</th>
@@ -17,6 +18,9 @@
                 {% for employee in employees %}
                 <tr>
                     <td>{{forloop.counter}}.</td>
+                    <td>
+                        <img src="{{employee.imageURL}}" alt="" class="profile-pic">
+                    </td>
                     <td><a class="" href="{% url 'ems:employee-detail' employee.empid %}">{{employee.name}}</a></td>
                     <td>{{employee.father_name}}</td>
                     <td>{{employee.department}}</td>

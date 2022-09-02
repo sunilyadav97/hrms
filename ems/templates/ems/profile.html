@@ -13,7 +13,7 @@
                                     <img src="{{profile.imageURL}}" alt="" class="rounded">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h6 class="m-2 profile-title"><b>Username - </b>{{profile.user.username}}</h6>
-                                        <a href="#" class="fw-semibold mx-2">Edit Profile</a>
+                                        <a href="{% url 'ems:profile-edit' %}" class="fw-semibold mx-2">Edit Profile</a>
                                     </div>
                                 </div>
                             </td>
