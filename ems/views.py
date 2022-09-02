@@ -8,6 +8,8 @@ from django.contrib import messages
 from .models import *
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.core.paginator import Paginator
+
 
 
 
@@ -59,6 +61,8 @@ def editProfile(request):
     context={}
     try:
         if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
             emp_obj=Employee.objects.get(user=request.user)
             address_obj=Address.objects.get(user=request.user)
             context['employee']=emp_obj
@@ -535,7 +539,10 @@ def allAttendances(request):
             context['profile']=profile_obj
             emp_obj=Employee.objects.get(user=request.user)
             attendances=Attendance.objects.filter(employee=emp_obj).order_by('-date')
-            context['attendances']=attendances
+            paginator=Paginator(attendances,2)
+            page_no=request.GET.get('page')
+            finalattendances=paginator.get_page(page_no) 
+            context['attendances']=finalattendances
         else:
             return redirect('ems:ems')
 

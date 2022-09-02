@@ -20,8 +20,16 @@
     <!-- ==========CUSTOM STYLE SHEET============ -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-    <style> {% block css %}{% endblock css %} 
-        .c-btn{
+    <style>
+        {
+            % block css %
+        }
+
+            {
+            % endblock css %
+        }
+
+        .c-btn {
             background-color: transparent;
             border: none;
             color: white;
@@ -31,47 +39,48 @@
 </head>
 
 <body>
-    
+
 
     <header class="shadow-sm">
-        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <nav class="navbar navbar-expand-lg bg-danger navbar-dark">
             <div class="container">
                 <a class="navbar-brand" href="{% url 'home:home' %}">TechInterio</a>
-                
+
                 <a class="cursor-pointer" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop"
                     aria-controls="staticBackdrop"><span class="navbar-toggler-icon"></span></a>
-                
+
             </div>
         </nav>
     </header>
 
-    <div class="offcanvas offcanvas-start bg-dark text-white" data-bs-backdrop="static" tabindex="2" id="staticBackdrop"
+    <div class="offcanvas offcanvas-start bg-danger text-white" tabindex="2" id="staticBackdrop"
         aria-labelledby="staticBackdropLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasExampleLabel">EMS</h5>
-            <button type="button" class="c-btn" data-bs-dismiss="offcanvas" aria-label="Close"><span class="material-symbols-outlined">
-                close
+            <button type="button" class="c-btn" data-bs-dismiss="offcanvas" aria-label="Close"><span
+                    class="material-symbols-outlined">
+                    close
                 </span></button>
         </div>
         <div class="offcanvas-body">
             <ul class="navbar-nav">
-                
-                
-               {% if request.user.is_superuser %}
-               <li class="nav-item"><a class="nav-link" href="{% url 'ems:ems' %}">Dashboard</a></li>
-               {% else %}
-               <li class="nav-item"><img src="{{profile.imageURL}}" alt="" class="profile-side"></li>
-               <li class="nav-item"><a class="nav-link" href="{% url 'ems:profile' %}">Profile</a></li>
-               <li class="nav-item"><a class="nav-link" href="{% url 'ems:ems' %}">Home</a></li>
-               {% endif %}
 
-               {% if request.user.is_superuser %}
+
+                {% if request.user.is_superuser %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'ems:ems' %}">Dashboard</a></li>
+                {% else %}
+                <li class="nav-item"><img src="{{profile.imageURL}}" alt="" class="profile-side"></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'ems:profile' %}">Profile</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'ems:ems' %}">Home</a></li>
+                {% endif %}
+
+                {% if request.user.is_superuser %}
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                         aria-expanded="false">
                         Department
                     </a>
-                    <ul class="dropdown-menu bg-dark side-drop-down">
+                    <ul class="dropdown-menu bg-danger side-drop-down">
                         <li><a class="dropdown-item text-light" href="{% url 'ems:create-department' %}">Create
                                 Department</a></li>
                         <li><a class="dropdown-item text-light" href="{% url 'ems:view-department' %}">View
@@ -83,7 +92,7 @@
                         aria-expanded="false">
                         Role
                     </a>
-                    <ul class="dropdown-menu bg-dark side-drop-down">
+                    <ul class="dropdown-menu bg-danger side-drop-down">
                         <li><a class="dropdown-item text-light" href="{% url 'ems:create-role' %}">Create Role</a></li>
                         <li><a class="dropdown-item text-light" href="{% url 'ems:view-role' %}">View Roles</a></li>
                     </ul>
@@ -93,29 +102,31 @@
                         aria-expanded="false">
                         Employee
                     </a>
-                    <ul class="dropdown-menu bg-dark side-drop-down">
+                    <ul class="dropdown-menu bg-danger side-drop-down">
                         <li><a class="dropdown-item text-light" href="{% url 'ems:employee-add' %}">Add EM</a></li>
                         <li><a class="dropdown-item text-light" href="{% url 'ems:employee-view' %}">View EM</a></li>
                     </ul>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:attendance' %}">Attendance</a></li>
-                {% endif %}
+                {% else %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:leave-create' %}">Leave</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:all-attendance' %}">Attendance</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'home:logout' %}">Logout</a></li>
+                {% endif %}
             </ul>
         </div>
     </div>
 
+
     <main>
-       
-                 {% for message in messages %}
-                    <div class="alert alert-{{ message.tags }} mb-0 alert-dismissible fade show w-50 m-auto mt-3" role="alert">
-                        <strong>Message: </strong> {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </button>
-                    </div>
-                    {% endfor %}
+
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} mb-0 alert-dismissible fade show w-50 m-auto mt-3" role="alert">
+            <strong>Message: </strong> {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </button>
+        </div>
+        {% endfor %}
 
 
         {% block body %}{% endblock body %}

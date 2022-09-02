@@ -43,7 +43,7 @@ def signin(request):
             if user is not None:
                 login(request,user)
                 messages.success(request,'Logged in successfully!')
-                return redirect('/')
+                return redirect('ems:ems')
             else:
                 messages.warning(request,'Credentials Not Match!')
     except Exception as e:
