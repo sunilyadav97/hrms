@@ -192,7 +192,7 @@
   width: 50px;
   object-fit: cover;
   object-position: center;
-  border-radius: 5px;
+  border-radius: 50%;
 }
 
 .profile-title{

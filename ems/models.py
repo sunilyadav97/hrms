@@ -33,7 +33,7 @@ class Employee(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     name=models.CharField(max_length=50)
     father_name=models.CharField(max_length=50)
-    avtar=models.ImageField(upload_to='employee_profile_images', null=True, blank=True)
+    avtar=models.ImageField(upload_to='employee_profile_images', blank=True , default='profile.jpg')
     dob=models.DateField()
     email=models.EmailField(max_length=100)
     mobile_no=models.IntegerField()
