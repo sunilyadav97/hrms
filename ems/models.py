@@ -5,13 +5,16 @@ from django.utils.timezone import now
 class Department(models.Model):
     name=models.CharField(max_length=70, unique=True)
     description=models.TextField(max_length=200)
-    
+    created_at = models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_at = models.DateTimeField(auto_now=True,blank=True,null=True)
     def __str__(self):
         return self.name
     
 class Role(models.Model):
     name=models.CharField(max_length=70, unique=True)
     description=models.TextField(max_length=200)
+    created_at = models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_at = models.DateTimeField(auto_now=True,blank=True,null=True)
     def __str__(self):
         return self.name
 
@@ -74,7 +77,8 @@ class Leave(models.Model):
     type=models.CharField(max_length=70)
     reply=models.CharField(max_length=100,null=True,blank=True)
     status=models.CharField(max_length=20)
-
+    created_at = models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_at = models.DateTimeField(auto_now=True,blank=True,null=True)
     def __str__(self):
         return self.employee.name
 
