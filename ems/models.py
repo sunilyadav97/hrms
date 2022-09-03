@@ -82,4 +82,11 @@ class Leave(models.Model):
     def __str__(self):
         return self.employee.name
 
+class Events(models.Model):
+    title=models.CharField(max_length=150)
+    description=models.TextField(max_length=300)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    date=models.DateField()
+
 
