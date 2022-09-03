@@ -60,6 +60,7 @@ class Attendance(models.Model):
     outtime=models.TimeField(blank=True,null=True)
     present=models.BooleanField(default=False)
     date=models.DateField()
+    
     def __str__(self):
         return self.employee.name
     

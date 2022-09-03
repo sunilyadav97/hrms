@@ -7,10 +7,11 @@
     <div class="container">
         <div class="row d-flex justify-content-center">
             {% if not request.user.is_authenticated %}
-            
-            
+
+
             <div class="col-12 col-sm-6 mb-3">
-                <p>If you are a New Employee then Register Here with username and password. After completion of your Registration admin will Add you as Employee.</p>
+                <p>If you are a New Employee then Register Here with username and password. After completion of your
+                    Registration admin will Add you as Employee.</p>
             </div>
             <div class="w-100"></div>
             <div class="col-12 col-sm-6">
@@ -18,12 +19,12 @@
                 <form class="border border-primary border-2 p-4 rounded my-4" action="" method="post">
                     {% csrf_token %}
                     <div class="mb-3">
-                      <label for="username" class="form-label">Username</label>
-                      <input type="text" class="form-control" id="username" name="username" required>
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
                     </div>
                     <div class="mb-3">
-                      <label for="pass" class="form-label">Password</label>
-                      <input type="password" class="form-control" id="pass" name="password" required>
+                        <label for="pass" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="pass" name="password" required>
                     </div>
                     <div class="d-grid">
                         <button type="submit" class="btn btn-warning">Register</button>
@@ -34,11 +35,35 @@
                             <a href="{% url 'home:login' %}" class="">Login</a>
                         </span>
                     </div>
-                  </form>
+                </form>
             </div>
             {% else %}
             <div class="col-12 col-sm-6">
                 <h3>Welcome to TechInterio EMS</h3>
+            </div>
+            <div class="col-8 py-3">
+                <p>Learn more about TechinTerio and its benefits and features. 🚀</p>
+
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero voluptas magni quidem nisi fugit
+                    accusamus amet, est animi? Autem, aut porro voluptatibus corrupti id perspiciatis obcaecati placeat!
+                    Eos, ratione vitae!</p>
+
+                <hr>
+                <p class="py-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Est dolorum praesentium tempore
+                    debitis quod necessitatibus aliquam adipisci nihil ipsum iure, veniam facilis pariatur, error,
+                    minima asperiores minus ea quibusdam impedit?</p>
+                <hr>
+                <h4 class="fw-semibold">About EMS 🚀</h4>
+                <p> adipisci alias enim, nihil animi ab doloribus non laudantium consequatur asperiores possimus totam
+                    obcaecati nulla expedita, nostrum omnis! Et similique minima, veniam voluptatibus mollitia incidunt
+                    perferendis cum qui earum delectus beatae ratione fuga, repellendus eos praesentium quisquam
+                    inventore exercitationem. Eveniet ipsam dolorem esse, quos commodi deserunt atque tempora. <br>
+                    <hr> Eos cupiditate iure, porro quidem culpa a accusantium recusandae provident, beatae distinctio
+                    consectetur assumenda voluptate architecto! Laboriosam impedit ducimus aperiam laudantium error
+                    pariatur corporis vitae nihil laborum, rerum perspiciatis quas officia culpa iure voluptatem magni
+                    soluta quibusdam molestiae provident distinctio maxime dicta vel modi ipsum. Ea facere possimus
+                    adipisci nostrum eligendi expedita, nemo numquam consequatur deserunt, enim, doloribus ex ut iusto!
+                </p>
             </div>
             {% endif %}
         </div>
@@ -46,4 +71,3 @@
 </section>
 
 {% endblock d-body %}
- 

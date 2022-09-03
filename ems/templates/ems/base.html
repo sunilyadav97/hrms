@@ -54,6 +54,8 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="{% url 'ems:ems' %}">Home</a>
                     </li>
+                    {% else %}
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'ems:ems' %}">Dashboard</a></li>
                         {% endif %}
                         <li class="nav-item">
                             <a href="#" class="nav-link active">Chat</a>
