@@ -45,10 +45,23 @@
         <nav class="navbar navbar-expand-lg bg-danger navbar-dark">
             <div class="container">
                 <a class="navbar-brand" href="{% url 'home:home' %}">TechInterio</a>
-
-                <a class="cursor-pointer" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop"
-                    aria-controls="staticBackdrop"><span class="navbar-toggler-icon"></span></a>
-
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="cursor-pointer nav-link active" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop"
+                        aria-controls="staticBackdrop"><span class="navbar-toggler-icon"></span></a>
+                    </li>
+                    {% if not request.user.is_superuser %}
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'ems:ems' %}">Home</a>
+                    </li>
+                        {% endif %}
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active">Chat</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link active" href="{% url 'home:logout' %}">Logout</a></li>
+                </ul>
+                
+                    
             </div>
         </nav>
     </header>
@@ -71,7 +84,6 @@
                 {% else %}
                 <li class="nav-item"><img src="{{profile.imageURL}}" alt="" class="profile-side"></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:profile' %}">Profile</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'ems:ems' %}">Home</a></li>
                 {% endif %}
 
                 {% if request.user.is_superuser %}
@@ -108,11 +120,27 @@
                     </ul>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:attendance' %}">Attendance</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Hirings</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">IT</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Reimbursement</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Clockify</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Awards</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Reviews</a></li>
+                
+                
                 {% else %}
+
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:leave-create' %}">Leave</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:all-attendance' %}">Attendance</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'home:logout' %}">Logout</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Reimbursement</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Clockify</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Awards</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Reviews</a></li>
+                
+                
                 {% endif %}
+                
+
             </ul>
         </div>
     </div>

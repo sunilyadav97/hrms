@@ -22,13 +22,21 @@ def dashboard(request):
                 context['profile']=profile_obj
                 return render(request,'ems/ems_home.html',context)
             else:
+                departments=Department.objects.all()
+                roles=Role.objects.all()
+                employees=Employee.objects.all()
+                leaves=Leave.objects.filter(status='Pending')
+                context['departments']=departments.count()
+                context['employees']=employees.count()
+                context['leaves']=leaves.count()
+                context['roles']=roles.count()
                 return render(request, 'ems/dashboard.html', context)               
         else:
             messages.warning(request,'Please Login!')
             return redirect('home:login')
     except Exception as e:
         print('EMS Dashboard Exception : ',e)
-        messages.success(request,'Somthing Went Wrong! Please Try after some time')
+        messages.warning(request,'Somthing Went Wrong! Please Try after some time')
     return redirect('/')
 
 def profile(request):

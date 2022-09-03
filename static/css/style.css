@@ -119,7 +119,15 @@
     border-width: none !important;
 }
 
-
+/* =======Admin DashBoard====== */
+.dashboard{
+  font-size: var(--h3-font-size);
+  font-weight: var(--normal-font);
+}
+.dashboard-title{
+  font-size: var(--h3-font-size);
+  font-weight: var(--font-bold);
+}
 /* =========DEPARTMENT SECTION========= */
 .derpartment-title{
   font-size: var(--h3-font-size);
