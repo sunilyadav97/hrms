@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.timezone import now
 
 class Department(models.Model):
     name=models.CharField(max_length=70, unique=True)
@@ -60,7 +61,8 @@ class Attendance(models.Model):
     outtime=models.TimeField(blank=True,null=True)
     present=models.BooleanField(default=False)
     date=models.DateField()
-    
+    created_at = models.DateTimeField(auto_now_add=True,blank=True,null=True)
+    updated_at = models.DateTimeField(auto_now=True,blank=True,null=True)
     def __str__(self):
         return self.employee.name
     
