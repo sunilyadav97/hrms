@@ -671,4 +671,21 @@ def allLeaves(request):
         print('All leaves Exception : ',e)
         
     return render(request,'ems/all_leaves.html',context)
-    
+@login_required()    
+def createEvent(request):
+    context={}
+    try:
+        if request.method == 'POST':
+            title=request.POST['title']
+            description=request.POST['description']
+            date=request.POST['date']
+            obj=Events.objects.create(title=title,description=description, date=date)
+            print(obj)                          
+            if obj:
+                messages.success(request,'Created Successfully!')
+                return redirect('ems:create-event')
+            else:
+                messages.warning(request,'Somthing went Wrong! Please Try Again.')
+    except Exception as e:
+        print('Create Event Execption : ',e)
+    return render(request,'ems/create_event.html',context)

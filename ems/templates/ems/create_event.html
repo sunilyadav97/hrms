@@ -1,0 +1,39 @@
+{% extends './base.html' %}
+{% block title %} Create Event | EMS {% endblock title %}
+{% block css %}
+.delete span {
+font-size: 16px !important;
+}
+{% endblock css%}
+
+{% block body %}
+
+<div class="container py-4">
+    <div class="row d-flex align-items-center justify-content-center ">
+        <div class="col-12 col-sm-8">
+            <h3 class=" my-3 derpartment-title">Create Event</h3>
+            <form action="" method="post">
+                {% csrf_token %}
+            <div class="mb-3">
+                <label for="role-name" class="form-label">Title</label>
+                <input type="text" class="form-control" id="role-name" placeholder="Enter Event Title....."
+                name="title">
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Descripiton</label>
+                <textarea class="form-control" id="description" rows="3" placeholder="Write Discription....."
+                name="description"></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="event-date" class="form-label">Event Date</label>
+                <input type="date" class="form-control" id="event-date" name="date">
+            </div>
+            <div class="d-grid">
+                <button class="btn btn-primary" type="submit">Create</button>
+            </div>
+        </form>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
