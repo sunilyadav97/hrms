@@ -94,7 +94,9 @@
 .cursor-pointer{
     cursor: pointer;
 }
-
+.delete span {
+  font-size: 16px !important;
+}
 /* ========Navbar======= */
 .dropdown-item:hover{
     background-color:#212529 !important;

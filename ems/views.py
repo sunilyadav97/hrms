@@ -323,8 +323,14 @@ def viewEmployee(request):
         if not request.user.is_superuser:
             profile_obj=Employee.objects.get(user=request.user)
             context['profile']=profile_obj
-        employees = Employee.objects.all()
-        context['employees'] = employees
+        employees = Employee.objects.all().order_by('-empid')
+        paginator=Paginator(employees,2)
+        page_no=request.GET.get('page')
+
+        total_pages=paginator.page_range
+        employeepages=paginator.get_page(page_no) 
+        context['pages']=total_pages
+        context['employees'] = employeepages
     except Exception as e:
         print('View Employee Exception : ', e)
 
@@ -449,10 +455,15 @@ def attendance(request):
             if item.status == 'Working':
                 em_list.append(item)
                 
-        
+        paginator=Paginator(nested_attendance,2)
+        page_no=request.GET.get('page')
+
+        total_pages=paginator.page_range
+        nested_attendance_pages=paginator.get_page(page_no) 
+        context['pages']=total_pages
 
         context['employees']=em_list
-        context['nested_attendence']=nested_attendance
+        context['nested_attendence']=nested_attendance_pages
        
         if request.method == 'POST':
             date=request.POST['date']
@@ -541,8 +552,11 @@ def allAttendances(request):
             attendances=Attendance.objects.filter(employee=emp_obj).order_by('-date')
             paginator=Paginator(attendances,2)
             page_no=request.GET.get('page')
+
+            total_pages=paginator.page_range
             finalattendances=paginator.get_page(page_no) 
             context['attendances']=finalattendances
+            context['pages']=total_pages
         else:
             return redirect('ems:ems')
 
@@ -606,7 +620,14 @@ def dashboardLeaves(request):
             context['profile']=profile_obj
             
         leaves=Leave.objects.all().order_by('-id')
-        context['leaves']=leaves
+        paginator=Paginator(leaves,2)
+        page_no=request.GET.get('page')
+
+        total_pages=paginator.page_range
+        leavespages=paginator.get_page(page_no) 
+        context['leaves']=leavespages
+        context['pages']=total_pages
+    
         if request.method == 'POST':
             status=request.POST['status']
             reply=request.POST['reply']
@@ -629,7 +650,13 @@ def allLeaves(request):
             context['profile']=profile_obj
             emp_obj=Employee.objects.get(user=request.user)
             leaves=Leave.objects.filter(employee=emp_obj).order_by('-id')
-            context['leaves']=leaves
+            paginator=Paginator(leaves,2)
+            page_no=request.GET.get('page')
+
+            total_pages=paginator.page_range
+            leavespages=paginator.get_page(page_no) 
+            context['leaves']=leavespages
+            context['pages']=total_pages
         else:
             return redirect('ems:ems')
     except Exception as e:

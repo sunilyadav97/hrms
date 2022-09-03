@@ -40,14 +40,26 @@ font-size: 16px !important;
                 </table>
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-end">
-                    {% if attendances.has_previous %}
+                        {% if attendances.has_previous %}
                         <li class="page-item ">
-                            <a class="page-link" href="?page={{attendance.perevious_page_number}}" >Previous</a>
+                            <a class="page-link" href="?page={{attendances.previous_page_number}}">Previous</a>
                         </li>
                         {% endif %}
-                        <li class="page-item"><a class="page-link" href="?page=2">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        {% if pages %}
+
+                        {% for p in pages %}
+
+                        {% if p == attendances.number %}
+                        <li class="page-item active" aria-current="page"><a class="page-link "
+                                href="?page={{p}}">{{p}}</a></li>
+                        {% else %}
+                        <li class="page-item "><a class="page-link" href="?page={{p}}">{{p}}</a></li>
+                        {% endif %}
+
+                        {% endfor %}
+
+                        {% endif %}
+
                         {% if attendances.has_next %}
                         <li class="page-item">
                             <a class="page-link" href="?page={{attendances.next_page_number}}">Next</a>

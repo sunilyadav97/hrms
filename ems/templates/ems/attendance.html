@@ -79,6 +79,36 @@ overflow: auto;
 
                 {% endfor %}
 
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-end">
+                        {% if nested_attendence.has_previous %}
+                        <li class="page-item ">
+                            <a class="page-link" href="?page={{nested_attendence.previous_page_number}}">Previous</a>
+                        </li>
+                        {% endif %}
+                        {% if pages %}
+
+                        {% for p in pages %}
+
+                        {% if p == nested_attendence.number %}
+                        <li class="page-item active" aria-current="page"><a class="page-link "
+                                href="?page={{p}}">{{p}}</a></li>
+                        {% else %}
+                        <li class="page-item "><a class="page-link" href="?page={{p}}">{{p}}</a></li>
+                        {% endif %}
+
+                        {% endfor %}
+
+                        {% endif %}
+
+                        {% if nested_attendence.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{nested_attendence.next_page_number}}">Next</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+
             </div>
 
         </div>
