@@ -1,0 +1,34 @@
+{% extends './base.html' %}
+{% block title %} Events | EMS {% endblock title %}
+{% block css %}
+.delete span {
+font-size: 16px !important;
+}
+{% endblock css%}
+{% block body %}
+<section class="py-5">
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-cent">
+            <div class="col-6">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-area-chart"></i>{{event.title}}
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-2 text-muted">
+                            <small>
+                            <span class="text-muted">Event Date : </span>{{event.date | date:'d-M-Y'}}
+                        </small>
+                        </div>
+                        <hr>
+                        <p >{{event.description}}</p>
+                    </div>
+                    <div class="card-footer small text-muted">Posted: {{event.created_at|timesince}} Ago</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+{% endblock body %}

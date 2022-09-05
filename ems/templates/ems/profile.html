@@ -10,7 +10,7 @@
                         <tr>
                             <td colspan="2">
                                 <div class="avtar d-flex align-items-center flex-column">
-                                    <img src="{{profile.imageURL}}" alt="" class="rounded">
+                                    <img src="{{profile.imageURL}}" alt="" class="rounded border ">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h6 class="m-2 profile-title"><b>Username - </b>{{profile.user.username}}</h6>
                                         <a href="{% url 'ems:profile-edit' %}" class="fw-semibold mx-2">Edit Profile</a>
@@ -31,7 +31,7 @@
                             <td><b>Father Name - </b>{{profile.father_name}}</td>
                         </tr>
                         <tr>
-                            <td><b>Date of Birth - </b>{{profile.dob}}</td>
+                            <td><b>Date of Birth - </b>{{profile.dob |date:'d M Y'}}</td>
                             <td><b>Phone No. - </b>{{profile.mobile_no}}</td>
                         </tr>
                         <tr>
@@ -67,22 +67,26 @@
             </div>
             <div class="col-4 ">
                 <div class="row">
-                    <div class="col-10 border border-dark  py-3 px-2">
+                    <div class="col-10 border border-dark  py-3 px-2 d-flex justify-content-center flex-column align-items-center">
                         <h3 class="events-title text-center mb-2">Upcomming Events</h3>
                         <ul>
-                            <li>Lorem ipsum dolor sit amet consectetur</li>
-                            <li>adipisicing elit. Saepe corporis est ad quae</li>
-                            <li>perspiciatis molestiae ducimus harum nemo, quaerat</li>
-                            <li>perspiciatis molestiae ducimus harum nemo, quaerat</li>
-                            <li>perspiciatis molestiae ducimus harum </li>
+                            {% for event in events  %}
+                            <li><a href="{% url 'ems:event' event.id %}">{{event.title}}</a></li>
+                            {% endfor %}
                         </ul>
                         
                     </div>
-                    <div class="col-10 border border-dark my-3 py-3 px-2">
+                    <div class="col-10 border border-dark my-3 py-3 px-2 ">
                         <h3 class="events-title text-center mb-2">Upcomming Celebrations</h3>
-                        <ul>
-                            <li>Anniversary</li>
-                            <li>Birthday</li>
+                        <ul class="style-none" style="list-style:none ;">
+                            <li class="text-center  fw-semibold">Birthday</li>
+                            {% if birthday %}
+                            <li class=" text-success text-center my-2">Happy Birthday {{name}} 🎂🎉</li>
+                            {% endif %}
+                            <li class="text-center text-warning fw-semibold">Anniversary</li>
+                            {% if anniversary %}
+                            <li class="text-success text-center my-2">Congratulations {{anniversary.name}} You Have Completed {{anniversary.completed_years}} Year 👏</li>
+                            {% endif %}
                         </ul>
                     </div>
                 </div>

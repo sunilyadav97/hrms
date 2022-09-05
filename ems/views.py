@@ -9,6 +9,7 @@ from .models import *
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.core.paginator import Paginator
+from datetime import datetime,timedelta
 
 
 
@@ -45,10 +46,41 @@ def profile(request):
         if request.user.is_authenticated:
             if not request.user.is_superuser:
                 try:
+                    events=Events.objects.exclude(is_completed=True)
                     profile=Employee.objects.get(user=request.user)
                     address=Address.objects.get(user=request.user)
+                    dob=str(profile.dob).split('-')
+                    now=datetime.now()
+                    day=now.day
+                    month=now.month
+                    year=now.year
+                    dob_day=int(dob[2])
+                    dob_month=int(dob[1])
+                    dob_year=int(dob[0])
+                    name=str(profile.name).split(' ')
+                    if dob_month == month and dob_day == day:
+                        print('Happy Birthday to ',profile.name)
+                        context['birthday']=True
+                        context['name']=name[0]
+                    else:
+                        context['birthday']=False
+                    joining_date=str(profile.joining_date).split('-')    
+                    j_day=int(joining_date[2])
+                    j_month=int(joining_date[1])
+                    j_year=int(joining_date[0])
+                    
+                    anny_year=year-j_year
+                    if j_day == day and j_month == month and anny_year >0:
+                        print(anny_year)
+                        anniversary={
+                            'name':name[0],
+                            'completed_years':anny_year
+                        }
+                        context['anniversary']=anniversary
+                                                                     
                     context['profile']=profile
                     context['address']=address
+                    context['events']=events
                 except Exception as e:
                     print('Profile Inside Exception : ',e)
                     messages.warning(request, 'Profile Not found Please contact Admin')
@@ -701,13 +733,19 @@ def viewEvents(request):
             title=request.POST['title']
             description=request.POST['description']
             date=request.POST['date']
-            
+            try:
+                is_completed=request.POST['completed']
+            except Exception as e:
+                is_completed=False
+                print('Is_complete input Exception : ',e)
+
             event_obj=Events.objects.get(id=id)
             
-            if event_obj.title != title or event_obj.description != description or event_obj.date != date:
+            if event_obj.title != title or event_obj.description != description or event_obj.date != date or event_obj.is_completed != is_completed:
                 event_obj.title=title
                 event_obj.description=description
                 event_obj.date=date
+                event_obj.is_completed=is_completed 
                 event_obj.save()
                 messages.success(request,'Updated Successfully!')
                 
@@ -727,3 +765,14 @@ def deleteEvent(request,id):
         messages.warning(request,'Something went wrong!')
     
     return redirect('ems:view-events')
+
+def event(request,id):
+    context={}
+    try:
+        print('know event')
+        event=Events.objects.get(id=id)
+        context['event']=event
+    except Exception as e:
+        print('Events Exception : ',e)
+        
+    return render(request,'ems/event.html',context)
