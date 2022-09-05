@@ -1,0 +1,79 @@
+{% extends './base.html' %}
+{% block title %} Events | EMS {% endblock title %}
+{% block css %}
+.delete span {
+font-size: 16px !important;
+}
+{% endblock css%}
+
+{% block body %}
+
+<div class="container py-4">
+    <div class="row d-flex align-items-center justify-content-center">
+        <div class="col-md-10 col-12">
+            <h3 class="my-3 derpartment-title">All events</h3>
+            <a href="{% url 'ems:create-event' %}" class="mb-2">Create Event</a>
+            <table class="table table-bordered event-table">
+                <tr>
+                    <th>SN</th>
+                    <th>Name</th>
+                    <th>Descripiton</th>
+                    <th>Date</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+                {% for event in events %}
+                <tr>
+                    <td>{{forloop.counter}}.</td>
+                    <td>{{event.title}}</td>
+                    <td>{{event.description}}</td>
+                    <td>{{event.date | date:'d-M-Y'}}</td>
+                    <td><a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#edit-event" ><i class='bx bx-edit' onclick="editevent({{event.id}},'{{event.title}}','{{event.description}}','{{event.date | date:'Y-m-d'}}')"></i></a></td>
+                    <td><a href="{% url 'ems:delete-event' event.id %}" class="delete"><span class="material-symbols-outlined">
+                        delete
+                        </span></a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- ========MODALS======= -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="edit-event" tabindex="-1" aria-labelledby="event-label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="event-label">Edit event</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="" method="post" >
+                {% csrf_token %}
+                <input type="text" hidden name="id" id="id">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" class="form-control" id="title"
+                    name="title" required >
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Descripiton</label>
+                <textarea class="form-control" id="description" rows="2"
+                name="description" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="date" class="form-label">Date</label>
+                <input type="text" class="form-control" id="date"
+                    name="date" required >
+            </div>
+            <div class="d-grid">
+                <button class="btn btn-success" type="submit">Save</button>
+            </div>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock body %}

@@ -12,10 +12,11 @@ font-size: 16px !important;
     <div class="row d-flex align-items-center justify-content-center ">
         <div class="col-12 col-sm-8">
             <h3 class=" my-3 derpartment-title">Create Event</h3>
+           
             <form action="" method="post">
                 {% csrf_token %}
             <div class="mb-3">
-                <label for="role-name" class="form-label">Title</label>
+                <label for="role-name" class="form-label">Title</label> <a class="float-end" href="{% url 'ems:view-events' %}">All Events</a>
                 <input type="text" class="form-control" id="role-name" placeholder="Enter Event Title....."
                 name="title">
             </div>

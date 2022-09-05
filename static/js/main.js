@@ -15,4 +15,15 @@ function editRole(id,name,des){
     description=document.getElementById('description').value=des
     departmentID=document.getElementById('department-id').value=id
     }
+function editevent(id,title,description,date)
+{
+    console.log(id)
+    console.log(title)
+    console.log(description)
+    console.log(date)
+    document.getElementById('title').value=title
+    document.getElementById('description').value=description
+    document.getElementById('date').value=date
+    document.getElementById('id').value=id
+}
 

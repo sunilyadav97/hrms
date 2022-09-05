@@ -683,9 +683,47 @@ def createEvent(request):
             print(obj)                          
             if obj:
                 messages.success(request,'Created Successfully!')
-                return redirect('ems:create-event')
+                return redirect('ems:view-events')
             else:
                 messages.warning(request,'Somthing went Wrong! Please Try Again.')
     except Exception as e:
         print('Create Event Execption : ',e)
     return render(request,'ems/create_event.html',context)
+
+@login_required()
+def viewEvents(request):
+    context={}
+    try:
+        events=Events.objects.all()
+        context['events']=events
+        if request.method =='POST':
+            id=request.POST['id']
+            title=request.POST['title']
+            description=request.POST['description']
+            date=request.POST['date']
+            
+            event_obj=Events.objects.get(id=id)
+            
+            if event_obj.title != title or event_obj.description != description or event_obj.date != date:
+                event_obj.title=title
+                event_obj.description=description
+                event_obj.date=date
+                event_obj.save()
+                messages.success(request,'Updated Successfully!')
+                
+            return redirect('ems:view-events')
+    except Exception as e:
+        print('Display Events Exception : ',e)
+    
+    return render(request,'ems/view_events.html',context)
+
+def deleteEvent(request,id):
+    try:
+        Events.objects.get(id=id).delete()
+        messages.success(request,'Deleted Successfully!')
+        
+    except Exception as e:
+        print('Delete Event Exception : ',e)
+        messages.warning(request,'Something went wrong!')
+    
+    return redirect('ems:view-events')

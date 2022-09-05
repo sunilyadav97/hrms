@@ -24,5 +24,7 @@ urlpatterns=[
     path('all-leaves/',allLeaves,name='all-leaves'),
     path('all-attendance/',allAttendances,name='all-attendance'),
     path('create-event/',createEvent,name='create-event'),
+    path('view-events/',viewEvents,name='view-events'),
+    path('delete-event/<id>/',deleteEvent,name='delete-event'),
     
 ]
