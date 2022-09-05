@@ -40,13 +40,13 @@ def dashboard(request):
                 
 
             print(birthdays)   
-            
-            
 
 
             if not request.user.is_superuser:
                 profile_obj=Employee.objects.get(user=request.user)
                 context['profile']=profile_obj
+                events=Events.objects.all()[0:2]
+                context['events']=events
                 return render(request,'ems/ems_home.html',context)
             else:
                 departments=Department.objects.all()

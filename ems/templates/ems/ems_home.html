@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row py-5 d-flex justify-content-center d-flex flex-column align-items-center" >
             
-            <div class="col-6 d-flex justify-content-start bg-dark py-2 text-white  rounded">
+            <div class="col-6 d-flex justify-content-start bg-success py-2 text-white  rounded">
                     <a href="{% url 'ems:all-leaves' %}" class="mx-2 text-white border-end  px-2">All Leaves</a>
                     <a href="{% url 'ems:profile' %}" class="mx-2 text-white border-end px-2">Profile</a>
                     <a href="{% url 'ems:all-attendance' %}" class="mx-2 text-white border-end px-2">All Attendance</a>
@@ -30,6 +30,25 @@
                 </div>
                 {% endfor %}
             </div>
+            {% for event in events %}
+            <div class="col-6 my-2">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-area-chart"></i>{{event.title}}
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-2 text-muted">
+                            <small>
+                            <span class="text-muted">Event Date : </span>{{event.date | date:'d-M-Y'}}
+                        </small>
+                        </div>
+                        <hr>
+                        <p >{{event.description}}</p>
+                    </div>
+                    <div class="card-footer small text-muted">Posted: {{event.created_at|timesince}} Ago</div>
+                </div>
+            </div>
+            {% endfor %}
             <div class="col-6">
                 <hr>
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima dolor ipsa quibusdam? Molestias ad perspiciatis officia a accusamus quisquam rem magnam earum! Neque harum labore consequatur suscipit numquam aspernatur hic.</p>
