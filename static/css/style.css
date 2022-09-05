@@ -124,6 +124,14 @@
   font-size: var(--h3-font-size);
   font-weight: var(--normal-font);
 }
+
+/* ======EMS HOME=========== */
+.birthday-wish{
+  font-weight: var(--font-bold);
+  font-size: var(--h3-font-size);
+  color: green;
+}
+
 .dashboard-title{
   font-size: var(--h3-font-size);
   font-weight: var(--font-bold);

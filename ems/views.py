@@ -18,6 +18,32 @@ def dashboard(request):
     context={}
     try:
         if request.user.is_authenticated:
+            employees=list(Employee.objects.all())
+            birthdays=[]
+            now=datetime.now()
+            day=now.day
+            month=now.month
+            year=now.year
+            
+            for i in employees:
+                dob_base=str(i.dob).split('-')
+                dob_day=int(dob_base[2])
+                dob_month=int(dob_base[1])
+                dob_year=int(dob_base[0])
+                if dob_day == day and dob_month == month:
+                    birthdays.append(i)
+                    print('Happy Birthday')
+                else:
+                    print('Not Happy Birthday')
+            
+            context['birthdays']=birthdays      
+                
+
+            print(birthdays)   
+            
+            
+
+
             if not request.user.is_superuser:
                 profile_obj=Employee.objects.get(user=request.user)
                 context['profile']=profile_obj
