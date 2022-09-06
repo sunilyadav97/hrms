@@ -769,7 +769,13 @@ def viewEvents(request):
     context={}
     try:
         events=Events.objects.all().order_by("-date")
-        context['events']=events
+        paginator=Paginator(events,2)
+        page_no=request.GET.get('page')
+
+        total_pages=paginator.page_range
+        eventespages=paginator.get_page(page_no) 
+        context['events']=eventespages
+        context['pages']=total_pages
         if request.method =='POST':
             id=request.POST['id']
             title=request.POST['title']

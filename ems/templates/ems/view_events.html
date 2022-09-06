@@ -1,102 +1,161 @@
-{% extends './base.html' %}
-{% block title %} Events | EMS {% endblock title %}
-{% block css %}
-.delete span {
-font-size: 16px !important;
-}
-{% endblock css%}
-
+{% extends './base.html' %} {% block title %} Events | EMS {% endblock title %}
+{% block css %} .delete span { font-size: 16px !important; } {% endblock css%}
 {% block body %}
 
 <div class="container py-4">
-    <div class="row d-flex align-items-center justify-content-center">
-        <div class="col-12">
-            <h3 class="my-3 derpartment-title">All events</h3>
-            <a href="{% url 'ems:create-event' %}" class="mb-2">Create Event</a>
-            <table class="table table-bordered event-table">
-                <tr>
-                    <th>SN</th>
-                    <th>Name</th>
-                    <th>Descripiton</th>
-                    <th>Date</th>
-                    <th>Completed</th>
-                    <th>Edit</th>
-                    <th>Delete</th>
-                </tr>
-                {% for event in events %}
-                <tr>
-                    <td>{{forloop.counter}}.</td>
-                    <td>{{event.title}}</td>
-                    <td>{{event.description}}</td>
-                    <td>{{event.date | date:'d-M-Y'}}
+  <div class="row d-flex align-items-center justify-content-center">
+    <div class="col-12">
+      <h3 class="my-3 derpartment-title">All events</h3>
+      <a href="{% url 'ems:create-event' %}" class="mb-2">Create Event</a>
+      <table class="table table-bordered event-table">
+        <tr>
+          <th>SN</th>
+          <th>Name</th>
+          <th>Descripiton</th>
+          <th>Date</th>
+          <th>Completed</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+        {% for event in events %}
+        <tr>
+          <td>{{forloop.counter}}.</td>
+          <td>{{event.title}}</td>
+          <td>{{event.description}}</td>
+          <td>{{event.date | date:'d-M-Y'}}</td>
+          <td>
+            {% if event.is_completed %}
+            <span class="material-symbols-outlined text-success fw-blod">
+              done
+            </span>
+            {% else %}
+            <span class="material-symbols-outlined text-danger"> close </span>
 
-                    </td>
-                    <td>
-                        {% if event.is_completed %}
-                        <span class="material-symbols-outlined text-success fw-blod ">
-                            done
-                            </span>
-                        {% else %}
-                        <span class="material-symbols-outlined text-danger">
-                            
-                            close
-                            </span>
-                            
-                        {% endif %}
-                    </td>
-                    <td><a href="#" class="edit" data-bs-toggle="modal" data-bs-target="#edit-event"><i
-                                class='bx bx-edit'
-                                onclick="editevent({{event.id}},'{{event.title}}','{{event.description}}','{{event.date | date:'Y-m-d'}}','{{event.is_completed}}')"></i></a>
-                    </td>
-                    <td><a href="{% url 'ems:delete-event' event.id %}" class="delete"><span
-                                class="material-symbols-outlined">
-                                delete
-                            </span></a></td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
+            {% endif %}
+          </td>
+          <td>
+            <a
+              href="#"
+              class="edit"
+              data-bs-toggle="modal"
+              data-bs-target="#edit-event"
+              ><i
+                class="bx bx-edit"
+                onclick="editevent({{event.id}},'{{event.title}}','{{event.description}}','{{event.date | date:'Y-m-d'}}','{{event.is_completed}}')"
+              ></i
+            ></a>
+          </td>
+          <td>
+            <a href="{% url 'ems:delete-event' event.id %}" class="delete"
+              ><span class="material-symbols-outlined"> delete </span></a
+            >
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+          {% if events.has_previous %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{events.previous_page_number}}"
+              >Previous</a
+            >
+          </li>
+          {% endif %} {% if pages %} {% for p in pages %} {% if p == events.number %}
+          <li class="page-item active" aria-current="page">
+            <a class="page-link" href="?page={{p}}">{{p}}</a>
+          </li>
+          {% else %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{p}}">{{p}}</a>
+          </li>
+          {% endif %} {% endfor %} {% endif %} {% if events.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{events.next_page_number}}"
+              >Next</a
+            >
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
     </div>
+  </div>
 </div>
 
 <!-- ========MODALS======= -->
 
 <!-- Modal -->
-<div class="modal fade" id="edit-event" tabindex="-1" aria-labelledby="event-label" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="event-label">Edit event</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form action="" method="post">
-                    {% csrf_token %}
-                    <input type="text" hidden name="id" id="id">
-                    <div class="mb-3">
-                        <label for="title" class="form-label">Title</label>
-                        <input type="text" class="form-control" id="title" name="title" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Descripiton</label>
-                        <textarea class="form-control" id="description" rows="2" name="description" required></textarea>
-                    </div>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox"  id="completed"  name="completed" value="True">
-                        <label class="form-check-label" for="completed">
-                          Completed
-                        </label>
-                      </div>
-                    <div class="mb-3">
-                        <label for="date" class="form-label">Date</label> <small class="text-danger float-end">Don't Change Date format: Y-M-D</small>
-                        <input type="text" class="form-control" id="date" name="date" required>
-                    </div>
-                    <div class="d-grid">
-                        <button class="btn btn-success" type="submit">Save</button>
-                    </div>
-                </form>
-            </div>
-        </div>
+<div
+  class="modal fade"
+  id="edit-event"
+  tabindex="-1"
+  aria-labelledby="event-label"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="event-label">Edit event</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post">
+          {% csrf_token %}
+          <input type="text" hidden name="id" id="id" />
+          <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input
+              type="text"
+              class="form-control"
+              id="title"
+              name="title"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Descripiton</label>
+            <textarea
+              class="form-control"
+              id="description"
+              rows="2"
+              name="description"
+              required
+            ></textarea>
+          </div>
+          <div class="form-check mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="completed"
+              name="completed"
+              value="True"
+            />
+            <label class="form-check-label" for="completed"> Completed </label>
+          </div>
+          <div class="mb-3">
+            <label for="date" class="form-label">Date</label>
+            <small class="text-danger float-end"
+              >Don't Change Date format: Y-M-D</small
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="date"
+              name="date"
+              required
+            />
+          </div>
+          <div class="d-grid">
+            <button class="btn btn-success" type="submit">Save</button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 </div>
 {% endblock body %}
