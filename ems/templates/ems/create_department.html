@@ -8,7 +8,7 @@
             <form action="" method="post">
                 {% csrf_token %}
             <div class="mb-3">
-                <label for="department-name" class="form-label">Name</label>
+                <label for="department-name" class="form-label">Name</label><a class="float-end" href="{% url 'ems:view-department' %}">See Department</a>
                 <input type="text" class="form-control" id="department-name" placeholder="Enter Name....."
                     name="department-name">
             </div>

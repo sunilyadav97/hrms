@@ -1,5 +1,28 @@
-console.log('Hello Js')
+// Rotate Arrow or side Nav
+state=false
+function rotate()
+{
 
+    var arrow=document.querySelectorAll('.arrow-forward')
+    arrow.forEach(e=>{
+        console.log('state')
+    e.addEventListener("click",function(){
+        console.log('state')
+    
+    if (!state)
+    {
+        arrow.classList.add('rotate-arrow')
+        state = true
+    }else if(state == true)
+    {
+        arrow.classList.remove('rotate-arrow')
+        state=false
+
+    }
+})
+})
+    
+}
 // Get Department Objct 
 
 function editDepartment(id, name, des) {

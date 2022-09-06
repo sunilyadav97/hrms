@@ -20,6 +20,10 @@
     <!-- ==========CUSTOM STYLE SHEET============ -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
+    <!-- ===============JQUERY CDN============ -->
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+        integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+
     <style>
         {
             % block css %
@@ -42,13 +46,14 @@
 
 
     <header class="shadow-sm">
-        <nav class="navbar navbar-expand-lg bg-danger navbar-dark">
+        <nav class="navbar navbar-expand-lg bg-danger navbar-dark shadow-sm fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="{% url 'home:home' %}">TechInterio</a>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="cursor-pointer nav-link active" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop"
-                        aria-controls="staticBackdrop"><span class="navbar-toggler-icon"></span></a>
+                        <a class="cursor-pointer nav-link active" data-bs-toggle="offcanvas"
+                            data-bs-target="#staticBackdrop" aria-controls="staticBackdrop"><span
+                                class="navbar-toggler-icon"></span></a>
                     </li>
                     {% if not request.user.is_superuser %}
                     <li class="nav-item">
@@ -56,14 +61,14 @@
                     </li>
                     {% else %}
                     <li class="nav-item"><a class="nav-link active" href="{% url 'ems:ems' %}">Dashboard</a></li>
-                        {% endif %}
-                        <li class="nav-item">
-                            <a href="#" class="nav-link active">Chat</a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link active" href="{% url 'home:logout' %}">Logout</a></li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active">Chat</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link active" href="{% url 'home:logout' %}">Logout</a></li>
                 </ul>
-                
-                    
+
+
             </div>
         </nav>
     </header>
@@ -89,70 +94,96 @@
                 {% endif %}
 
                 {% if request.user.is_superuser %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Department
-                    </a>
-                    <ul class="dropdown-menu bg-danger side-drop-down">
-                        <li><a class="dropdown-item text-light" href="{% url 'ems:create-department' %}">Create
-                                Department</a></li>
-                        <li><a class="dropdown-item text-light" href="{% url 'ems:view-department' %}">View
-                                Departments</a></li>
-                    </ul>
+                <li class="nav-item accordion-button collapsed sub-arrow-forward" data-bs-toggle="collapse"
+                    data-bs-target="#department-nav" aria-expanded="false" aria-controls="department-nav"
+                    onclick="rotate()"><a class="nav-link w-100" href="#">Department</a>
+                    <span class="material-symbols-outlined arrow-forward ">
+                        arrow_forward_ios</span>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Role
-                    </a>
-                    <ul class="dropdown-menu bg-danger side-drop-down">
-                        <li><a class="dropdown-item text-light" href="{% url 'ems:create-role' %}">Create Role</a></li>
-                        <li><a class="dropdown-item text-light" href="{% url 'ems:view-role' %}">View Roles</a></li>
-                    </ul>
+                <div id="department-nav" class="accordion-collapse collapse">
+                    <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:create-department' %}">Create
+                            Department</a></li>
+                    <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:view-department' %}">View
+                            Departments</a></li>
+
+                </div>
+
+                <li class="nav-item accordion-button collapsed sub-arrow-forward" data-bs-toggle="collapse"
+                    data-bs-target="#role-nav" aria-expanded="false" aria-controls="role-nav" onclick="rotate()">
+                    <a class="nav-link w-100 arrow" href="#">Role</a><span
+                        class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
                 </li>
-                
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                        Employee
-                    </a>
-                    <ul class="dropdown-menu bg-danger side-drop-down">
-                        <li><a class="dropdown-item text-light" href="{% url 'ems:employee-add' %}">Add EM</a></li>
-                        <li><a class="dropdown-item text-light" href="{% url 'ems:employee-view' %}">View EM</a></li>
-                    </ul>
+
+                <div class="accordion-collapse collapse" id="role-nav">
+                    <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:create-role' %}">Create Role</a>
+                    </li>
+                    <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:view-role' %}">View Roles</a>
+                    </li>
+                </div>
+
+                <li class="nav-item accordion-button collapsed sub-arrow-forward" data-bs-toggle="collapse"
+                    data-bs-target="#employee-nav" aria-expanded="false" aria-controls="employee-nav"
+                    onclick="rotate()">
+                    <a class="nav-link w-100 arrow" href="#">Employee</a><span
+                        class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
                 </li>
-                <li class="nav-item">
-                    <a href="{% url 'ems:create-event' %}" class="nav-link">Create Event</a>
+
+                <div id="employee-nav" class="accordion-collapse collapse">
+                    <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:employee-add' %}">Add EM</a>
+                    </li>
+                    <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:employee-view' %}">View
+                            EM</a></li>
+                </div>
+
+                <li class="nav-item accordion-button collapsed sub-arrow-forward" data-bs-toggle="collapse"
+                    data-bs-target="#event-nav" aria-expanded="false" aria-controls="employee-nav"
+                    onclick="rotate()">
+                    <a class="nav-link w-100 arrow" href="#">Event</a><span
+                        class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
                 </li>
+                <div id="event-nav" class="accordion-collapse collapse">
+                <li class="nav-item sub-nav"><a href="{% url 'ems:create-event' %}" class="nav-link">Create Event</a></li>
+                <li class="nav-item sub-nav"><a href="{% url 'ems:view-events' %}" class="nav-link">View Events</a></li>
+            </div>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:attendance' %}">Attendance</a></li>
+
                 <li class="nav-item"><a class="nav-link" href="#">Hirings</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">IT</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Reimbursement</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Clockify</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Awards</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Reviews</a></li>
-                
-                
+
+
                 {% else %}
 
-                <li class="nav-item"><a class="nav-link" href="{% url 'ems:leave-create' %}">Leave</a></li>
+                <li class="nav-item accordion-button collapsed sub-arrow-forward" data-bs-toggle="collapse"
+                    data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne"
+                    onclick="rotate()"><a class="nav-link w-100" href="#">Leave</a><span
+                        class="material-symbols-outlined arrow-forward " id="arrow">
+                        arrow_forward_ios</span></li>
+                <div id="flush-collapseOne" class="accordion-collapse collapse">
+                    <li class="nav-item sub-nav "><a class="nav-link " href="{% url 'ems:leave-create' %}">Create
+                            Leave</a></li>
+                    <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:all-leaves' %}">All Leaves</a>
+                    </li>
+                </div>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:all-attendance' %}">Attendance</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Reimbursement</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Clockify</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Awards</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Reviews</a></li>
-                
-                
+
+
                 {% endif %}
-                
+
 
             </ul>
         </div>
     </div>
 
 
-    <main>
+    <main class="my-5 pt-3">
 
         {% for message in messages %}
         <div class="alert alert-{{ message.tags }} mb-0 alert-dismissible fade show w-50 m-auto mt-3" role="alert">

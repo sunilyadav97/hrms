@@ -768,7 +768,7 @@ def createEvent(request):
 def viewEvents(request):
     context={}
     try:
-        events=Events.objects.all()
+        events=Events.objects.all().order_by("-date")
         context['events']=events
         if request.method =='POST':
             id=request.POST['id']

@@ -113,7 +113,23 @@
 .btn-close{
     color: white !important;
 }
-
+.sub-arrow-forward{
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+}
+.arrow-forward{
+  font-size: 13px !important;
+}
+.rotate-arrow{
+  transform: rotate(-90deg);
+  transition: 0.3s ease;
+  
+}
+.sub-nav{
+  margin-left: 2rem !important;
+  color: #ffffffb8 !important;
+}
 .side-drop-down{
     border: none !important;
     border-width: none !important;

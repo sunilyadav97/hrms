@@ -10,7 +10,7 @@ font-size: 16px !important;
 
 <div class="container py-4">
     <div class="row d-flex align-items-center justify-content-center">
-        <div class="col-md-10 col-12">
+        <div class="col-12">
             <h3 class="my-3 derpartment-title">All events</h3>
             <a href="{% url 'ems:create-event' %}" class="mb-2">Create Event</a>
             <table class="table table-bordered event-table">
@@ -88,7 +88,7 @@ font-size: 16px !important;
                         </label>
                       </div>
                     <div class="mb-3">
-                        <label for="date" class="form-label">Date</label>
+                        <label for="date" class="form-label">Date</label> <small class="text-danger float-end">Don't Change Date format: Y-M-D</small>
                         <input type="text" class="form-control" id="date" name="date" required>
                     </div>
                     <div class="d-grid">

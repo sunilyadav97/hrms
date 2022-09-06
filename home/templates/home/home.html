@@ -8,9 +8,8 @@
         <div class="row d-flex justify-content-center">
             {% if not request.user.is_authenticated %}
 
-
             <div class="col-12 col-sm-6 mb-3">
-                <p>If you are a New Employee then Register Here with username and password. After completion of your
+                <p><b>Note-</b> If you are a New Employee then Register Here with username and password. After completion of your
                     Registration admin will Add you as Employee.</p>
             </div>
             <div class="w-100"></div>
@@ -27,7 +26,7 @@
                         <input type="password" class="form-control" id="pass" name="password" required>
                     </div>
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-warning">Register</button>
+                        <button type="submit" class="btn btn-danger">Register</button>
                     </div>
                     <div class=" my-2 ">
                         <span>
