@@ -12,7 +12,7 @@
         <div class="row d-flex justify-content-center">
             <div class="col-lg-10 col-12 my-5">
                 <h3 class="my-3 derpartment-title">All Leaves</h3>
-                <a href="{% url 'ems:leave-create' %}" class="mb-2">Create New Leave</a>
+                <a href="{% url 'ems:leave-create' %}" class="mb-2">Request Leave</a>
                 <table class="table table-bordered">
                     <tr>
                         <th>SN</th>
@@ -22,15 +22,23 @@
                         <th>Type</th>
                         <th>Status</th>
                         <th>Reply</th>
-                        <th>Delete</th>
+                        <!-- <th>Delete</th> -->
                     </tr>
+                    {% if not leaves %}
+                    <tr><td colspan="8" class="text-center text-danger">You Have no Leaves</td></tr>
+                    {% endif %}
                     {% for leave in leaves %}
                     <tr class="my-4">
                         <td>{{forloop.counter}}.</td>
                         <td>{{leave.date_from | date:'d/M/Y'}}</td>
                         <td>{{leave.date_to | date:'d/M/Y'}}</td>
-                        <td>{{leave.description}}</td>
-                        <td>{{leave.type}}</td>
+                        <td><a data-bs-toggle="collapse" href="#description{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="description{{forloop.counter}}">{{leave.description|truncatewords:5}}</a></td>
+                        <div class="collapse my-3" id="description{{forloop.counter}}">
+                            <div class="card card-body ">
+                                {{leave.description}}
+                            </div>
+                          </div>
+                        <td>{{leave.type}}</td> 
                         {% if leave.status == 'Pending' %}
                         <td class="bg-warning text-dark">{{leave.status}}</td>
                         {% elif leave.status == 'Rejected' %}
@@ -45,7 +53,8 @@
                         {% else %}
                         <td>{{leave.reply}}</td>
                         {% endif %}
-                        {% if leave.status == 'Accepted' %}
+                     
+                        {% comment %} {% if leave.status == 'Approved' %}
                         <td>
                             <span class="delete disabled text-muted cursor-pointer"><span class="material-symbols-outlined">
                                 delete
@@ -55,11 +64,12 @@
                         <td><a href="{% url 'ems:leave-delete' leave.id %}" class="delete"><span class="material-symbols-outlined">
                             delete
                         </span></a></td>
-                        {% endif %}
+                        {% endif %}  {% endcomment %}
                     </tr>
                     {% endfor %}
                 </table>
-                <nav aria-label="Page navigation example">
+                {% if leaves.number >= 1  %}
+                <nav aria-label="Page navigation description">
                     <ul class="pagination justify-content-end">
                         {% if leaves.has_previous %}
                         <li class="page-item ">
@@ -88,9 +98,13 @@
                         {% endif %}
                     </ul>
                 </nav>
+                {% endif %}
             </div>
         </div>
     </div>
 </section>
+
+
+
 
 {% endblock body %}

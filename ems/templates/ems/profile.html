@@ -85,7 +85,7 @@
                             {% endif %}
                             <li class="text-center text-warning fw-semibold">Anniversary</li>
                             {% if anniversary %}
-                            <li class="text-success text-center my-2">Congratulations {{anniversary.name}} You Have Completed {{anniversary.completed_years}} Year 👏</li>
+                            <li class="text-success text-center my-2">Congratulations {{anniversary.name}} You Have Completed {{anniversary.completed_years}} {% if anniversary.completed_years > 1 %}Years {% else %} Year {% endif %} 👏</li>
                             {% endif %}
                         </ul>
                     </div>

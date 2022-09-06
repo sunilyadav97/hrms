@@ -674,7 +674,7 @@ def createLeave(request):
                 status='Pending',
             )
             if obj:
-                messages.success(request,'Leave Created Successfully!')           
+                messages.success(request,'Requested Successfully!')           
                 return redirect('ems:all-leaves')
             else:
                 messages.warning(request,'Something Went Wrong!')
@@ -682,16 +682,17 @@ def createLeave(request):
     except Exception as e:
         print('Create Leave Exception : ',e)
     return render(request,'ems/create_leave.html',context)
+
 @login_required()
 def deleteLeave(request, pk):
     try:
-        Leave.objects.get(id=pk).delete()
-        messages.success(request, 'Deleted Successfully!')
-        return redirect(reverse('ems:leave-create'))
+        # Leave.objects.get(id=pk).delete()
+        messages.success(request, 'Deleted Leave Not Allwed!')
+        return redirect(reverse('ems:all-leaves'))
     except Exception as e:
         print('Delete Attendance Exception : ', e)
         messages.warning(request,'Something Wend Wrong!')
-        return redirect('ems:leave-create')
+        return redirect('ems:all-leaves')
     
 @login_required()    
 def dashboardLeaves(request):
@@ -718,7 +719,7 @@ def dashboardLeaves(request):
             obj.status=status
             obj.reply=reply
             obj.save()
-            messages.success(request,'Leave updated successfully!')
+            messages.success(request,'Status Updated successfully!')
             return redirect('ems:dashboard-leaves')
     except Exception as e:
         print('Dashboard Leaves Exception : ',e)

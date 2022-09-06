@@ -55,3 +55,15 @@ function editevent(id, title, description, date, is_com) {
     
 }
 
+
+// =========Show Leave Description=========
+
+function showDescription(description)
+{
+    var descriptionContainer=document.getElementById('discription-container')
+
+   
+        descriptionContainer.innerHTML=description
+        descriptionContainer.classList.remove('d-none')
+    
+}

@@ -3,13 +3,7 @@
 Attendance
 {% endblock title%}
 {% block css%}
-.modal-content{
-width:700px !important;
-position: absolute;
-left: -90px;
-transition: ease;
-overflow: auto;
-}
+
 .editinput-width{
     width:8rem !important;
 }
@@ -118,12 +112,12 @@ overflow: auto;
 
 
 
-<!-- Button trigger modal -->
+
 
 <!-- Modal -->
-<div class="modal " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content ">
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title fw-semibodl" id="exampleModalLabel">Add Attendance</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -175,7 +169,7 @@ overflow: auto;
 
 <!-- Attendance Edit Modal -->
 <div class="modal fade" id="editmodal" tabindex="-1" aria-labelledby="editmodalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editmodalLabel">Edit</h5>

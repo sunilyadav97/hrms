@@ -2,124 +2,124 @@
 {% block title %}Create Leave | EMS {% endblock title %}
 {% block css %}
 .delete span {
-    font-size: 16px !important;
-  }
+font-size: 16px !important;
+}
 {% endblock css%}
 {% block body %}
 <div class="container py-4">
-    <div class="row d-flex align-items-center justify-content-center ">
-       
-        <div class="col-lg-10 col-12 my-5">
-            <h3 class="my-3 derpartment-title">All Leaves</h3>
-            <table class="table table-bordered">
-                <tr>
-                    <th>SN</th>
-                    <th>Name</th>
-                    <th>From date</th>
-                    <th>From to</th>
-                    <th>Descripiton</th>
-                    <th>Reply</th>
-                    <th>Type</th>
-                    <th>Status</th>
-                    <th>Approve/Reject</th>
-                    
-                </tr>
-                {% for leave in leaves %}
-                <tr class="my-4">
-                    <td>{{forloop.counter}}</td>
-                    <td>{{leave.employee.name}}</td>
-                    <td>{{leave.date_from | date:'d/M/Y'}}</td>
-                    <td>{{leave.date_to | date:'d/M/Y'}}</td>
-                    <td>{{leave.description}}</td>
-                    <td>{{leave.reply}}</td>
-                    <td>{{leave.type}}</td>
-                    {% if leave.status == 'Pending' %}
-                    <td class="bg-warning text-dark">{{leave.status}}</td>
-                    {% elif leave.status == 'Rejected' %}
-                    <td class="text-white bg-danger">{{leave.status}}</td>
-                    {% else %}
-                    <td class="text-white bg-success">{{leave.status}}</td>
-                    {% endif %}
-                    
-                    <td><a href="" data-bs-toggle="modal" data-bs-target="#leavemodal" onclick="leave({{leave.id}})">Approve/Reject</a></td>
-                   
-                </tr>
-                {% endfor %}
-                
-            </table>
-            <nav aria-label="Page navigation example">
-              <ul class="pagination justify-content-end">
-                  {% if leaves.has_previous %}
-                  <li class="page-item ">
-                      <a class="page-link" href="?page={{leaves.previous_page_number}}">Previous</a>
-                  </li>
-                  {% endif %}
-                  {% if pages %}
+  <div class="row d-flex align-items-center justify-content-center " >
 
-                  {% for p in pages %}
+    <div class="col-lg-10 col-12 my-5">
+      <h3 class="my-3 derpartment-title">All Leaves</h3>
+      <div class="border my-3 rounded p-3 d-none" id="discription-container"></div>
+      <table class="table table-bordered">
+        <tr>
+          <th>SN</th>
+          <th>Name</th>
+          <th>From date</th>
+          <th>From to</th>
+          <th>Descripiton</th>
+          <th>Reply</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Approve/Reject</th>
 
-                  {% if p == leaves.number %}
-                  <li class="page-item active" aria-current="page"><a class="page-link "
-                          href="?page={{p}}">{{p}}</a></li>
-                  {% else %}
-                  <li class="page-item "><a class="page-link" href="?page={{p}}">{{p}}</a></li>
-                  {% endif %}
+        </tr>
+        {% for leave in leaves %}
+        <tr class="my-4">
+          <td>{{forloop.counter}}</td>
+          <td>{{leave.employee.name}}</td>
+          <td>{{leave.date_from | date:'d/M/Y'}}</td>
+          <td>{{leave.date_to | date:'d/M/Y'}}</td>
+          <td onclick="showDescription('{{leave.description}}')" class="text-primary">{{leave.description|truncatewords:4}}</td>
+          <td>{{leave.reply}}</td>
+          <td>{{leave.type}}</td>
+          {% if leave.status == 'Pending' %}
+          <td class="bg-warning text-dark">{{leave.status}}</td>
+          {% elif leave.status == 'Rejected' %}
+          <td class="text-white bg-danger">{{leave.status}}</td>
+          {% else %}
+          <td class="text-white bg-success">{{leave.status}}</td>
+          {% endif %}
 
-                  {% endfor %}
+          <td><a href="" data-bs-toggle="modal" data-bs-target="#leavemodal"
+              onclick="leave({{leave.id}})">Approve/Reject</a></td>
 
-                  {% endif %}
+        </tr>
+        {% endfor %}
 
-                  {% if leaves.has_next %}
-                  <li class="page-item">
-                      <a class="page-link" href="?page={{leaves.next_page_number}}">Next</a>
-                  </li>
-                  {% endif %}
-              </ul>
-          </nav>
-        </div>
-    </div>
-</div>
+      </table>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+          {% if leaves.has_previous %}
+          <li class="page-item ">
+            <a class="page-link" href="?page={{leaves.previous_page_number}}">Previous</a>
+          </li>
+          {% endif %}
+          {% if pages %}
 
-  <!-- Modal -->
-  <div class="modal fade" id="leavemodal" tabindex="-1" aria-labelledby="leavemodalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="leavemodalLabel">Leave</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form action="" method="post">
-            {% csrf_token %}
-            <input type="text" hidden name="id" id="leave-id">
-            <div class="mb-3">
-                <label for="leave-type" class="form-label">Approve/Reject</label>
-                <select class="form-select" aria-label="Default select example" name="status" id="leave-type">
-                    <option selected value="Accepted">Accept</option>
-                    <option value="Rejected">Reject</option>
-                  </select>
-            </div>
-            <div class="mb-3">
-                <label for="description" class="form-label">Reply</label>
-                <textarea class="form-control" id="description" rows="3" placeholder="Write Discription....."
-                    name="reply"></textarea>
-            </div>
-            <div class="d-grid">
+          {% for p in pages %}
 
-                <button type="submit" class="btn btn-success">Save</button>
-            </div>
-          </form>
-        </div>
-        
-      </div>
+          {% if p == leaves.number %}
+          <li class="page-item active" aria-current="page"><a class="page-link " href="?page={{p}}">{{p}}</a></li>
+          {% else %}
+          <li class="page-item "><a class="page-link" href="?page={{p}}">{{p}}</a></li>
+          {% endif %}
+
+          {% endfor %}
+
+          {% endif %}
+
+          {% if leaves.has_next %}
+          <li class="page-item">
+            <a class="page-link" href="?page={{leaves.next_page_number}}">Next</a>
+          </li>
+          {% endif %}
+        </ul>
+      </nav>
     </div>
   </div>
+</div>
 
-  <script>
-    function leave(id)
-    {
-      document.getElementById('leave-id').value=id
-    }
-  </script>
-  
+<!-- Modal -->
+<div class="modal fade" id="leavemodal" tabindex="-1" aria-labelledby="leavemodalLabel" aria-hidden="true">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="leavemodalLabel">Leave</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post">
+          {% csrf_token %}
+          <input type="text" hidden name="id" id="leave-id">
+          <div class="mb-3">
+            <label for="leave-type" class="form-label">Approve/Reject</label>
+            <select class="form-select" aria-label="Default select example" name="status" id="leave-type">
+              <option selected value="Approved">Approve</option>
+              <option value="Rejected">Reject</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="description" class="form-label">Reply</label>
+            <textarea class="form-control" id="description" rows="3" placeholder="Write Discription....."
+              name="reply"></textarea>
+          </div>
+          <div class="d-grid">
+
+            <button type="submit" class="btn btn-success">Save</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+  function leave(id) {
+    document.getElementById('leave-id').value = id
+  }
+</script>
+
 {% endblock body %}
