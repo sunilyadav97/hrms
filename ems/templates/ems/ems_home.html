@@ -3,55 +3,80 @@
 {% block body %}
 <section>
     <div class="container">
-        <div class="row py-5 d-flex justify-content-center d-flex flex-column align-items-center" >
-            
-            <div class="col-6 d-flex justify-content-start bg-success py-2 text-white  rounded">
-                    <a href="{% url 'ems:all-leaves' %}" class="mx-2 text-white border-end  px-2">All Leaves</a>
-                    <a href="{% url 'ems:profile' %}" class="mx-2 text-white border-end px-2">Profile</a>
-                    <a href="{% url 'ems:all-attendance' %}" class="mx-2 text-white border-end px-2">All Attendance</a>
-            </div>
-            <div class="col-6 py-4">
-                <div class="">
-                <h5 class="fw-semibold">This is EMS Home</h5>
-                    <p>Here you will all people birthday notificationa and Also Anniversar. And some other stuff.</p>
-                </div>
+        <div class="row d-flex justify-content-center ">
+            <div class="col-6">
+                <div class="row px-2 py-5 d-flex justify-content-center flex-column align-items-center ">
 
-            </div>
-            <div class="col-6">
-                {% for birthday in birthdays %}
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <i class="fa fa-area-chart"></i><small class="text-muted"> Brithday Notification</small>
+                    <div class="col-12 d-flex justify-content-start bg-success py-2 text-white  rounded">
+                        <a href="{% url 'ems:all-leaves' %}" class="mx-2 text-white border-end  px-2">All Leaves</a>
+                        <a href="{% url 'ems:profile' %}" class="mx-2 text-white border-end px-2">Profile</a>
+                        <a href="{% url 'ems:all-attendance' %}" class="mx-2 text-white border-end px-2">All
+                            Attendance</a>
                     </div>
-                    <div class="card-body bg-warning">
-                        <h3 class="text-center my-5 birthday-wish">Happy Birthday {{birthday.name}} 🎂🎉</h3>
-                    </div>
-                    
-                </div>
-                {% endfor %}
-            </div>
-            {% for event in events %}
-            <div class="col-6 my-2">
-                <div class="card mb-3">
-                    <div class="card-header">
-                        <i class="fa fa-area-chart"></i>{{event.title}}
-                    </div>
-                    <div class="card-body">
-                        <div class="mb-2 text-muted">
-                            <small>
-                            <span class="text-muted">Event Date : </span>{{event.date | date:'d-M-Y'}}
-                        </small>
+                    <div class="col-12 py-4">
+                        <div class="">
+                            <h5 class="fw-semibold home-title">This is EMS Home Feed</h5>
+                            <p class="home-description text-muted">Here you will get all people birthday and Anniversary
+                                And also Events Notifications. And some other stuff.</p>
                         </div>
-                        <hr>
-                        <p >{{event.description}}</p>
+
                     </div>
-                    <div class="card-footer small text-muted">Posted: {{event.created_at|timesince}} Ago</div>
+                    <div class="col-12">
+                        {% for birthday in birthdays %}
+                        <div class="card mb-3 ">
+                            <div class="card-header">
+                                <i class="fa fa-area-chart"></i><small class="text-muted"> Brithday Notification</small>
+                            </div>
+                            <div class="card-body " style="background-color:#f8696980;">
+                                <h3 class="text-center my-5 birthday-wish">Happy Birthday {{birthday.name}} 🎂🎉</h3>
+                            </div>
+
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="col-12">
+                        {% for anniversary in anniversaries %}
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <i class="fa fa-area-chart"></i><small class="text-muted"> Anniversary
+                                    Notification</small>
+                            </div>
+                            <div class="card-body" style="background-color:#f8696980;">
+                                <h3 class="text-center my-5 birthday-wish">Congratulations {{anniversary.employee.name}}
+                                    👏 <br> You Have successfully completed {{anniversary.completed_years}} {% if anniversary.completed_years > 1 %}Years {% else %} Year {% endif %}</h3>
+
+                            </div>
+
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% for event in events %}
+                    <div class="col-12 my-2">
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <i class="fa fa-area-chart"></i>{{event.title}}
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-2 text-muted">
+                                    <small>
+                                        <span class="text-muted">Event Date : </span>{{event.date | date:'d-M-Y'}}
+                                    </small>
+                                </div>
+                                <hr>
+                                <p>{{event.description}}</p>
+                            </div>
+                            <div class="card-footer small text-muted">Posted: {{event.created_at|timesince}} Ago</div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="col-12">
+                        <hr>
+                        <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima dolor ipsa quibusdam?
+                            Molestias ad perspiciatis officia a accusamus quisquam rem magnam earum! Neque harum labore
+                            consequatur suscipit numquam aspernatur hic.</p>
+                    </div>
                 </div>
-            </div>
-            {% endfor %}
-            <div class="col-6">
-                <hr>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minima dolor ipsa quibusdam? Molestias ad perspiciatis officia a accusamus quisquam rem magnam earum! Neque harum labore consequatur suscipit numquam aspernatur hic.</p>
             </div>
         </div>
     </div>

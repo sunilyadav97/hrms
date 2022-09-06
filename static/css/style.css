@@ -131,6 +131,12 @@
   font-size: var(--h3-font-size);
   color: green;
 }
+.home-title{
+  font-size: var(--h3-font-size);
+}
+.home-description{
+  font-size: var(--small-font-size);
+}
 
 .dashboard-title{
   font-size: var(--h3-font-size);

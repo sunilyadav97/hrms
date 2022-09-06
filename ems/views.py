@@ -37,10 +37,24 @@ def dashboard(request):
                     print('Not Happy Birthday')
             
             context['birthdays']=birthdays      
-                
-
-            print(birthdays)   
-
+            
+            anniversaries=[]
+            for i in employees:
+                joing_base=str(i.joining_date).split('-')    
+                j_day=int(joing_base[2])
+                j_month=int(joing_base[1])
+                j_year=int(joing_base[0])
+                completed_years=year-j_year
+                data={}
+                if j_day== day and j_month==month and completed_years>0:
+                    print(i)
+                    data['completed_years']=completed_years
+                    data['employee']=i
+                    anniversaries.append(data)
+                    
+                    print('Happy Anniversary',i.name,completed_years)
+ 
+            context['anniversaries']=anniversaries
 
             if not request.user.is_superuser:
                 profile_obj=Employee.objects.get(user=request.user)
@@ -90,17 +104,19 @@ def profile(request):
                         context['name']=name[0]
                     else:
                         context['birthday']=False
+
+                    # Getting Anniversary of Employee
                     joining_date=str(profile.joining_date).split('-')    
                     j_day=int(joining_date[2])
                     j_month=int(joining_date[1])
                     j_year=int(joining_date[0])
                     
-                    anny_year=year-j_year
-                    if j_day == day and j_month == month and anny_year >0:
-                        print(anny_year)
+                    completed_yers=year-j_year
+                    if j_day == day and j_month == month and completed_yers >0:
+                        print(completed_yers)
                         anniversary={
                             'name':name[0],
-                            'completed_years':anny_year
+                            'completed_years':completed_yers
                         }
                         context['anniversary']=anniversary
                                                                      

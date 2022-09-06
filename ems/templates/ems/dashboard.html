@@ -14,7 +14,7 @@
                         <!-- Breadcrumbs-->
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item">
-                                <h3 class="dashboard"><a >Dashboard</a></h3>
+                                <h3 class="dashboard"><a>Dashboard</a></h3>
                             </li>
                             <!-- <li class="breadcrumb-item active">My Dashboard</li> -->
                         </ol>
@@ -28,10 +28,11 @@
                                         </div>
                                         <div class="mr-5 ">
                                             <h3 class="dashboard-title">
-                                                <a class="text-light" href="{% url 'ems:dashboard-leaves' %}">Leaves</a></h3>
+                                                <a class="text-light" href="{% url 'ems:dashboard-leaves' %}">Leaves</a>
+                                            </h3>
                                         </div>
                                     </div>
-                                    <a class="card-footer text-white clearfix small z-1" >
+                                    <a class="card-footer text-white clearfix small z-1">
                                         <span class="float-left">{{leaves}}</span>
                                         <span class="float-right">
                                             <i class="fa fa-angle-right"></i>
@@ -47,10 +48,11 @@
                                         </div>
                                         <div class="mr-5">
                                             <h3 class="dashboard-title">
-                                                <a class="text-light" href="{% url 'ems:employee-view' %}">Staff</a></h3>
+                                                <a class="text-light" href="{% url 'ems:employee-view' %}">Staff</a>
+                                            </h3>
                                         </div>
                                     </div>
-                                    <a class="card-footer text-white clearfix small z-1" >
+                                    <a class="card-footer text-white clearfix small z-1">
                                         <span class="float-left">{{employees}}</span>
                                         <span class="float-right">
                                             <i class="fa fa-angle-right"></i>
@@ -65,11 +67,15 @@
                                             <i class="fa fa-fw fa-shopping-cart"></i>
                                         </div>
                                         <div class="mr-5">
-                                            <h3 class="dashboard-title"><h3 class="dashboard-title">
-                                                <a class="text-light" href="{% url 'ems:view-department' %}">Department</a></h3></h3>
+                                            <h3 class="dashboard-title">
+                                                <h3 class="dashboard-title">
+                                                    <a class="text-light"
+                                                        href="{% url 'ems:view-department' %}">Department</a>
+                                                </h3>
+                                            </h3>
                                         </div>
                                     </div>
-                                    <a class="card-footer text-white clearfix small z-1" >
+                                    <a class="card-footer text-white clearfix small z-1">
                                         <span class="float-left">{{departments}}</span>
                                         <span class="float-right">
                                             <i class="fa fa-angle-right"></i>
@@ -84,11 +90,14 @@
                                             <i class="fa fa-fw fa-support"></i>
                                         </div>
                                         <div class="mr-5">
-                                            <h3 class="dashboard-title"><h3 class="dashboard-title">
-                                                <a class="text-light" href="{% url 'ems:view-role' %}">Role</a></h3></h3>
+                                            <h3 class="dashboard-title">
+                                                <h3 class="dashboard-title">
+                                                    <a class="text-light" href="{% url 'ems:view-role' %}">Role</a>
+                                                </h3>
+                                            </h3>
                                         </div>
                                     </div>
-                                    <a class="card-footer text-white clearfix small z-1" >
+                                    <a class="card-footer text-white clearfix small z-1">
                                         <span class="float-left">{{roles}}</span>
                                         <span class="float-right">
                                             <i class="fa fa-angle-right"></i>
@@ -107,20 +116,51 @@
                             </div>
                             <div class="card-footer small text-muted">Updated yesterday at 11:59 PM</div>
                         </div>
-                            {% for birthday in birthdays %}
-                            <div class="card mb-3">
-                                <div class="card-header">
-                                    <i class="fa fa-area-chart"></i><small class="text-muted"> Brithday Notification</small>
-                                </div>
-                                <div class="card-body bg-warning">
-                                    <h3 class="text-center my-5 birthday-wish">Happy Birthday {{birthday.name}} 🎂🎉</h3>
-                                </div>
-                                
+                        <div class="row">
+                            <div class="col-8 bg-light p-5 ">
+                                <h2>Main Home Feed</h2>
                             </div>
-                            {% endfor %}
-                        
+                            <div class="col-4">
+                                <div class="row">
+                                    {% for birthday in birthdays %}
+                                    <div class="col-12">
+                                        <div class="card mb-3 ">
+                                            <div class="card-header">
+                                                <i class="fa fa-area-chart"></i><small class="text-muted"> Brithday
+                                                    Notification</small>
+                                            </div>
+                                            <div class="card-body " style="background-color:#f8696980;">
+                                                <h3 class="text-center my-5 birthday-wish">Happy Birthday
+                                                    {{birthday.name}} 🎂🎉
+                                                </h3>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                    {% endfor %}
+                                    {% for anniversary in anniversaries %}
+                                    <div class="col-12">
+                                        <div class="card mb-3">
+                                            <div class="card-header">
+                                                <i class="fa fa-area-chart"></i><small class="text-muted"> Anniversary
+                                                    Notification</small>
+                                            </div>
+                                            <div class="card-body" style="background-color:#f8696980;">
+                                                <h3 class="text-center my-5 birthday-wish">Congratulations
+                                                    {{anniversary.employee.name}}
+                                                    👏 <br> You Have successfully completed
+                                                    {{anniversary.completed_years}} {% if anniversary.completed_years > 1 %}Years {% else %} Year {% endif %}</h3>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>

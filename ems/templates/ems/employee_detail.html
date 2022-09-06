@@ -148,10 +148,10 @@
                         <select class="form-select employee_detail" aria-label="Default select example"
                             id="select-status" name="select-status" required>
                             {% if employee_obj.status == 'Working' %}
-                            <option value="{{employee_obj.role}}" selected>{{employee_obj.status}}</option>
+                            <option value="{{employee_obj.status}}" selected>{{employee_obj.status}}</option>
                             <option value="Not working">Not Working</option>
                             {% else %}
-                            <option value="{{employee_obj.role}}" selected>{{employee_obj.status}}</option>
+                            <option value="{{employee_obj.status}}" selected>{{employee_obj.status}}</option>
                             <option value="Working" >Working</option>
                             {% endif %}
                         </select>
