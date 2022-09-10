@@ -34,6 +34,7 @@ class Address(models.Model):
 
 class Employee(models.Model):
     empid=models.AutoField(primary_key=True)
+    employeeid=models.IntegerField(max_length=6,unique=True, null=True, blank=True)
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     name=models.CharField(max_length=50)
     father_name=models.CharField(max_length=50)
