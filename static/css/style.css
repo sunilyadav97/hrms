@@ -101,8 +101,22 @@
 .dropdown-item:hover{
     background-color:#212529 !important;
 }
-
-
+.nav-bg{
+  background-color: #c30000e6 !important;
+}
+.home-button{
+  position: absolute;
+  top: 50%;  
+  left: 50%; 
+  transform: translate(-50%, -50%);
+}
+.home-body{
+  background:url('../css/../images/home.jpeg');
+  height: 100vh;
+  width: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
 /* ============SIDE NAVBAR========= */
 .offcanvas.offcanvas-start{
     top: 56px !important;
@@ -145,7 +159,7 @@
 .birthday-wish{
   font-weight: var(--font-bold);
   font-size: var(--h3-font-size);
-  color: green;
+  color: white;
 }
 .home-title{
   font-size: var(--h3-font-size);

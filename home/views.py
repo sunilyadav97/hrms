@@ -5,6 +5,10 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
 def home(request):
+   
+    return render(request,'home/home.html')
+
+def register(request):
     context={}
     try:
         if request.method == 'POST':
@@ -29,10 +33,8 @@ def home(request):
                     else:
                         messages.warning(request,'Somthing Went wrong!')
     except Exception as e:
-        print("Home Exception : ",e)
-    
-    return render(request,'home/home.html',context)
-
+        print('Rgister View Exception : ',e)
+    return render(request,'home/register.html',context)
 
 def signin(request):
     try:

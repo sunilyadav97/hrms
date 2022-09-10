@@ -28,7 +28,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark nav-bg">
         <div class="container">
           <a class="navbar-brand" href="/">Techinterio</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,12 +36,10 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
+              {% if request.user.is_authenticated %}
                 <a class="nav-link active" href="{% url 'ems:ems' %}">EMS</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="#">Chat</a>
-              </li>
+              {% endif %}
             </ul>
             <div class="d-flex">
               <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -52,7 +50,7 @@
       </nav>
 
 
-<main class="my-5 pt-3">
+<main class="">
        
     {% for message in messages %}
        <div class="alert alert-{{ message.tags }} mb-0 alert-dismissible fade show w-50 m-auto mt-3" role="alert">

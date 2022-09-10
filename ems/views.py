@@ -86,7 +86,7 @@ def profile(request):
         if request.user.is_authenticated:
             if not request.user.is_superuser:
                 try:
-                    events=Events.objects.exclude(is_completed=True)
+                    events=Events.objects.exclude(is_completed=True).order_by('-id')[:10] 
                     profile=Employee.objects.get(user=request.user)
                     address=Address.objects.get(user=request.user)
                     dob=str(profile.dob).split('-')

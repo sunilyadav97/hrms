@@ -8,7 +8,10 @@ font-size: 16px !important;
 {% block body %}
 <section class="py-5">
     <div class="container">
-        <div class="row d-flex justify-content-center align-items-cent">
+        <div class="row d-flex justify-content-center align-items-center flex-column">
+            <div class="col-6 mb-5">
+                <a href="{% url 'ems:profile' %}" class="my-3 btn nav-bg text-white"><i class='bx bx-arrow-back'></i> Back to Profile</a>
+            </div>
             <div class="col-6">
                 <div class="card mb-3">
                     <div class="card-header">
