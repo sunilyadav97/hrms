@@ -3,10 +3,21 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, logout,authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from .models import *
+import random
 
 def home(request):
-   
-    return render(request,'home/home.html')
+    
+    context={}
+    try:
+        images=list(SliderImage.objects.all())
+        random.shuffle(images)
+        context['images']=images
+        
+    except Exception as e:
+       print('Home Exception : ',e)
+
+    return render(request,'home/home.html',context)
 
 def register(request):
     context={}

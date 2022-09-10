@@ -105,10 +105,10 @@
   background-color: #c30000e6 !important;
 }
 .home-button{
-  position: absolute;
-  top: 50%;  
-  left: 50%; 
-  transform: translate(-50%, -50%);
+  /* position: fixed; */
+  top: 50% !important;  
+  left: 12% !important; 
+  /* transform: translate(-50%, -50%) !important; */
 }
 .home-body{
   background:url('../css/../images/home.jpeg');

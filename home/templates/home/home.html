@@ -1,22 +1,34 @@
 {% extends './dependancy.html' %}
 {% load static %}
 {% block title %}TechInterio EMS{% endblock title %}
+{% block css %}
+.carousel-item{
+  height:91vh;
+  filter:blur(1.5px) brightness(60%);
+  transform:scale(1.0);
+}
+.carousel-item img{
+transform:scale(1.0);
+}
 
+{% endblock css %}
 {% block d-body %}
 
 <section class="">
     {% if not request.user.is_authenticated %}
     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
         <div class="carousel-inner">
+          {% for item in images %}
+          {% if forloop.counter == 1 %}
           <div class="carousel-item active">
-            <img src="{% static 'images/home.jpeg' %}" class="d-block w-100" alt="...">
+            <img src="{{item.image.url}}" class="d-block w-100 " alt="...">
           </div>
+          {% endif %}
           <div class="carousel-item">
-            <img src="{% static 'images/Cafeteria.jpeg' %}" class="d-block w-100" alt="...">
+            <img src="{{item.image.url}}" class="d-block w-100" alt="...">
           </div>
-          <div class="carousel-item">
-            <img src="{% static 'images/Director.jpeg' %}" class="d-block w-100" alt="...">
-          </div>
+          {% endfor %}
+         
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -31,7 +43,7 @@
     <div class="container">
         <div class="row d-flex justify-content-center ">
             {% if not request.user.is_authenticated %}
-            <div class="home-button"><h6 class="nav-bg text-white py-3 d-flex align-items-center justify-content-around w-25 m-auto rounded text-center "><a class="text-white" href="{% url 'home:register' %}">Register</a> <a class="text-white" href="{% url 'home:login' %}">Login</a></h6></div>
+            <div class="home-button fixed-bottom w-75"><h6 class=" nav-bg text-white py-3 d-flex align-items-center justify-content-around w-25 m-auto rounded text-center "><a class="text-white" href="{% url 'home:register' %}">Register</a> <a class="text-white" href="{% url 'home:login' %}">Login</a></h6></div>
             {% else %}
             <div class="col-12 col-sm-6">
                 <h3>Welcome to TechInterio EMS</h3>
