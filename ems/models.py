@@ -38,6 +38,7 @@ class Employee(models.Model):
     name=models.CharField(max_length=50)
     father_name=models.CharField(max_length=50)
     avtar=models.ImageField(upload_to='employee_profile_images', blank=True , default='profile.jpg')
+    document=models.FileField(upload_to='employee_documents',null=True,blank=True)
     dob=models.DateField()
     email=models.EmailField(max_length=100)
     mobile_no=models.IntegerField()
