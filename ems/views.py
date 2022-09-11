@@ -40,28 +40,34 @@ def dashboard(request):
             
             anniversaries=[]
             for i in employees:
-                joing_base=str(i.joining_date).split('-')    
-                j_day=int(joing_base[2])
-                j_month=int(joing_base[1])
-                j_year=int(joing_base[0])
-                completed_years=year-j_year
-                data={}
-                if j_day== day and j_month==month and completed_years>0:
-                    print(i)
-                    data['completed_years']=completed_years
-                    data['employee']=i
-                    anniversaries.append(data)
-                    
-                    print('Happy Anniversary',i.name,completed_years)
+                if i.joining_date:
+                    joing_base=str(i.joining_date).split('-')    
+                    j_day=int(joing_base[2])
+                    j_month=int(joing_base[1])
+                    j_year=int(joing_base[0])
+                    completed_years=year-j_year
+                    data={}
+                    if j_day== day and j_month==month and completed_years>0:
+                        print(i)
+                        data['completed_years']=completed_years
+                        data['employee']=i
+                        anniversaries.append(data)
+                        
+                        print('Happy Anniversary',i.name,completed_years)
  
             context['anniversaries']=anniversaries
 
             if not request.user.is_superuser:
-                profile_obj=Employee.objects.get(user=request.user)
-                context['profile']=profile_obj
-                events=Events.objects.all()[0:2]
-                context['events']=events
-                return render(request,'ems/ems_home.html',context)
+                emp_obj=Employee.objects.filter(user=request.user).exists()
+                if not emp_obj:
+                    messages.info(request,'Add Personal Information!')
+                    return redirect('ems:add-employee')
+                else:
+                    profile_obj=Employee.objects.get(user=request.user)
+                    context['profile']=profile_obj
+                    events=Events.objects.all()[0:2]
+                    context['events']=events
+                    return render(request,'ems/ems_home.html',context)
             else:
                 departments=Department.objects.all()
                 roles=Role.objects.all()
@@ -77,6 +83,7 @@ def dashboard(request):
             return redirect('home:login')
     except Exception as e:
         print('EMS Dashboard Exception : ',e)
+        
         messages.warning(request,'Somthing Went Wrong! Please Try after some time')
     return redirect('/')
 
@@ -106,19 +113,23 @@ def profile(request):
                         context['birthday']=False
 
                     # Getting Anniversary of Employee
-                    joining_date=str(profile.joining_date).split('-')    
-                    j_day=int(joining_date[2])
-                    j_month=int(joining_date[1])
-                    j_year=int(joining_date[0])
+                    if profile.joining_date != '':
+                        print('inside annivarsary')
+                        joining_date=str(profile.joining_date).split('-')    
+                        j_day=int(joining_date[2])
+                        j_month=int(joining_date[1])
+                        j_year=int(joining_date[0])
+                        completed_yers=year-j_year
+                        if j_day == day and j_month == month and completed_yers >0:
+                            print(completed_yers)
+                            anniversary={
+                                'name':name[0],
+                                'completed_years':completed_yers
+                            }
+                            context['anniversary']=anniversary
+                    else:
+                        messages.warning(request,'Please Add Joining Date!')
                     
-                    completed_yers=year-j_year
-                    if j_day == day and j_month == month and completed_yers >0:
-                        print(completed_yers)
-                        anniversary={
-                            'name':name[0],
-                            'completed_years':completed_yers
-                        }
-                        context['anniversary']=anniversary
                                                                      
                     context['profile']=profile
                     context['address']=address
@@ -157,18 +168,42 @@ def editProfile(request):
                 ephone=request.POST['ephone']
                 email=request.POST['email']
                 dob=request.POST['dob']
+                address=request.POST['address']
+                street=request.POST['street']
+                locality=request.POST['locality']
+                city=request.POST['city']
+                state=request.POST['state']
+                pincode=request.POST['pincode']
+                country=request.POST['country']
+
                 try:
                    avtar=request.FILES['profile-pic']
-                   emp_obj.avtar=avtar
+                   emp_obj.avtar=avtar                   
                 except:
                     pass 
+                
+                try:
+                    document=request.FILES['document']
+                    emp_obj.document=document
+                except:
+                    pass
+                
                 emp_obj.name=name
                 emp_obj.father_name=father_name
                 emp_obj.mobile_no=phone
-                emp_obj.emergency_mobile_no=ephone
+                if ephone != '':
+                    emp_obj.emergency_mobile_no=ephone
                 emp_obj.email=email
                 emp_obj.dob=dob
                 emp_obj.save()
+                address_obj.address=address
+                address_obj.street=street
+                address_obj.locality=locality
+                address_obj.pincode=pincode
+                address_obj.city=city
+                address_obj.state=state
+                address_obj.country=country
+                address_obj.save()
                 messages.success(request,'Updated Successfully')
                 return redirect('ems:profile')
                 
@@ -178,7 +213,22 @@ def editProfile(request):
         print('Edit Profile Exception : ',e)
 
     return render(request,'ems/edit_profile.html',context)
+
+@login_required()
+def changePassword(request):
+    new_password=request.POST['new-password']
+    confirm_password=request.POST['confirm-password']
+    user=User.objects.get(username=request.user.username)
+    if new_password ==  confirm_password:
+        user.set_password(new_password)
+        user.save()
+        messages.success(request,'Passowrd Updated Successfully!')
+    else:
+        messages.warning(request,'Both Passowrd should Match!')
+        
+    return redirect('ems:profile')
     
+
 @login_required()
 def createDepartment(request):
     context = {}
@@ -297,29 +347,14 @@ def deleteRole(request, pk):
 def addEmployee(request):
     context = {}
     try:
-        if not request.user.is_superuser:
-            profile_obj=Employee.objects.get(user=request.user)
-            context['profile']=profile_obj
-        users = User.objects.filter(~Q(is_superuser=True))
-        new_users=list()
         
-        # checking employee is created of users
-        for u in users:
-            obj=Employee.objects.filter(user=u).exists()
-            if not obj:
-                new_users.append(u)
-                
-        roles = Role.objects.all()
-        departments = Department.objects.all()
-        context['users'] = new_users
-        context['roles'] = roles
-        context['departments'] = departments
-
         if request.method == 'POST':
-            user = request.POST['select-user']
+            print('Post Method add Employee')
+            user = request.user
             full_name = request.POST['employee-name']
             father_name = request.POST['father-name']
             dob = request.POST['employee-dob']
+            document = request.FILES['document']
             phone_number = request.POST['phone-number']
             ephone_number= request.POST['ephone-number']
             email = request.POST['email']
@@ -330,32 +365,28 @@ def addEmployee(request):
             state = request.POST['state']
             pincode = request.POST['pincode']
             country = request.POST['country']
-            designation = request.POST['designation']
-            department = request.POST['select-department']
-            role = request.POST['select-role']
-            joining_date = request.POST['joining-date']
+            joining_date=request.POST['joining-date']
             
+            if ephone_number == '':
+                ephone_number=None
 
-            if user and full_name and father_name and dob and email and phone_number and address and street and locality and city and state and pincode and country and designation and department and role and joining_date:
-                if user and role and department == 'default':
-                    messages.warning(request, '*All fields are Mandatory')
-                    return redirect('ems:employee-add')
+            if user and full_name and father_name and dob and email and phone_number and address and street and locality and city and state and pincode and country and joining_date:
 
-                user_obj = User.objects.get(username=user)
                 check_employee = Employee.objects.filter(
-                    user=user_obj).exists()
-                print('user obj ',user_obj)
+                    user=user).exists()
+                
                 if check_employee:
                     messages.warning(
-                        request, 'This user already in use Please Create new user!')
-                    return redirect('ems:employee-add')
+                        request, 'You have Already added personal Informatin!')
+                    return redirect('ems:ems')
 
-                check_address = Address.objects.filter(user=user_obj).exists()
+                check_address = Address.objects.filter(user=user).exists()
+                
                 if check_address:
-                    address_obj = Address.objects.get(user=user_obj)
+                    address_obj = Address.objects.get(user=user)
                 else:
                     address_obj = Address.objects.create(
-                        user=user_obj,
+                        user=user,
                         address=address,
                         street=street,
                         locality=locality,
@@ -366,30 +397,28 @@ def addEmployee(request):
                     )
 
                 print('Address Obj : ', address_obj)
-                d_obj = Department.objects.get(name=department)
-                print('Department Obj', d_obj)
-                role_obj = Role.objects.get(name=role)
-                print('Role Obj', role_obj)
+                
 
                 emp_obj = Employee.objects.create(
-                    user=user_obj,
+                    user=user,
                     name=full_name,
                     father_name=father_name,
                     dob=dob,
+                    document=document,
                     email=email,
                     mobile_no=phone_number,
-                   emergency_mobile_no=ephone_number,
+                    emergency_mobile_no=ephone_number,
                     address=address_obj,
-                    designation=designation,
-                    role=role_obj,
-                    department=d_obj,
                     joining_date=joining_date,
                     status='Working'
                 )
                 print('Employee Obj : ', emp_obj)
-                messages.success(
-                    request, 'New Employee Reigsterd Successfully!')
-                return redirect('ems:employee-view')
+                if emp_obj:
+                    messages.success(request, 'Added Successfully!')
+                    return redirect('ems:profile')
+                else:
+                    messages.warning(request,'Something Went Wrong!')
+                    
             else:
                 print('fail')
                 messages.warning(request, 'All fields are mandouttimery')

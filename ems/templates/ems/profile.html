@@ -5,16 +5,25 @@
     <div class="container">
         <div class="row d-flex justify-content-between">
             <div class="col-7 ">
+                <table class="table table-bordered">
+                    <tr class="text-center w-100">
+                        <td class="w-50"><a href="{% url 'ems:profile-edit' %}">Edit Profile</a></td>
+                        <td class="w-50"><a href="" data-bs-toggle="modal" data-bs-target="#changePassword" >Change Password</a></td>
+                    </tr>
+                </table>
                 <div class="personal-info">
                     <table class="table table-borderless">
+                        
                         <tr>
                             <td colspan="2">
                                 <div class="avtar d-flex align-items-center flex-column">
                                     <img src="{{profile.imageURL}}" alt="" class="rounded border ">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h6 class="m-2 profile-title"><b>Username - </b>{{profile.user.username}}</h6>
-                                        <a href="{% url 'ems:profile-edit' %}" class="fw-semibold mx-2">Edit Profile</a>
+                                        
+                                        
                                     </div>
+                                    <span>Employee Id - {{profile.employeeid}}</span>
                                 </div>
                             </td>
                            
@@ -48,7 +57,7 @@
                         </tr>
                         <tr>
                             <td><b>State - </b>{{address.state}}</td>
-                            <td><b>Pin Code - </b>{{address.pincode}}</td>
+                            <td><b>Pin Code - </b>{{address.pincode|floatformat:'0'}}</td>
                         </tr>
                         <tr>
                             <td><b>Country - </b>{{address.country}}</td>
@@ -94,4 +103,37 @@
         </div>
     </div>
 </section>
+
+
+  
+  <!-- Change Password Modal -->
+  <div class="modal fade" id="changePassword" tabindex="-1" aria-labelledby="changePasswordLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="changePasswordLabel">Change Password</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form method="post" action="{% url 'ems:change-password' %}">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="new-password" class="form-label">New Password</label>
+                  <input type="password" class="form-control" id="new-password" name="new-password" required>
+                </div>
+                <div class="mb-3">
+                  <label for="cnew-password" class="form-label">Confirm Password</label>
+                  <input type="password" class="form-control" id="cnew-password" name="confirm-password" required>
+                </div>
+                <div class="d-grid">
+
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>        
+              </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
 {% endblock body %}

@@ -4,6 +4,7 @@ from django.contrib.auth import login, logout,authenticate
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .models import *
+from ems.models import *
 import random
 
 def home(request):
@@ -55,8 +56,19 @@ def signin(request):
             user=authenticate(username=username,password=password)
             if user is not None:
                 login(request,user)
-                messages.success(request,'Logged in successfully!')
-                return redirect('ems:ems')
+                print('user : ',user)
+                emp_obj=Employee.objects.filter(user=user)
+                
+                if user.is_superuser:
+                    messages.success(request,'Logged in successfully!')
+                    return redirect('ems:ems')
+                    
+                if emp_obj:
+                    messages.success(request,'Logged in successfully!')
+                    return redirect('ems:ems')
+                else:
+                    messages.info(request,'Add Your Personal info!')
+                    return redirect('ems:add-employee')
             else:
                 messages.warning(request,'Credentials Not Match!')
     except Exception as e:

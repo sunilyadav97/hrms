@@ -97,6 +97,26 @@
 .delete span {
   font-size: 16px !important;
 }
+
+
+/* ============SCROLL BAR============= */
+::-webkit-scrollbar {
+  width: .6rem;
+  border-radius: .5rem;
+  background-color: white;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color:#ff021c;
+  border-radius: .5rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: lightblue;
+}
+
+
+
 /* ========Navbar======= */
 .dropdown-item:hover{
     background-color:#212529 !important;

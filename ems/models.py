@@ -34,7 +34,7 @@ class Address(models.Model):
 
 class Employee(models.Model):
     empid=models.AutoField(primary_key=True)
-    employeeid=models.IntegerField(max_length=6,unique=True, null=True, blank=True)
+    employeeid=models.IntegerField(unique=True, null=True, blank=True)
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     name=models.CharField(max_length=50)
     father_name=models.CharField(max_length=50)
@@ -45,10 +45,10 @@ class Employee(models.Model):
     mobile_no=models.IntegerField()
     emergency_mobile_no=models.IntegerField(null=True,blank=True)
     address=models.OneToOneField(Address, on_delete=models.CASCADE,blank=True, null=True,)
-    designation=models.CharField(max_length=70)
+    designation=models.CharField(max_length=70,null=True, blank=True)
     role=models.ForeignKey(Role, on_delete=models.SET_NULL,blank=True, null=True,)
     department=models.ForeignKey(Department, on_delete=models.SET_NULL,blank=True, null=True,)
-    joining_date=models.DateField()
+    joining_date=models.DateField(null=True, blank=True)
     status=models.CharField(max_length=15)
     def __str__(self):
         return self.name
