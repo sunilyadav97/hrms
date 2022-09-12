@@ -9,4 +9,5 @@ admin.site.register(Address)
 admin.site.register(Attendance)
 admin.site.register(Leave)
 admin.site.register(Events)
+admin.site.register(DepartmentQuery)
 

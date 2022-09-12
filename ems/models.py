@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils.timezone import now
@@ -94,5 +95,23 @@ class Events(models.Model):
     
     def __str__(self):
         return self.title
+    
+# class PayRoll(models.Model):
+#     employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
+#     payrollid=models.CharField(max_length=10,unique=True)
+#     working_days=models.IntegerField()
+    
+class DepartmentQuery(models.Model):
+    query_id=models.IntegerField(unique=True)
+    employee=models.ForeignKey(Employee, on_delete=models.CASCADE)
+    department=models.ForeignKey(Department,on_delete=models.CASCADE)
+    subject=models.CharField(max_length=100)
+    description=models.TextField(max_length=400)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    status=models.CharField(max_length=20)
+
+    def __str__(self):
+        return f'{self.subject} {self.query_id}'
 
 

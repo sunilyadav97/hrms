@@ -14,7 +14,8 @@ def home(request):
         images=list(SliderImage.objects.all())
         random.shuffle(images)
         context['images']=images
-        
+        if request.user.is_authenticated:
+            return redirect('ems:ems')
     except Exception as e:
        print('Home Exception : ',e)
 

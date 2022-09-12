@@ -1,4 +1,4 @@
-
+from .utils import *
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
@@ -887,4 +887,31 @@ def createPayRoll(request):
     except Exception as e:
         print("Add PayRoll Exception : ",e)
     return render(request,'ems/add_payroll.html',context)
+
+@login_required()
+def createQuery(request):
+    context={}
+    try:
+        departments=Department.objects.all()
+        context['departments']=departments
+        if request.method == 'POST':
+            department=request.POST['department']
+            subject=request.POST['subject']
+            description=request.POST['description']
+            department_obj=Department.objects.get(id=department)
+            emp_obj=Employee.objects.get(user=request.user)
+            id=generateId(request)
+            obj=DepartmentQuery.objects.create(
+                employee=emp_obj,
+                subject=subject,
+                department=department_obj,
+                description=description,
+                status='Pending',
+                query_id=id
+            )
+            print(obj)
+
+    except Exception as e:
+        print('Create Query Exception : ',e)
+    return render(request,'ems/create_query.html',context)
     

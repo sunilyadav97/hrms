@@ -1,0 +1,38 @@
+{% extends './base.html' %}
+{% block title %} Query | EMS{% endblock title %}
+{% block body %}
+
+<section class="py-5">
+<div class="container">
+    <div class="row d-flex align-items-center justify-content-center ">
+        <div class="col-9">
+            <h3 class=" my-3 derpartment-title">Create Query</h3>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="employee">Departemnt</label>
+                    <select class="form-select" aria-label="Default select example" name="department">
+                        <option selected>Please Select</option>
+                        {% for department in departments %}
+                        <option value="{{department.id}}">{{department.name}}</option>
+                        {% endfor %}
+                      </select>
+                </div>
+                <div class="mb-3">
+                  <label for="subject" class="form-label">Subject</label>
+                  <input type="text" class="form-control" id="subject" name="subject">
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="form-label">Describe</label>
+                    <textarea class="form-control" id="description" rows="3" name="description"></textarea>
+                  </div>
+                  <div class="d-grid">
+                      <button type="submit" class="btn btn-primary">Submit</button>
+                  </div>
+              </form>
+        </div>
+    </div>
+</div>
+</section>
+
+{% endblock body %}
