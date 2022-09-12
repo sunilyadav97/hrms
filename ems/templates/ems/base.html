@@ -49,11 +49,11 @@
         <nav class="navbar navbar-expand-lg nav-bg navbar-dark shadow-sm fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="{% url 'home:home' %}">TechInterio</a>
-                <a class="cursor-pointer nav-link active" data-bs-toggle="offcanvas"
-                            data-bs-target="#staticBackdrop" aria-controls="staticBackdrop"><span
-                                class="navbar-toggler-icon"></span></a>
-                
-                    {% comment %} <li class="nav-item"><a class="nav-link active" href="{% url 'ems:ems' %}">Dashboard</a></li> {% endcomment %}
+                <a class="cursor-pointer nav-link active" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop"
+                    aria-controls="staticBackdrop"><span class="navbar-toggler-icon"></span></a>
+
+                {% comment %} <li class="nav-item"><a class="nav-link active" href="{% url 'ems:ems' %}">Dashboard</a>
+                </li> {% endcomment %}
 
 
             </div>
@@ -124,17 +124,29 @@
                 </div>
 
                 <li class="nav-item accordion-button collapsed sub-arrow-forward" data-bs-toggle="collapse"
-                    data-bs-target="#event-nav" aria-expanded="false" aria-controls="employee-nav"
-                    onclick="rotate()">
+                    data-bs-target="#event-nav" aria-expanded="false" aria-controls="event-nav" onclick="rotate()">
                     <a class="nav-link w-100 arrow" href="#">Event</a><span
                         class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
                 </li>
                 <div id="event-nav" class="accordion-collapse collapse">
-                <li class="nav-item sub-nav"><a href="{% url 'ems:create-event' %}" class="nav-link">Create Event</a></li>
-                <li class="nav-item sub-nav"><a href="{% url 'ems:view-events' %}" class="nav-link">View Events</a></li>
-            </div>
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:create-event' %}" class="nav-link">Create
+                            Event</a></li>
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:view-events' %}" class="nav-link">View Events</a>
+                    </li>
+                </div>
+
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:attendance' %}">Attendance</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">PayRoll</a></li>
+                
+                <li class="nav-item accordion-button collapsed sub-arrow-forward" data-bs-toggle="collapse"
+                    data-bs-target="#payroll-nav" aria-expanded="false" aria-controls="payroll-nav" onclick="rotate()">
+                    <a class="nav-link w-100 arrow" href="#">PayRoll</a><span
+                        class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
+                </li>
+                <div id="payroll-nav" class="accordion-collapse collapse">
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:create-payroll' %}" class="nav-link">Add PayRoll</a></li>
+                    <li class="nav-item sub-nav"><a href="#" class="nav-link">View PayRolls</a>
+                    </li>
+                </div>
                 <li class="nav-item"><a class="nav-link" href="#">Hirings</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">IT</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Reimbursement</a></li>

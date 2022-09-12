@@ -880,11 +880,11 @@ def event(request,id):
     return render(request,'ems/event.html',context)
 
 @login_required()
-def payRoll(request):
+def createPayRoll(request):
     context={}
     try:
         pass
     except Exception as e:
         print("Add PayRoll Exception : ",e)
-    return render(request,'ems:payroll.html',context)
+    return render(request,'ems/add_payroll.html',context)
     

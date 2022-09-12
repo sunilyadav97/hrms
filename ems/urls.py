@@ -28,5 +28,6 @@ urlpatterns=[
     path('view-events/',viewEvents,name='view-events'),
     path('delete-event/<id>/',deleteEvent,name='delete-event'),
     path('event/<id>/',event,name='event'),
+    path('create-payroll',createPayRoll,name='create-payroll'),
     
 ]
