@@ -435,7 +435,7 @@ def viewEmployee(request):
             profile_obj=Employee.objects.get(user=request.user)
             context['profile']=profile_obj
         employees = Employee.objects.all().order_by('-empid')
-        paginator=Paginator(employees,2)
+        paginator=Paginator(employees,10)
         page_no=request.GET.get('page')
 
         total_pages=paginator.page_range
@@ -484,6 +484,16 @@ def employeeDetail(request, empid):
             role = request.POST['select-role']
             joining_date = request.POST['joining-date']
             status = request.POST['select-status']
+            employeeid = request.POST['employeeid']
+            
+            if department == 'None':
+                print('department print')
+                messages.warning(request,'*Please Select Department!')
+                return redirect('ems:employee-detail',employee_obj.empid)
+            elif role == 'None':
+                messages.warning(request,'*Please Select Role!')
+                return redirect('ems:employee-detail',employee_obj.empid)
+            
 
             if full_name and father_name and dob and email and phone_number and address and street and locality and city and state and pincode and country and designation and department and role and joining_date and status:
                 
@@ -492,7 +502,7 @@ def employeeDetail(request, empid):
                     employee_obj.emergency_mobile_no=None
                 else:
                     employee_obj.emergency_mobile_no=ephone_number
-                    
+                
                 r_obj = Role.objects.get(name=role)
                 employee_obj.name = full_name
                 employee_obj.father_name = father_name
@@ -515,6 +525,19 @@ def employeeDetail(request, empid):
                 addres_obj.pincode = pincode
                 addres_obj.country = country
                 addres_obj.save()
+                
+                if employeeid == '':
+                    messages.warning(request,'Please Enter Employee Id!')
+                    return redirect('ems:employee-detail',employee_obj.empid)
+                else:
+                    check_employeeid=Employee.objects.filter(employeeid=employeeid).exists()
+                    if check_employeeid:
+                        messages.warning(request,'This Employee Id Already Exits! Please Try Another')
+                        return redirect('ems:employee-detail',employee_obj.empid)
+                    else:
+                        employee_obj.employeeid=employeeid
+                        employee_obj.save()
+
                 messages.success(request, 'Updated successfully!')
                 return redirect('ems:employee-view')
             else:
@@ -844,6 +867,7 @@ def deleteEvent(request,id):
     
     return redirect('ems:view-events')
 
+@login_required()
 def event(request,id):
     context={}
     try:
@@ -854,3 +878,13 @@ def event(request,id):
         print('Events Exception : ',e)
         
     return render(request,'ems/event.html',context)
+
+@login_required()
+def payRoll(request):
+    context={}
+    try:
+        pass
+    except Exception as e:
+        print("Add PayRoll Exception : ",e)
+    return render(request,'ems:payroll.html',context)
+    

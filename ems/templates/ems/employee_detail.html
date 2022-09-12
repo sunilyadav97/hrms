@@ -8,18 +8,16 @@
             <div class="profile-image my-3">
                 <img src="{{employee_obj.imageURL}}" alt="" class="rounded">
             </div>
-                <button class="btn btn-warning" onclick="edit()">Edit Details</button>
+                <div class="float-center text-center"><span class="fw-semibold">Username -</span> {{employee_obj.user}}</div>
+                <div>
+                    <button class="btn btn-warning" onclick="edit()">Edit Details</button>
+                    <a class="float-end" href="{% url 'ems:employee-view' %}">See Employee's</a>
+
+                </div>
             <form action="" method="post" class="mt-4 add-employee">
                 {% csrf_token %}
                 <div class="row gy-1">
                 
-                    <div class="mb-3 col-12 col-sm-6">
-                        <label for="select-user" class="form-label">User </label>
-                        <select readonly class="form-select employee_detail" aria-label="Default select example"
-                            id="select-user" required name="select-user">
-                            <option value="{{employee_obj.user}}" selected>{{employee_obj.user}}</option>
-                        </select>
-                    </div>
                     <div class="mb-3 col-12 col-sm-6">
                         <label for="fname" class="form-label">Name</label>
                         <input type="text" class="form-control employee_detail" id="fname" name="employee-name" required
@@ -42,8 +40,13 @@
 
 
                     <div class="mb-3 col-12 col-sm-6">
-                        <label for="email" class="form-label">Phone No.</label>
-                        <input type="number" class="form-control employee_detail" id="email"
+                        <label for="empid" class="form-label">Employee Id</label>
+                        <input type="number" class="form-control employee_detail" id="empid"
+                            value="{{employee_obj.employeeid}}" name="employeeid">
+                    </div>
+                    <div class="mb-3 col-12 col-sm-6">
+                        <label for="phone-no" class="form-label">Phone No.</label>
+                        <input type="number" class="form-control employee_detail" id="phone-no"
                             value="{{employee_obj.mobile_no}}" name="phone-number" required>
                     </div>
                     <div class="mb-3 col-6">
@@ -56,8 +59,6 @@
                         <input type="email" class="form-control employee_detail" id="email"
                             value="{{employee_obj.email}}" name="email" required>
                     </div>
-
-
 
                     <div class="mb-3 col-12 col-sm-6">
                         <label for="address" class="form-label">Address</label>
@@ -109,7 +110,9 @@
                         <label for="select-department" class="form-label">Department</label>
                         <select class="form-select employee_detail" aria-label="Default select example"
                             id="select-department" name="select-department" required>
-
+                            {% if employee_obj.department == None %}
+                            <option value="{{employee_obj.department}}" >{{employee_obj.department}}</option>
+                            {% endif %}
 
                             {% for department in departments %}
                             {% if department == employee_obj.department %}
@@ -117,6 +120,7 @@
                             {% else %}
                             <option value="{{department.name}}">{{department.name}}</option>
                             {% endif %}
+                            
 
                             {% endfor %}
                         </select>
@@ -127,6 +131,9 @@
                         <label for="select-role" class="form-label">Role</label>
                         <select class="form-select employee_detail" aria-label="Default select example" id="select-role"
                             name="select-role" required>
+                            {% if employee_obj.role == None %}
+                            <option value="{{employee_obj.role}}" >{{employee_obj.role}}</option>
+                            {% endif %}
                             {% for role in roles %}
                             {% if role == employee_obj.role %}
                             <option value="{{employee_obj.role}}" selected>{{employee_obj.role}}</option>
@@ -182,14 +189,7 @@
             })
             btn.removeAttribute('hidden', 'hidden')
             edtiStatus = true
-        }/*else{
-            employeeDetails.forEach(e=>{
-                e.setAttribute('readonly','readonly')
-                e.setAttribute('disabled','disabled')
-            })
-            btn.setAttribute('hidden','hidden')
-            var edtiStatus=false
-        }*/
+        }
     }
 </script>
 
