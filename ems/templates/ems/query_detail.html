@@ -24,16 +24,29 @@
                 </div>
             </div>
             <div class="col-8">
-                <form action="">
+                <form action="{% url 'ems:add-comment' %}" method="post">
+                    {% csrf_token %}
                 <div class="form-floating my-2">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                    <input type="text" name="query-id" value="{{query.query_id}}" hidden>
+                    <textarea name="comment" class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea >
                     <label for="floatingTextarea">Leave Comment</label>
                     <button class="btn btn-primary float-end my-2" type="submit">Submit</button>
                 </div>
             </form>
         </div>
         <div class="col-8 my-2">
-                <h6 class="fw-semibold">Comments</h6>
+                <h5 class="fw-semibold mb-5">Comments <span class="ms-1"> {{comments.count}}</span></h5>
+                {% for comment in comments %}
+                <div class="border rounded p-4 my-3">
+                    {% if request.user == comment.user %}
+                    <b class="fw-semibold">Comment by :</b> <small class="fw-semibold">You</small>
+                    {% else %}
+                    <b class="fw-semibold">Comment by :</b> <small class="fw-semibold"> {{comment.user}}</small>
+                    {% endif %}
+                    <p class="p-2">{{comment.comment}}</p>
+                    <small class="text-muted float-end fw-semibold">Create At : {{comment.created_at|timesince}}</small>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>

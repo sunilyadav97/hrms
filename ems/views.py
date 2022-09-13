@@ -961,7 +961,9 @@ def queryDetail(request,id):
             profile_obj=Employee.objects.get(user=request.user)
             context['profile']=profile_obj
         query=DepartmentQuery.objects.get(query_id=id)
+        comments=QueryComment.objects.filter(query=query).order_by('-id')
         context['query']=query
+        context['comments']=comments
     except Exception as e:
         print('Query Detail Exception : ',e)
     return render(request,'ems/query_detail.html',context)
@@ -1005,3 +1007,25 @@ def quriesManger(request):
     return render(request,'ems/all_queries.html',context)
 
 
+@login_required()
+def addComment(request):
+    context={}
+    try:
+        if request.method == 'POST':
+            comment=request.POST['comment']
+            query_id=request.POST['query-id']
+            query_obj=DepartmentQuery.objects.get(query_id=query_id)
+
+            obj=QueryComment.objects.create(
+                user=request.user,
+                comment=comment,
+                query=query_obj
+            )
+            if obj:
+                messages.success(request,'Comment Added Successfully!')     
+                return redirect('/ems/query/'+query_id)
+
+    except Exception as e:
+        print('Add Comment Exception : ',e)
+        
+    return HttpResponse('Go back to home')

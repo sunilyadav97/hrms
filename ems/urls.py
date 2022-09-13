@@ -33,5 +33,6 @@ urlpatterns=[
     path('queries',displayQuerys,name='queries'),
     path('query/<id>/',queryDetail,name='query-detail'),
     path('all-queries',quriesManger,name='all-queries'),
+    path('add-comment',addComment,name='add-comment'),  
     
 ]
