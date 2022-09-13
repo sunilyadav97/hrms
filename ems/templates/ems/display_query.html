@@ -6,11 +6,13 @@
     <div class="container">
         <div class="row d-flex align-items-center justify-content-center ">
             <div class="col-9">
-                <h3 class=" my-3 derpartment-title">Create Query</h3>
+                <h3 class=" my-3 derpartment-title">All Queries</h3>
+                <a href="{% url 'ems:create-query' %}">Create Query</a>
                 <table class="table my-3">
                     <tr>
                         <th>SN</th>
                         <th>Query Id</th>
+                        <th>Department</th>
                         <th>Subject</th>
                         <th>Created Date</th>
                         <th>Status</th>
@@ -19,9 +21,14 @@
                 <tr>
                     <td>{{forloop.counter}}.</td>
                     <td>{{query.query_id}}</td>
+                    <td>{{query.department}}</td>
                     <td><a href="{% url 'ems:query-detail' query.query_id %}">{{query.subject}}</a></td>
                     <td>{{query.created_at | date:'d-M-Y'}}</td>
-                    <td>{{query.status}}</td>
+                    {% if query.status == 'pending'%}
+                    <td class="text-dark bg-warning">{{query.status}}</td>
+                    {% else %}
+                    <td class="text-light bg-success">{{query.status}}</td>
+                    {% endif %}
                 </tr>    
                     {% endfor %}
                 </table>

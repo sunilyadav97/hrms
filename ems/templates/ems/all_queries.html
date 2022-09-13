@@ -1,0 +1,73 @@
+{% extends './base.html' %}
+{% block title %} All Queries | EMS{% endblock title %}
+{% block body %}
+
+<section class="py-5">
+    <div class="container">
+        <div class="row d-flex align-items-center justify-content-center ">
+            <div class="col-9">
+                <h3 class=" my-3 derpartment-title">Create Query</h3>
+                <table class="table my-3">
+                    <tr>
+                        <th>SN</th>
+                        <th>Query Id</th>
+                        <th>Employee</th>
+                        <th>Subject</th>
+                        <th>Created Date</th>
+                        <th>Status</th>
+                    </tr>
+                    {% for query in queries %}
+                <tr>
+                    <td>{{forloop.counter}}.</td>
+                    <td>{{query.query_id}}</td>
+                    <td>{{query.employee}}</td>
+                    <td><a href="{% url 'ems:query-detail' query.query_id %}">{{query.subject}}</a></td>
+                    <td>{{query.created_at | date:'d-M-Y'}}</td>
+                    {% if query.status == 'pending' %}
+                    <td class="text-dark bg-warning cursor-pointer" onclick="query('{{query.query_id}}')" data-bs-target="#querymodal"  data-bs-toggle="modal">{{query.status}}</td>
+                    {% else %}
+                    <td class="text-light bg-success cursor-pointer" onclick="query('{{query.query_id}}')" data-bs-target="#querymodal"  data-bs-toggle="modal">{{query.status}}</td>
+                    {% endif %}
+                </tr>    
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="querymodal" tabindex="-1" aria-labelledby="querymodalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="querymodalLabel">Query</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="" method="post">
+            {% csrf_token %}
+            <input type="text" hidden name="query-id" id="query-id">
+            <div class="mb-3">
+              <label for="query-type" class="form-label">Approve/Reject</label>
+              <select class="form-select" aria-label="Default select example" name="status" id="query-type">
+                <option selected value="Resolved">Resolve</option>
+                <option value="Rejected">Reject</option>
+              </select>
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-success">Save</button>
+            </div>
+          </form>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    function query(id) {
+      document.getElementById('query-id').value = id
+    }
+  </script>
+
+{% endblock body %}

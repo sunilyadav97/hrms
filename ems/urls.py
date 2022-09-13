@@ -32,5 +32,6 @@ urlpatterns=[
     path('create-query',createQuery,name='create-query'),
     path('queries',displayQuerys,name='queries'),
     path('query/<id>/',queryDetail,name='query-detail'),
+    path('all-queries',quriesManger,name='all-queries'),
     
 ]

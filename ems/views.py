@@ -892,6 +892,7 @@ def createPayRoll(request):
         print("Add PayRoll Exception : ",e)
     return render(request,'ems/add_payroll.html',context)
 
+# Create New Query
 @login_required()
 def createQuery(request):
     context={}
@@ -899,32 +900,42 @@ def createQuery(request):
         if not request.user.is_superuser:
             profile_obj=Employee.objects.get(user=request.user)
             context['profile']=profile_obj
-        departments=Department.objects.all()
-        context['departments']=departments
-        if request.method == 'POST':
-            department=request.POST['department']
-            subject=request.POST['subject']
-            description=request.POST['description']
-            department_obj=Department.objects.get(id=department)
-            emp_obj=Employee.objects.get(user=request.user)
-            id=generateId()
-            obj=DepartmentQuery.objects.create(
-                employee=emp_obj,
-                subject=subject,
-                department=department_obj,
-                description=description,
-                status='pending',
-                query_id=id
-            )
-            if obj:
-                messages.success(request,'Created Successfully!')
+            if profile_obj.role.name != 'Manager':
+                departments=Department.objects.all()
+                context['departments']=departments
+                if request.method == 'POST':
+                    department=request.POST['department']
+                    subject=request.POST['subject']
+                    description=request.POST['description']
+                    department_obj=Department.objects.get(id=department)
+                    emp_obj=Employee.objects.get(user=request.user)
+                    id=generateId()
+                    obj=DepartmentQuery.objects.create(
+                        employee=emp_obj,
+                        subject=subject,
+                        department=department_obj,
+                        description=description,
+                        status='pending',
+                        query_id=id
+                    )
+                    if obj:
+                        messages.success(request,'Created Successfully!')
+                        return redirect('ems:queries')
+                    else:
+                        messages.warning(request,'Something Went Wrong! Please try after some time!')
             else:
-                messages.warning(request,'Something Went Wrong! Please try after some time!')
-
+                messages.warning(request,'Manager Can not create Query!')
+                return redirect('ems:ems')
+        else:
+            messages.warning(request,'Admin Can not create Query!')
+            return redirect('ems:ems')
+            
     except Exception as e:
         print('Create Query Exception : ',e)
+        
     return render(request,'ems/create_query.html',context)
 
+# Displaying All queries of Employee
 @login_required()
 def displayQuerys(request):
     context={}
@@ -933,7 +944,7 @@ def displayQuerys(request):
             profile_obj=Employee.objects.get(user=request.user)
             context['profile']=profile_obj
         emp=Employee.objects.get(user=request.user)
-        queries=DepartmentQuery.objects.filter(employee=emp)
+        queries=DepartmentQuery.objects.filter(employee=emp).order_by('-id')
         print(queries)
         context['queries']=queries
     except Exception as e:
@@ -941,6 +952,7 @@ def displayQuerys(request):
         
     return render(request,'ems/display_query.html',context)
 
+# Getting Particular Query Detail
 @login_required()
 def queryDetail(request,id):
     context={}
@@ -953,3 +965,43 @@ def queryDetail(request,id):
     except Exception as e:
         print('Query Detail Exception : ',e)
     return render(request,'ems/query_detail.html',context)
+
+# Getting All the Queries For the Manager 
+@login_required()
+def quriesManger(request):
+    context={}
+    try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
+            if profile_obj.role.name == 'Manager':
+                queries=DepartmentQuery.objects.all()
+                context['queries']=queries
+                if request.method == 'POST':
+                    query_id=request.POST['query-id']
+                    status=request.POST['status']
+                    query=DepartmentQuery.objects.get(query_id=query_id)
+                    query.status=status
+                    query.save()
+                    messages.success(request,'Status Updated Successfully!')
+                    return redirect('ems:all-queries')
+            else:
+                messages.warning(request,"You don't have Permission to access!")
+                return redirect('ems:ems')
+        else:
+            queries=DepartmentQuery.objects.all()
+            context['queries']=queries
+            
+            if request.method == 'POST':
+                query_id=request.POST['query-id']
+                status=request.POST['status']
+                query=DepartmentQuery.objects.get(query_id=query_id)
+                query.status=status
+                query.save()
+                messages.success(request,'Status Updated Successfully!')
+                return redirect('ems:all-queries')
+    except Exception as e:
+        print('Manager Queryes Exception : ',e)
+    return render(request,'ems/all_queries.html',context)
+
+

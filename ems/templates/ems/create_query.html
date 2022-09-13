@@ -10,7 +10,7 @@
             <form method="post">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <label for="employee">Departemnt</label>
+                    <label for="employee">Departemnt</label> <a class="float-end" href="{% url 'ems:queries' %}">See All Queries</a>
                     <select class="form-select" aria-label="Default select example" name="department">
                         <option selected>Please Select</option>
                         {% for department in departments %}
