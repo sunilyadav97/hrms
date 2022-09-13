@@ -871,7 +871,10 @@ def deleteEvent(request,id):
 def event(request,id):
     context={}
     try:
-        print('know event')
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
+            
         event=Events.objects.get(id=id)
         context['event']=event
     except Exception as e:
@@ -883,6 +886,7 @@ def event(request,id):
 def createPayRoll(request):
     context={}
     try:
+        
         pass
     except Exception as e:
         print("Add PayRoll Exception : ",e)
@@ -892,6 +896,9 @@ def createPayRoll(request):
 def createQuery(request):
     context={}
     try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
         departments=Department.objects.all()
         context['departments']=departments
         if request.method == 'POST':
@@ -900,18 +907,49 @@ def createQuery(request):
             description=request.POST['description']
             department_obj=Department.objects.get(id=department)
             emp_obj=Employee.objects.get(user=request.user)
-            id=generateId(request)
+            id=generateId()
             obj=DepartmentQuery.objects.create(
                 employee=emp_obj,
                 subject=subject,
                 department=department_obj,
                 description=description,
-                status='Pending',
+                status='pending',
                 query_id=id
             )
-            print(obj)
+            if obj:
+                messages.success(request,'Created Successfully!')
+            else:
+                messages.warning(request,'Something Went Wrong! Please try after some time!')
 
     except Exception as e:
         print('Create Query Exception : ',e)
     return render(request,'ems/create_query.html',context)
-    
+
+@login_required()
+def displayQuerys(request):
+    context={}
+    try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
+        emp=Employee.objects.get(user=request.user)
+        queries=DepartmentQuery.objects.filter(employee=emp)
+        print(queries)
+        context['queries']=queries
+    except Exception as e:
+        print('Display Query Excepton : ',e)
+        
+    return render(request,'ems/display_query.html',context)
+
+@login_required()
+def queryDetail(request,id):
+    context={}
+    try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
+        query=DepartmentQuery.objects.get(query_id=id)
+        context['query']=query
+    except Exception as e:
+        print('Query Detail Exception : ',e)
+    return render(request,'ems/query_detail.html',context)

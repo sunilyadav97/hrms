@@ -30,5 +30,7 @@ urlpatterns=[
     path('event/<id>/',event,name='event'),
     path('create-payroll',createPayRoll,name='create-payroll'),
     path('create-query',createQuery,name='create-query'),
+    path('queries',displayQuerys,name='queries'),
+    path('query/<id>/',queryDetail,name='query-detail'),
     
 ]

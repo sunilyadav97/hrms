@@ -1,0 +1,42 @@
+{% extends './base.html' %}
+{% block title %} All Queries | EMS{% endblock title %}
+{% block body %}
+
+<section class="py-5">
+    <div class="container">
+        <div class="row d-flex align-items-center justify-content-center ">
+            <div class="col-8">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-area-chart"></i><span>Query Id: {{query.query_id}}</span> 
+                        
+                            {% if query.status == 'pending' %}
+                            <span class="float-end text-warning">{{query.status | title}}</span>
+                            {% else %}
+                            <span class="float-end text-success">{{query.status | title}}</span>
+                            {% endif %}                       
+                    </div>
+                    <div class="card-body p-2">
+                        <h6 class="my-2"><b>{{query.subject}}</b></h6>
+                        <p>{{query.description}}</p>
+                    </div>
+                    <div class="card-footer small text-muted"><b>Created at:</b>  {{query.created_at|timesince}} Ago</div>
+                </div>
+            </div>
+            <div class="col-8">
+                <form action="">
+                <div class="form-floating my-2">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
+                    <label for="floatingTextarea">Leave Comment</label>
+                    <button class="btn btn-primary float-end my-2" type="submit">Submit</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-8 my-2">
+                <h6 class="fw-semibold">Comments</h6>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock body %}
