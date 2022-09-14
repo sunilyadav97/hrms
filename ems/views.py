@@ -67,6 +67,9 @@ def dashboard(request):
                     context['profile']=profile_obj
                     events=Events.objects.all()[0:2]
                     context['events']=events
+                    connects=Connect.objects.filter(Q(employee=profile_obj) and Q(is_completed=False))
+                    print(connects)
+                    context['connects']=connects
                     return render(request,'ems/ems_home.html',context)
             else:
                 departments=Department.objects.all()
@@ -1050,7 +1053,44 @@ def addComment(request):
 def connect(request):
     context={}
     try:
-        pass
+        connects=Connect.objects.all()
+        employees=Employee.objects.all()
+        context['employees']=employees
+        context['connects']=connects
+        
+        if request.method == 'POST':
+            id=request.POST['id']
+            message=request.POST['message']
+            employee_obj=Employee.objects.get(empid=id)
+            obj=Connect.objects.create(
+                employee=employee_obj,
+                message=message
+            )
+            if obj:
+                messages.success(request,'Connected Successfully!')
+                return redirect('ems:connect')
+            
     except Exception as e:
         print('Connect Exception : ',e)
     return render(request,'ems/connect.html',context)
+
+@login_required()
+def connectStatus(request):
+    context={}
+    try:
+        if request.method == 'POST':
+            id=request.POST['id']
+            status=request.POST['status']
+            connect=Connect.objects.get(id=id)
+            if status == 'True':
+                connect.is_completed=True
+            else:
+                connect.is_completed=False
+            connect.save()
+            messages.success(request,'Updated Successfully!')
+            return redirect('ems:connect')
+        
+    except Exception as e:
+        print('Connect Status Exception : ',e)
+        
+    return HttpResponse('Something Went wrong, Please Try After Sometime!')

@@ -123,3 +123,13 @@ class QueryComment(models.Model):
     updated_at=models.DateTimeField(auto_now=True)
     def __str__(self):
         return f'{self.query.subject}    -  {self.user.username}'
+
+class Connect(models.Model):
+    employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
+    message=models.TextField(max_length=400)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    is_completed=models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.employee.name

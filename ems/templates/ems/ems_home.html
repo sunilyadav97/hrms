@@ -1,5 +1,9 @@
 {% extends './base.html' %}
+{% block head %}
+<meta http-equiv="refresh" content="20">
+{% endblock head %}
 {% block title %} EMS | Home {% endblock title %}
+
 {% block body %}
 <section>
     <div class="container">
@@ -7,7 +11,8 @@
             <div class="col-6">
                 <div class="row px-2 py-5 d-flex justify-content-center flex-column align-items-center ">
 
-                    {% comment %} <div class="col-12 d-flex justify-content-start  py-2 text-white  rounded" style="background-color: #c30000e6;">
+                    {% comment %} <div class="col-12 d-flex justify-content-start  py-2 text-white  rounded"
+                        style="background-color: #c30000e6;">
                         <a href="{% url 'ems:all-leaves' %}" class="text-white border-end  px-2">All Leaves</a>
                         <a href="{% url 'ems:profile' %}" class="text-white border-end px-2">Profile</a>
                         <a href="{% url 'ems:all-attendance' %}" class="text-white border-end px-2">Attendance</a>
@@ -15,11 +20,29 @@
                     <div class="col-12 py-4">
                         <div class="">
                             <h5 class="fw-semibold home-title">EMS Home Feed</h5>
-                            <p class="home-description text-muted">Here you will see Other colleagues' birthday and Anniversary
+                            <p class="home-description text-muted">Here you will see Other colleagues' birthday and
+                                Anniversary
                                 And also Events Notifications. And some other stuff.</p>
                         </div>
 
                     </div>
+                    <div class="col-12">
+
+                        {% for connect in connects %}
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <i class="fa fa-area-chart"></i>Connect Notification
+                                <small class="bg-success text-white float-end py-1 px-2 rounded">New</small>
+                            </div>
+                            <div class="card-body p-5">
+                                <p>{{connect.message}}</p>
+                            </div>
+                            <div class="card-footer small text-dark">Time : {{connect.created_at | timesince}} Ago
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
                     <div class="col-12">
                         {% for birthday in birthdays %}
                         <div class="card mb-3 ">
