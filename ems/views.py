@@ -196,6 +196,7 @@ def editProfile(request):
                 emp_obj.email=email
                 emp_obj.dob=dob
                 emp_obj.save()
+                
                 address_obj.address=address
                 address_obj.street=street
                 address_obj.locality=locality
@@ -487,7 +488,6 @@ def employeeDetail(request, empid):
             employeeid = request.POST['employeeid']
             
             if department == 'None':
-                print('department print')
                 messages.warning(request,'*Please Select Department!')
                 return redirect('ems:employee-detail',employee_obj.empid)
             elif role == 'None':
@@ -531,9 +531,11 @@ def employeeDetail(request, empid):
                     return redirect('ems:employee-detail',employee_obj.empid)
                 else:
                     check_employeeid=Employee.objects.filter(employeeid=employeeid).exists()
+                    
                     if check_employeeid:
-                        messages.warning(request,'This Employee Id Already Exits! Please Try Another')
-                        return redirect('ems:employee-detail',employee_obj.empid)
+                        if employee_obj.employeeid != int(employeeid):
+                            messages.warning(request,'This Employee Id Already Exits! Please Try Another')
+                            return redirect('ems:employee-detail',employee_obj.empid)
                     else:
                         employee_obj.employeeid=employeeid
                         employee_obj.save()
@@ -589,7 +591,7 @@ def attendance(request):
             if item.status == 'Working':
                 em_list.append(item)
                 
-        paginator=Paginator(nested_attendance,2)
+        paginator=Paginator(nested_attendance,4)
         page_no=request.GET.get('page')
 
         total_pages=paginator.page_range
@@ -629,6 +631,20 @@ def attendance(request):
         print('Attendance Exception ',e)
         
     return render(request,'ems/attendance.html',context)
+
+
+@login_required()
+def filterAttendance(request):
+    context={}
+    try:
+        filter_date=request.GET['filter-date']
+        print('filter date ',filter_date)
+        attendances=Attendance.objects.filter(date=filter_date)
+        context['attendances']=attendances
+        print(attendances)
+    except Exception as e:
+        print('Filter Attendace Exception : ',e)
+    return render(request,'ems/filter_attendate.html',context)
 
 @login_required()
 def editAttendance(request):
@@ -684,7 +700,7 @@ def allAttendances(request):
             context['profile']=profile_obj
             emp_obj=Employee.objects.get(user=request.user)
             attendances=Attendance.objects.filter(employee=emp_obj).order_by('-date')
-            paginator=Paginator(attendances,2)
+            paginator=Paginator(attendances,10)
             page_no=request.GET.get('page')
 
             total_pages=paginator.page_range
@@ -977,7 +993,7 @@ def quriesManger(request):
             profile_obj=Employee.objects.get(user=request.user)
             context['profile']=profile_obj
             if profile_obj.role.name == 'Manager':
-                queries=DepartmentQuery.objects.all()
+                queries=DepartmentQuery.objects.all().order_by('-id')
                 context['queries']=queries
                 if request.method == 'POST':
                     query_id=request.POST['query-id']
@@ -991,7 +1007,7 @@ def quriesManger(request):
                 messages.warning(request,"You don't have Permission to access!")
                 return redirect('ems:ems')
         else:
-            queries=DepartmentQuery.objects.all()
+            queries=DepartmentQuery.objects.all().order_by('-id')
             context['queries']=queries
             
             if request.method == 'POST':
@@ -1029,3 +1045,4 @@ def addComment(request):
         print('Add Comment Exception : ',e)
         
     return HttpResponse('Go back to home')
+

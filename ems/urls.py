@@ -34,5 +34,6 @@ urlpatterns=[
     path('query/<id>/',queryDetail,name='query-detail'),
     path('all-queries',quriesManger,name='all-queries'),
     path('add-comment',addComment,name='add-comment'),  
+    path('attendance-filter',filterAttendance,name='attendance-filter'),  
     
 ]

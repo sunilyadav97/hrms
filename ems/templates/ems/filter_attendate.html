@@ -1,0 +1,133 @@
+{% extends './base.html' %}
+{% block title%}
+Attendance
+{% endblock title%}
+{% block css%}
+
+.editinput-width{
+width:8rem !important;
+}
+{% endblock css%}
+{% block body %}
+<section class="py-5">
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-sm-8 col-md-10 my-3 col-12 overflow-auto">
+                <h3 class="derpartment-title my-3">All Attendance</h3>
+                <div class="d-flex align-items-center my-2 mb-3 justify-content-between my-2 mt-4 ">
+                    <a href="{% url 'ems:attendance' %}" class="btn btn-dark ">Back</a>
+                    <span class="bg-secondary p-1 px-2 rounded text-light">Date: {{attendances.0.date|date:"d-m-Y"}}</span>
+                </div> 
+                <table class="table border border-1 border-dark my-2">
+                    <tr>
+                        <th>SN</th>
+                        <th>Name</th>
+                        <th>In-Time</th>
+                        <th>Out-Time</th>
+                        <th>Attendance Status</th>
+                        <th class="me-4">Date</th>
+                        <th class="me-4">Edit</th>
+                        <th class="me-4">Delete</th>
+                    </tr>
+                    {% for item in attendances %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{item.employee.name}}</td>
+                        <td>{{item.intime | time}}</td>
+                        <td>{{item.outtime | time}}</td>
+                        {% if item.present %}
+                        <td class="text-success fw-semibold ">Present</td>
+                        {% else %}
+                        <td class="text-danger fw-semibold ">Absent</td>
+                        {% endif %}
+                        <td>{{item.date | date:"d-m-Y"}}</td>
+                        <td class="text-primary ">
+                            <i class='bx bx-edit'
+                                onclick="editAttendance('{{item.employee.name}}','{{item.intime | time:'G'}}','{{item.outtime| time:'G'}}','{{item.present}}','{{item.date| date:'Y-m-d'}}','{{item.id}}')"
+                                data-bs-toggle="modal" data-bs-target="#editmodal"></i>
+                        </td>
+                        <td class="pe-3"><a href="{% url 'ems:attendance-delete' item.id %}"
+                                class="attedance-delete"><span class="material-symbols-outlined">
+                                    delete
+                                </span></a></td>
+                    </tr>
+                    {% endfor %}
+                </table>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Attendance Edit Modal -->
+<div class="modal fade" id="editmodal" tabindex="-1" aria-labelledby="editmodalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editmodalLabel">Edit</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'ems:edit-attendance' %}" method="post">
+                    {% csrf_token %}
+                    <input type="text" hidden name="attendance-id" id="edit-id">
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Date</label>
+                        <input type="text" id="edit-date" class="form-control" name="date" required>
+                    </div>
+                    <table class="table table-borderless">
+                        <tr>
+                            <th>Name</th>
+                            <th>In-Time</th>
+                            <th>Out-Time</th>
+                            <th>Present</th>
+                        </tr>
+                        <tr>
+                            <td id="emName"></td>
+                            <td><input type="time" name="intime" class="form-control editinput-width" id="emintime">
+                            </td>
+                            <td><input type="time" name="outtime" class="form-control editinput-width" id="emouttime">
+                            </td>
+                            <td>
+                                <select class="form-select" aria-label="Default select example"
+                                    name="attendance-status">
+                                    <option value="True" id="status-true">Yes</option>
+                                    <option value="False" id="status-false">No</option>
+                                </select>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <div class="d-grid my-2">
+                        <input type="submit" value="Save" class="btn btn-success">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function editAttendance(name, intime, outtime, status, date, id) {
+        console.log(status)
+        console.log(date)
+        console.log(id)
+        document.getElementById('emName').innerHTML = name
+        //document.getElementById('emintime').value = intime
+        //document.getElementById('emouttime').value = outtime
+        document.getElementById('edit-date').value = date
+        document.getElementById('edit-id').value = id
+        if (status == 'True') {
+            console.log(status)
+            document.getElementById('status-true').setAttribute('selected', 'selected')
+        } else {
+            console.log(status)
+            document.getElementById('status-false').setAttribute('selected', 'selected')
+
+        }
+
+    }
+</script>
+
+{% endblock body %}

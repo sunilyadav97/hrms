@@ -5,7 +5,7 @@ Attendance
 {% block css%}
 
 .editinput-width{
-    width:8rem !important;
+width:8rem !important;
 }
 {% endblock css%}
 {% block body %}
@@ -17,8 +17,8 @@ Attendance
             <div class="col-sm-8 col-md-10 my-3 col-12 overflow-auto">
                 <h3 class="derpartment-title my-3">All Attendance</h3>
                 <div class="d-grid my-2 mb-3">
-                    <button type="button"
-                        class="btn btn-success float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <button type="button" class="btn btn-success float-end" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
                         Add New Attendance
                     </button>
                 </div>
@@ -34,7 +34,14 @@ Attendance
                         <th class="me-4">Delete</th>
                     </tr>
                 </table>
-
+                <div class="w-25 my-3 mb-4">
+                    <form action="{% url 'ems:attendance-filter' %}" method="get">
+                        {% csrf_token %}
+                        <label for="date" class="form-label">Filter Date</label><small><button type="submit"
+                                class="btn btn-primary float-end mb-1 btn-sm">Submit</button></small>
+                        <input type="date" class="form-control  form-control-sm" id="filter-date" name="filter-date">
+                    </form>
+                </div>
                 {% for nest in nested_attendence %}
                 <div class="d-flex align-items-center my-2 mb-3 justify-content-between">
                     {% if nest.count == 1 %}
@@ -45,7 +52,7 @@ Attendance
 
                 </div>
                 <table class="table border attendance-table">
-                    
+
                     {% for item in nest %}
                     <tr>
                         <td>{{forloop.counter}}</td>
@@ -63,9 +70,10 @@ Attendance
                                 onclick="editAttendance('{{item.employee.name}}','{{item.intime | time:'G'}}','{{item.outtime| time:'G'}}','{{item.present}}','{{item.date| date:'Y-m-d'}}','{{item.id}}')"
                                 data-bs-toggle="modal" data-bs-target="#editmodal"></i>
                         </td>
-                        <td class="pe-3"><a href="{% url 'ems:attendance-delete' item.id %}" class="attedance-delete"><span class="material-symbols-outlined">
-                            delete
-                            </span></a></td>
+                        <td class="pe-3"><a href="{% url 'ems:attendance-delete' item.id %}"
+                                class="attedance-delete"><span class="material-symbols-outlined">
+                                    delete
+                                </span></a></td>
                     </tr>
 
                     {% endfor %}
@@ -148,8 +156,8 @@ Attendance
                             <td>
                                 <select class="form-select" aria-label="Default select example"
                                     name="attendance-status{{forloop.counter}}">
-                                    <option value="True" >Yes</option>
-                                    <option value="False" >No</option>
+                                    <option value="True">Yes</option>
+                                    <option value="False">No</option>
                                 </select>
                             </td>
                         </tr>
@@ -178,36 +186,38 @@ Attendance
             <div class="modal-body">
                 <form action="{% url 'ems:edit-attendance' %}" method="post">
                     {% csrf_token %}
-                <input type="text" hidden name="attendance-id" id="edit-id">
-                <div class="mb-3">
-                    <label for="date" class="form-label">Date</label>
-                    <input type="text" id="edit-date" class="form-control" name="date" required>
-                </div>
-                <table class="table table-borderless">
-                    <tr>
-                        <th>Name</th>
-                        <th>In-Time</th>
-                        <th>Out-Time</th>
-                        <th>Present</th>
-                    </tr>
-                    <tr>
-                        <td id="emName"></td>
-                        <td><input type="time" name="intime" class="form-control editinput-width" id="emintime"></td>
-                        <td><input type="time" name="outtime" class="form-control editinput-width" id="emouttime"></td>
-                        <td>
-                            <select class="form-select" aria-label="Default select example"
-                                name="attendance-status">
-                                <option value="True" id="status-true">Yes</option>
-                                <option value="False" id="status-false">No</option>
-                            </select>
-                        </td>
-                    </tr>
+                    <input type="text" hidden name="attendance-id" id="edit-id">
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Date</label>
+                        <input type="text" id="edit-date" class="form-control" name="date" required>
+                    </div>
+                    <table class="table table-borderless">
+                        <tr>
+                            <th>Name</th>
+                            <th>In-Time</th>
+                            <th>Out-Time</th>
+                            <th>Present</th>
+                        </tr>
+                        <tr>
+                            <td id="emName"></td>
+                            <td><input type="time" name="intime" class="form-control editinput-width" id="emintime">
+                            </td>
+                            <td><input type="time" name="outtime" class="form-control editinput-width" id="emouttime">
+                            </td>
+                            <td>
+                                <select class="form-select" aria-label="Default select example"
+                                    name="attendance-status">
+                                    <option value="True" id="status-true">Yes</option>
+                                    <option value="False" id="status-false">No</option>
+                                </select>
+                            </td>
+                        </tr>
 
-                </table>
-                <div class="d-grid my-2">
-                    <input type="submit" value="Save" class="btn btn-success">
-                </div>
-            </form>
+                    </table>
+                    <div class="d-grid my-2">
+                        <input type="submit" value="Save" class="btn btn-success">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -215,21 +225,21 @@ Attendance
 
 
 <script>
-    function editAttendance(name, intime, outtime, status, date,id) {
+    function editAttendance(name, intime, outtime, status, date, id) {
         console.log(status)
         console.log(date)
         console.log(id)
         document.getElementById('emName').innerHTML = name
         //document.getElementById('emintime').value = intime
         //document.getElementById('emouttime').value = outtime
-        document.getElementById('edit-date').value=date
-        document.getElementById('edit-id').value=id
-        if (status == 'True'){
+        document.getElementById('edit-date').value = date
+        document.getElementById('edit-id').value = id
+        if (status == 'True') {
             console.log(status)
-            document.getElementById('status-true').setAttribute('selected','selected')
-        }else{
+            document.getElementById('status-true').setAttribute('selected', 'selected')
+        } else {
             console.log(status)
-            document.getElementById('status-false').setAttribute('selected','selected')
+            document.getElementById('status-false').setAttribute('selected', 'selected')
 
         }
 

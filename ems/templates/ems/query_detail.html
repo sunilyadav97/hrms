@@ -41,10 +41,10 @@
                     {% if request.user == comment.user %}
                     <b class="fw-semibold">Comment by :</b> <small class="fw-semibold">You</small>
                     {% else %}
-                    <b class="fw-semibold">Comment by :</b> <small class="fw-semibold"> {{comment.user}}</small>
+                    <b class="fw-semibold">Comment by :</b> <small class="fw-semibold"> {{comment.user | title}}</small>
                     {% endif %}
                     <p class="p-2">{{comment.comment}}</p>
-                    <small class="text-muted float-end fw-semibold">Create At : {{comment.created_at|timesince}}</small>
+                    <small class="text-muted float-end fw-semibold">Replied : {{comment.created_at|timesince}} Ago</small>
                 </div>
                 {% endfor %}
             </div>
