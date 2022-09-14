@@ -1046,3 +1046,11 @@ def addComment(request):
         
     return HttpResponse('Go back to home')
 
+@login_required()
+def connect(request):
+    context={}
+    try:
+        pass
+    except Exception as e:
+        print('Connect Exception : ',e)
+    return render(request,'ems/connect.html',context)
