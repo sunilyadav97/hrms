@@ -67,7 +67,7 @@ def dashboard(request):
                     context['profile']=profile_obj
                     events=Events.objects.all()[0:2]
                     context['events']=events
-                    connects=Connect.objects.filter(Q(employee=profile_obj) and Q(is_completed=False))
+                    connects=Connect.objects.filter(Q(employee=profile_obj) and Q(is_completed=False)).order_by('-id')
                     print(connects)
                     context['connects']=connects
                     return render(request,'ems/ems_home.html',context)
@@ -996,7 +996,7 @@ def quriesManger(request):
             profile_obj=Employee.objects.get(user=request.user)
             context['profile']=profile_obj
             if profile_obj.role.name == 'Manager':
-                queries=DepartmentQuery.objects.all().order_by('-id')
+                queries=DepartmentQuery.objects.filter(department=profile_obj.department).order_by('-id')
                 context['queries']=queries
                 if request.method == 'POST':
                     query_id=request.POST['query-id']
@@ -1054,6 +1054,7 @@ def connect(request):
     context={}
     try:
         connects=Connect.objects.all()
+        expireConnect()
         employees=Employee.objects.all()
         context['employees']=employees
         context['connects']=connects

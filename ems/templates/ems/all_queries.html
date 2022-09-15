@@ -13,6 +13,9 @@
                         <th>Query Id</th>
                         <th>Employee</th>
                         <th>Subject</th>
+                        {% if request.user.is_superuser %}
+                        <th>Department</th>
+                        {% endif %}
                         <th>Created Date</th>
                         <th>Status</th>
                     </tr>
@@ -22,6 +25,9 @@
                     <td>{{query.query_id}}</td>
                     <td>{{query.employee}}</td>
                     <td><a href="{% url 'ems:query-detail' query.query_id %}">{{query.subject}}</a></td>
+                    {% if request.user.is_superuser %}
+                    <td>{{query.department}}</td>
+                    {% endif %}
                     <td>{{query.created_at | date:'d-M-Y'}}</td>
                     {% if query.status == 'pending' %}
                     <td class="text-dark bg-warning cursor-pointer" onclick="query('{{query.query_id}}')" data-bs-target="#querymodal"  data-bs-toggle="modal">{{query.status}}</td>

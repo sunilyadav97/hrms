@@ -1,6 +1,7 @@
 import random
 from .models import *
-
+import datetime
+from datetime import timedelta
 
 def generateId():
     id=''
@@ -16,3 +17,9 @@ def generateId():
             generateId()
         else:
             return id
+        
+def expireConnect():
+    connects=Connect.objects.all()
+    time=datetime.time()
+    print('time :', time)
+
