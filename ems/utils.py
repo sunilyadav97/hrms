@@ -1,7 +1,7 @@
 import random
 from .models import *
 import datetime
-from datetime import timedelta
+from datetime import timedelta,timezone
 
 def generateId():
     id=''
@@ -19,7 +19,21 @@ def generateId():
             return id
         
 def expireConnect():
-    connects=Connect.objects.all()
-    time=datetime.time()
-    print('time :', time)
-
+    try:
+        connects=Connect.objects.all()
+        for item in connects:
+            create_time=item.created_at
+            current_time=datetime.datetime.now(timezone.utc)
+            difference=current_time-create_time
+            compare_time=datetime.time(23,00,00).hour
+            object_time=int(((difference.seconds)/60)/60)
+            
+            if object_time > compare_time:
+                item.delete()
+                print('Item Deleted')
+            else:
+                print('Time Need to complete')
+    except Exception as e:
+        print('Expire Connect Exception : ',e)
+    
+        

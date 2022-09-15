@@ -17,6 +17,7 @@ from datetime import datetime,timedelta
 def dashboard(request):
     context={}
     try:
+        expireConnect()
         if request.user.is_authenticated:
             employees=list(Employee.objects.all())
             birthdays=[]
