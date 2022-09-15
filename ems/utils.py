@@ -36,4 +36,14 @@ def expireConnect():
     except Exception as e:
         print('Expire Connect Exception : ',e)
     
-        
+def checkIsLate(intime):
+    split_intime=str(intime).split(":")
+    intime_hour=int(split_intime[0])
+    intime_minute=int(split_intime[1])
+    if intime_hour == 9:
+        if intime_minute >45:
+            return True
+    elif intime_hour >9:
+        return True
+    else:
+        return False

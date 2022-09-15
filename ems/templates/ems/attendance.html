@@ -57,7 +57,13 @@ width:8rem !important;
                     <tr>
                         <td>{{forloop.counter}}</td>
                         <td>{{item.employee.name}}</td>
+                        {% if item.is_late == True %}
+                        
+                        <td ><span class="bg-danger text-light p-1 py-2">{{item.intime | time}}</span></td>
+                        {% else %}
                         <td>{{item.intime | time}}</td>
+                        {% endif %}
+
                         <td>{{item.outtime | time}}</td>
                         {% if item.present %}
                         <td class="text-success fw-semibold ">Present</td>
@@ -197,6 +203,7 @@ width:8rem !important;
                             <th>In-Time</th>
                             <th>Out-Time</th>
                             <th>Present</th>
+                            <th>Late</th>
                         </tr>
                         <tr>
                             <td id="emName"></td>
@@ -207,6 +214,13 @@ width:8rem !important;
                             <td>
                                 <select class="form-select" aria-label="Default select example"
                                     name="attendance-status">
+                                    <option value="True" id="status-true">Yes</option>
+                                    <option value="False" id="status-false">No</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-select" aria-label="Default select example"
+                                    name="is-late">
                                     <option value="True" id="status-true">Yes</option>
                                     <option value="False" id="status-false">No</option>
                                 </select>

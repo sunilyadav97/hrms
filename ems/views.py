@@ -609,6 +609,7 @@ def attendance(request):
             date=request.POST['date']
             print(date)
             for i in range(1,len(em_list)+1):
+                is_late=False
                 empid=request.POST['empid'+str(i)]
                 intime=request.POST['intime'+str(i)]
                 outtime=request.POST['outtime'+str(i)]
@@ -618,14 +619,25 @@ def attendance(request):
                     
                 if outtime == '':
                     outtime=None
-                    
+                split_intime=str(intime).split(":")
+                intime_hour=int(split_intime[0])
+                intime_minute=int(split_intime[1])
+                print('Split Intime : ',split_intime)
+
+                if intime_hour == 9:
+                    if intime_minute >45:
+                        is_late=True
+                elif intime_hour >9:
+                    is_late=True
+                     
                 emp_obj=Employee.objects.get(empid=empid)
                 att_obj=Attendance.objects.create(
                     employee=emp_obj,
                     intime=intime,
                     outtime=outtime,
                     date=date,
-                    present=attendance_status
+                    present=attendance_status,
+                    is_late=is_late
                     )
                 print(att_obj)
                 print(i,'empid-',empid,'intime-',intime,'outime-',outtime,'present-',attendance_status)
@@ -654,6 +666,7 @@ def filterAttendance(request):
 def editAttendance(request):
     try:
         if request.method == 'POST':
+            is_late=request.POST['is-late']
             id=request.POST['attendance-id']
             intime=request.POST['intime']
             outtime=request.POST['outtime']
@@ -664,16 +677,20 @@ def editAttendance(request):
             if intime and outtime != '':
                 obj.intime=intime
                 obj.outtime=outtime
+                    
             elif not intime == '':
                 obj.intime=intime
+
             elif not outtime == '':
                 obj.outtime=outtime
             if attendence_status == 'False':
                 obj.intime=None
-                obj.outtime=None     
-                           
+                obj.outtime=None
+                
+                               
             obj.present=attendence_status
             obj.date=date
+            obj.is_late=is_late
             obj.save()
             
             messages.success(request,'Updated Successfully!')
