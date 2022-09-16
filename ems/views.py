@@ -938,13 +938,82 @@ def event(request,id):
 @login_required()
 def createPayRoll(request):
     context={}
-    try:
-        
-        pass
-    except Exception as e:
-        print("Add PayRoll Exception : ",e)
-    return render(request,'ems/add_payroll.html',context)
+    if request.user.is_superuser:
+        try:
+            context['employees']=Employee.objects.all()
+            if request.method == "POST":
+                empid=request.POST['empid']
+                month=request.POST['month']
+                pay_slip=request.FILES['pay-slip']
+                print(empid)
+                print(month)
+                print(pay_slip)
+                emp_obj=Employee.objects.get(empid=empid)
+                obj=PayRoll.objects.create(
+                    employee=emp_obj,
+                    month=month,
+                    payroll_slip=pay_slip
+                )
+                if obj:
+                    messages.success(request,'Added Successfully!')
+                    return redirect('ems:view-payrolls')
+        except Exception as e:
+            print("Add PayRoll Exception : ",e)
+        return render(request,'ems/add_payroll.html',context)
+    else:
+        messages.warning(request,"You don't Have Access!")
+        return redirect('ems:ems')
 
+
+
+# Displaying All the PayRolls to the Admin
+@login_required()
+def viewPayRoll(request):
+    context={}
+    if request.user.is_superuser:
+        try:
+            payrolls=PayRoll.objects.all()
+            context['payrolls']=payrolls
+            
+        except Exception as e:
+            print('View Pay Slip Exception : ',e)
+        return render(request,'ems/view_pay_slip.html',context)
+    else:
+        messages.warning(request,"You don't Have Access!")
+        return redirect('ems:ems')
+
+
+# Delete PayRoll By Admin
+@login_required()
+def deletePayRoll(request,id):
+    if request.user.is_superuser:
+        try:
+            PayRoll.objects.get(id=id).delete()
+            messages.success(request,"Deleted Successfully!")
+
+        except Exception as e:
+            print('View Pay Slip Exception : ',e)
+            messages.warning(request,"Something went Wrong! Please Try Again.")
+        return redirect('ems:view-payrolls')
+    else:
+        messages.warning(request,"You don't Have Access!")
+        return redirect('ems:ems')
+    
+# Displaying Payroll For Employee
+@login_required()    
+def payRoll(request):
+    context={}
+    try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
+            employee=Employee.objects.get(user=request.user)
+            payrolls=PayRoll.objects.filter(employee=employee)
+            context['payrolls']=payrolls
+            
+    except Exception as e:
+        print('Payroll Exception : ',e)
+    return render(request,'ems/payroll.html',context)
 # Create New Query
 @login_required()
 def createQuery(request):

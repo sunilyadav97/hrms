@@ -25,7 +25,7 @@ def expireConnect():
             create_time=item.created_at
             current_time=datetime.datetime.now(timezone.utc)
             difference=current_time-create_time
-            compare_time=datetime.time(23,00,00).hour
+            compare_time=datetime.time(22,00,00).hour
             object_time=int(((difference.seconds)/60)/60)
             
             if object_time > compare_time:

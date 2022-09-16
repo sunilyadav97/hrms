@@ -1,0 +1,75 @@
+{% extends './base.html' %}
+{% block title %} All PayRoll | EMS{% endblock title %}
+{% block body %}
+
+<section class="py-5">
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-8">
+                <h3 class="my-3 derpartment-title">All PayRolls</h3>
+                <a href="{% url 'ems:create-payroll' %}" class="mb-2">Add PayRoll</a>
+                <table class="table table-bordered">
+                    <tr>
+                        <th>SN</th>
+                        <th>Employee</th>
+                        <th>Month</th>
+                        <th>PaySlip</th>
+                        <th>Delete</th>
+
+                        <!-- <th>Delete</th> -->
+                    </tr>
+                    {% if not payrolls %}
+                    <tr>
+                        <td colspan="8" class="text-center text-danger">You have no PayRolls</td>
+                    </tr>
+                    {% endif %}
+
+                    {% for payroll in payrolls %}
+                    <tr class="my-4">
+                        <td>{{forloop.counter}}.</td>
+                        <td>{{payroll.employee.name}}</td>
+                        <td>{{payroll.month}}</td>
+                        <td><a href="{{payroll.payroll_slip.url}}" download="{{payroll.payroll_slip.url}}">Download</a>
+                        </td>
+
+                        <td><a href="{% url 'ems:delete-payroll' payroll.id %}" class="delete"><span class="material-symbols-outlined">delete</span></a></td>
+
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% if leaves.number >= 1 %}
+                <nav aria-label="Page navigation description">
+                    <ul class="pagination justify-content-end">
+                        {% if leaves.has_previous %}
+                        <li class="page-item ">
+                            <a class="page-link" href="?page={{leaves.previous_page_number}}">Previous</a>
+                        </li>
+                        {% endif %}
+                        {% if pages %}
+
+                        {% for p in pages %}
+
+                        {% if p == leaves.number %}
+                        <li class="page-item active" aria-current="page"><a class="page-link "
+                                href="?page={{p}}">{{p}}</a></li>
+                        {% else %}
+                        <li class="page-item "><a class="page-link" href="?page={{p}}">{{p}}</a></li>
+                        {% endif %}
+
+                        {% endfor %}
+
+                        {% endif %}
+
+                        {% if leaves.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{leaves.next_page_number}}">Next</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

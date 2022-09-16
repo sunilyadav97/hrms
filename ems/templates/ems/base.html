@@ -146,7 +146,7 @@
                 <div id="payroll-nav" class="accordion-collapse collapse">
                     <li class="nav-item sub-nav"><a href="{% url 'ems:create-payroll' %}" class="nav-link">Add
                             PayRoll</a></li>
-                    <li class="nav-item sub-nav"><a href="#" class="nav-link">View PayRolls</a>
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:view-payrolls' %}" class="nav-link">View PayRolls</a>
                     </li>
                 </div>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:all-queries' %}">Queries</a></li>
@@ -172,7 +172,7 @@
                     </li>
                 </div>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:all-attendance' %}">Attendance</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">PayRoll</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'ems:payroll' %}">PayRoll</a></li>
                 {% if profile.role.name == 'Manager' %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:all-queries' %}">Queries</a></li>
                 {% else %}

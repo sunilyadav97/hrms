@@ -7,22 +7,29 @@
     <div class="row d-flex align-items-center justify-content-center ">
         <div class="col-9">
             <h3 class=" my-3 derpartment-title">PayRoll</h3>
-            <form>
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
                 <div class="mb-3">
-                    <label for="employee">Employee</label>
-                    <select class="form-select" aria-label="Default select example">
+                    <label for="employee">Employee</label><a href="{% url 'ems:view-payrolls' %}" class="mb-2 float-end">See All PayRolls</a>
+                    <select class="form-select" aria-label="Default select example" name="empid">
                         <option selected>Please Select</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                        {% for employee in employees %}
+                        <option value="{{employee.empid}}">{{employee.name}}</option>
+                        {% endfor %}
                       </select>
                 </div>
                 <div class="mb-3">
-                  <label for="total-salary" class="form-label">Total Salary</label>
-                  <input type="text" class="form-control" id="total-salary">
+                  <label for="Month" class="form-label">Month</label>
+                  <input type="Month" name="month" class="form-control" id="Month">
                 </div>
-                
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="mb-3">
+                  <label for="pay-slip" class="form-label">Upload PaySlip</label>
+                  <input type="file" name="pay-slip" class="form-control" id="pay-slip">
+                </div>
+                <div class="d-grid">
+                  <button type="submit" class="btn btn-primary">Save</button>
+
+                </div>
               </form>
         </div>
     </div>

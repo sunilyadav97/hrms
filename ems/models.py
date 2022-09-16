@@ -104,6 +104,9 @@ class PayRoll(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     
+    def __str__(self):
+        return f'{self.employee.name}  {self.month}'
+    
 class DepartmentQuery(models.Model):
     query_id=models.IntegerField(unique=True)
     employee=models.ForeignKey(Employee, on_delete=models.CASCADE)

@@ -13,4 +13,5 @@ admin.site.register(DepartmentQuery)
 admin.site.register(QueryComment)
 admin.site.register(Connect)
 admin.site.register(AllocatedLeave)
+admin.site.register(PayRoll)
 
