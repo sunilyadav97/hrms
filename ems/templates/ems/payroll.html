@@ -1,5 +1,5 @@
 {% extends './base.html' %}
-{% block title %} All PayRoll | EMS{% endblock title %}
+{% block title %} {{profile.name}} PayRolls {% endblock title %}
 {% block body %}
 
 <section class="py-5">
@@ -27,7 +27,6 @@
                         <td>{{payroll.employee.name}}</td>
                         <td>{{payroll.month}}</td>
                         <td><a href="{{payroll.payroll_slip.url}}" download="{{payroll.payroll_slip.url}}">Download</a></td>
-
                     </tr>
                     {% endfor %}
                 </table>

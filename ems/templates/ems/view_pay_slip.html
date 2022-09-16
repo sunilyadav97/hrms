@@ -37,19 +37,19 @@
                     </tr>
                     {% endfor %}
                 </table>
-                {% if leaves.number >= 1 %}
+                {% if payrolls.number >= 1 %}
                 <nav aria-label="Page navigation description">
                     <ul class="pagination justify-content-end">
-                        {% if leaves.has_previous %}
+                        {% if payrolls.has_previous %}
                         <li class="page-item ">
-                            <a class="page-link" href="?page={{leaves.previous_page_number}}">Previous</a>
+                            <a class="page-link" href="?page={{payrolls.previous_page_number}}">Previous</a>
                         </li>
                         {% endif %}
                         {% if pages %}
 
                         {% for p in pages %}
 
-                        {% if p == leaves.number %}
+                        {% if p == payrolls.number %}
                         <li class="page-item active" aria-current="page"><a class="page-link "
                                 href="?page={{p}}">{{p}}</a></li>
                         {% else %}
@@ -60,9 +60,9 @@
 
                         {% endif %}
 
-                        {% if leaves.has_next %}
+                        {% if payrolls.has_next %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{leaves.next_page_number}}">Next</a>
+                            <a class="page-link" href="?page={{payrolls.next_page_number}}">Next</a>
                         </li>
                         {% endif %}
                     </ul>

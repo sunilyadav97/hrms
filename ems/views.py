@@ -973,8 +973,13 @@ def viewPayRoll(request):
     if request.user.is_superuser:
         try:
             payrolls=PayRoll.objects.all()
-            context['payrolls']=payrolls
-            
+            paginator=Paginator(payrolls,2)
+            page_no=request.GET.get('page')
+
+            total_pages=paginator.page_range
+            payrollspages=paginator.get_page(page_no) 
+            context['payrolls']=payrollspages
+            context['pages']=total_pages
         except Exception as e:
             print('View Pay Slip Exception : ',e)
         return render(request,'ems/view_pay_slip.html',context)
@@ -999,7 +1004,7 @@ def deletePayRoll(request,id):
         messages.warning(request,"You don't Have Access!")
         return redirect('ems:ems')
     
-# Displaying Payroll For Employee
+# Displaying Payroll For Employee 
 @login_required()    
 def payRoll(request):
     context={}
@@ -1015,6 +1020,7 @@ def payRoll(request):
         print('Payroll Exception : ',e)
     return render(request,'ems/payroll.html',context)
 # Create New Query
+
 @login_required()
 def createQuery(request):
     context={}
