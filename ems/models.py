@@ -97,10 +97,12 @@ class Events(models.Model):
     def __str__(self):
         return self.title
     
-# class PayRoll(models.Model):
-#     employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
-#     payrollid=models.CharField(max_length=10,unique=True)
-#     working_days=models.IntegerField()
+class PayRoll(models.Model):
+    employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
+    payroll_slip=models.FileField(upload_to='payrolls',null=True,blank=True)
+    month=models.CharField(max_length=10)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
     
 class DepartmentQuery(models.Model):
     query_id=models.IntegerField(unique=True)
