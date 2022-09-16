@@ -134,3 +134,11 @@ class Connect(models.Model):
 
     def __str__(self):
         return self.employee.name
+
+class AllocatedLeave(models.Model):
+    employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
+    allocated=models.IntegerField(default=18)
+    earn=models.IntegerField()
+    month=models.CharField(max_length=12)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)

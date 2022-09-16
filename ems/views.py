@@ -835,6 +835,22 @@ def allLeaves(request):
         print('All leaves Exception : ',e)
         
     return render(request,'ems/all_leaves.html',context)
+
+
+def allocatedLeave(request):
+    context={}
+    if request.user.is_superuser:
+        try:
+            pass
+            
+        except Exception as e:
+            print('Allocated Leave Exception : ',e)
+        return render(request,'ems/allocated_leave.html',context)
+    else:
+        messages.warning(request,"You don't have access!")
+        return redirect('ems:ems')
+
+
 @login_required()    
 def createEvent(request):
     context={}

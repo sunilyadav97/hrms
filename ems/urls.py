@@ -37,4 +37,5 @@ urlpatterns=[
     path('attendance-filter/',filterAttendance,name='attendance-filter'),  
     path('connect',connect,name='connect'),  
     path('connect-status',connectStatus,name='connect-status'),  
+    path('allocated-leaves',allocatedLeave,name='allocated-leaves'),  
 ]

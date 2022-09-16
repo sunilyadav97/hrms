@@ -25,7 +25,14 @@ font-size: 16px !important;
                     <tr>
                         <td>{{forloop.counter}}.</td>
                         <td>{{item.employee.name}}</td>
+                        {% comment %} <td>{{item.intime | time}}</td> {% endcomment %}
+
+                        {% if item.is_late == True %}
+                        <td class="bg-danger text-light p-1 py-2">{{item.intime | time}}</td>
+                        {% else %}
                         <td>{{item.intime | time}}</td>
+                        {% endif %}
+
                         <td>{{item.outtime | time}}</td>
                         {% if item.present %}
                         <td class="text-success fw-semibold ">Present</td>
