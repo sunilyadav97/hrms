@@ -76,16 +76,27 @@
             </div>
             <div class="col-4 ">
                 <div class="row">
-                    <div class="col-10 border border-dark  py-3 px-2 d-flex justify-content-center flex-column align-items-center">
-                        <h3 class="events-title text-center mb-2">Upcomming Events</h3>
+                    <div class="col-11 border rounded-5 border-danger  py-3 px-2 d-flex justify-content-center flex-column align-items-center bg-danger">
+                        <h6 class="events-title text-center mb-2 fw-semibold">Upcoming Events & Celebrations</h6>
                         <ul>
                             {% for event in events  %}
-                            <li><a href="{% url 'ems:event' event.id %}">{{event.title}}</a></li>
+                            <li><a href="{% url 'ems:event' event.id %}" class="fw-semibold text-light">{{event.title}}</a></li>
                             {% endfor %}
+                            
+                        </ul>
+                        <ul class="style-none" style="list-style:none ;">
+                            {% comment %} <li class="text-center  fw-semibold">Birthday</li> {% endcomment %}
+                            {% if birthday %}
+                            <li class=" text-white text-center my-2 fw-semibold">Happy Birthday {{name}} 🎂🎉</li>
+                            {% endif %}
+                            {% comment %} <li class="text-center text-warning fw-semibold">Anniversary</li> {% endcomment %}
+                            {% if anniversary %}
+                            <li class="text-white text-center my-2 fw-semibold">Congratulations {{anniversary.name}} You Have Completed {{anniversary.completed_years}} {% if anniversary.completed_years > 1 %}Years {% else %} Year {% endif %} 👏</li>
+                            {% endif %}
                         </ul>
                         
                     </div>
-                    <div class="col-10 border border-dark my-3 py-3 px-2 ">
+                    {% comment %} <div class="col-10 border border-dark my-3 py-3 px-2 ">
                         <h3 class="events-title text-center mb-2">Upcomming Celebrations</h3>
                         <ul class="style-none" style="list-style:none ;">
                             <li class="text-center  fw-semibold">Birthday</li>
@@ -97,7 +108,7 @@
                             <li class="text-success text-center my-2">Congratulations {{anniversary.name}} You Have Completed {{anniversary.completed_years}} {% if anniversary.completed_years > 1 %}Years {% else %} Year {% endif %} 👏</li>
                             {% endif %}
                         </ul>
-                    </div>
+                    </div> {% endcomment %}
                 </div>
             </div>
         </div>

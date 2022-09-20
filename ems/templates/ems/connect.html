@@ -11,7 +11,7 @@ Connect | EMS
     <div class="container">
     <div class="row d-flex align-items-center justify-content-center">
         <div class="col-8">
-            <h3 class="derpartment-title my-3">All Connect</h3>
+            <h3 class="derpartment-title my-3 text-uppercase text-white" style="background-color: #c30000e6 !important;">All Connect</h3>
             <div class="d-grid">
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addconnect">Connect</button>
             </div>
@@ -19,18 +19,18 @@ Connect | EMS
         {% for connect in connects %}
         <div class="col-8 my-3">
             <div class="card mb-3">
-                <div class="card-header">
+                <div class="card-header bg-danger text-white" style="background-color: #c30000e6 !important;">
                     <i class="fa fa-area-chart"></i><b>{{connect.employee.name}}</b>
                     {% if connect.is_completed %}
-                    <span class="float-end"><button class="btn  btn-outline-dark mx-2 btn-sm" data-bs-toggle="modal" data-bs-target="#connectStatus" onclick="updateStatus({{connect.id}})">Status</button> ✔️</span>
+                    <span class="float-end"><button class="btn  btn-outline-light mx-2 btn-sm" data-bs-toggle="modal" data-bs-target="#connectStatus" onclick="updateStatus({{connect.id}})">Status</button> ✔️</span>
                     {% else %}
-                    <span class="float-end"><button class="btn btn-outline-dark mx-2 btn-sm" data-bs-toggle="modal" data-bs-target="#connectStatus"  onclick="updateStatus({{connect.id}})">Status</button> ❌ </span>
+                    <span class="float-end"><button class="btn btn-outline-light mx-2 btn-sm" data-bs-toggle="modal" data-bs-target="#connectStatus"  onclick="updateStatus({{connect.id}})">Status</button> ❌ </span>
                     {% endif %}
                 </div>
                 <div class="card-body p-5">
                     <p>{{connect.message}}</p>
                 </div>
-                <div class="card-footer small text-muted">Connect At: {{connect.created_at | timesince}}</div>
+                <div class="card-footer small text-white" style="background-color: #c30000e6 !important;">Connect At: {{connect.created_at | timesince}}</div>
             </div>
         </div>
         {% endfor %}

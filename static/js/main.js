@@ -39,10 +39,7 @@ function editRole(id, name, des) {
     departmentID = document.getElementById('department-id').value = id
 }
 function editevent(id, title, description, date, is_com) {
-    console.log(id)
-    console.log(title)
-    console.log(description)
-    console.log(date)
+    
     document.getElementById('title').value = title
     document.getElementById('description').value = description
     document.getElementById('date').value = date
@@ -65,5 +62,22 @@ function showDescription(description)
    
         descriptionContainer.innerHTML=description
         descriptionContainer.classList.remove('d-none')
+    
+}
+
+// ==========Remove Notification After Some time============
+ window.addEventListener("load",function(){
+    setTimeout(removeNotification, 5000);
+
+})
+function removeNotification()
+{
+    try {
+        const notification=document.getElementById('notification')
+    notification.classList.add('d-none');
+      }
+      catch(err) {
+        console.log("Notification function")
+    }
     
 }

@@ -60,8 +60,8 @@ width:8rem !important;
                         {% if item.is_late == True %}
                         
                         <td ><span class="bg-danger text-light p-1 py-2">{{item.intime | time}}</span></td>
-                        {% else %}
-                        <td>{{item.intime | time}}</td>
+                        {% elif item.intime %}
+                        <td><span class="bg-success text-dark p-1 py-2">{{item.intime | time}}</span></td>
                         {% endif %}
 
                         <td>{{item.outtime | time}}</td>

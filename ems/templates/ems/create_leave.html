@@ -24,58 +24,20 @@
                 <div class="mb-3">
                     <label for="leave-type" class="form-label">Type of Leave</label>
                     <select class="form-select" aria-label="Default select example" name="type" id="leave-type">
-                        <option selected value="week">Week</option>
-                        <option value="month">Month</option>
-                        <option value="annual">Annual</option>
+                        <option selected value="Comp off">Comp off</option>
+                        <option value="Earned Leave">Earned Leave</option>
                       </select>
                 </div>
                 <div class="mb-3">
                     <label for="description" class="form-label">Descripiton</label>
                     <textarea class="form-control" id="description" rows="3" placeholder="Write Discription....."
-                        name="description"></textarea>
+                        name="description" required></textarea>
                 </div>
                 <div class="d-grid">
-                    <button class="btn btn-primary" type="submit">Create</button>
+                    <button class="btn btn-primary" type="submit">Request</button>
                 </div>
             </form>
         </div>
-        {% comment %} <div class="col-lg-10 col-12 my-5">
-            <h3 class="my-3 derpartment-title">All Leaves</h3>
-            <table class="table table-bordered">
-                <tr>
-                    <th>SN</th>
-                    <th>From date</th>
-                    <th>From to</th>
-                    <th>Descripiton</th>
-                    <th>Type</th>
-                    <th>Status</th>
-                    <th>Reply</th>
-                    <th>Delete</th>
-                </tr>
-                {% for leave in leaves %}
-                <tr class="my-4">
-                    <td>{{forloop.counter}}</td>
-                    <td>{{leave.date_from | date:'d/M/Y'}}</td>
-                    <td>{{leave.date_to | date:'d/M/Y'}}</td>
-                    <td>{{leave.description}}</td>
-                    <td>{{leave.type}}</td>
-                    {% if leave.status == 'Pending' %}
-                    <td class="bg-warning text-dark">{{leave.status}}</td>
-                    {% elif leave.status == 'Rejected' %}
-                    
-                    <td class="bg-danger text-white">{{leave.status}}</td>
-                    {% else %}
-                    <td class="text-white bg-success">{{leave.status}}</td>
-                    {% endif %}
-                    <td>{{leave.reply}}</td>
-                    
-                    <td><a href="{% url 'ems:leave-delete' leave.id %}" class="delete"><span class="material-symbols-outlined">
-                        delete
-                        </span></a></td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div> {% endcomment %}
     </div>
 </div>
 {% endblock body %}

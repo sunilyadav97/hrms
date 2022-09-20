@@ -17,15 +17,14 @@
                         <a href="{% url 'ems:profile' %}" class="text-white border-end px-2">Profile</a>
                         <a href="{% url 'ems:all-attendance' %}" class="text-white border-end px-2">Attendance</a>
                     </div> {% endcomment %}
-                    <div class="col-12 py-4">
+                    {% comment %} <div class="col-12 py-4">
                         <div class="">
                             <h5 class="fw-semibold home-title">EMS Home Feed</h5>
                             <p class="home-description text-muted">Here you will see Other colleagues' birthday and
                                 Anniversary
                                 And also Events Notifications. And some other stuff.</p>
                         </div>
-
-                    </div>
+                    </div> {% endcomment %}
                     <div class="col-12">
 
                         {% for connect in connects %}

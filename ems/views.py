@@ -1162,7 +1162,7 @@ def addComment(request):
 def connect(request):
     context={}
     try:
-        connects=Connect.objects.all()
+        connects=Connect.objects.all().order_by('-id')
         expireConnect()
         employees=Employee.objects.all()
         context['employees']=employees

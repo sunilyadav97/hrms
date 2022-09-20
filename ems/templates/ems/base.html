@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en">
+<html lang="en"> 
 
 <head>
     <meta charset="UTF-8">
@@ -48,9 +48,10 @@
 
     <header class="shadow-sm">
         <nav class="navbar navbar-expand-lg nav-bg navbar-dark shadow-sm fixed-top">
-            <div class="container">
+            <div class="container d-flex align-items-center justify-content-start">
+                
                 <a class="navbar-brand" href="{% url 'home:home' %}">TechInterio</a>
-                <a class="cursor-pointer nav-link active" data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop"
+                <a class="cursor-pointer float-end active " data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop"
                     aria-controls="staticBackdrop"><span class="navbar-toggler-icon"></span></a>
 
                 {% comment %} <li class="nav-item"><a class="nav-link active" href="{% url 'ems:ems' %}">Dashboard</a>
@@ -64,7 +65,11 @@
     <div class="offcanvas offcanvas-start nav-bg text-white" tabindex="2" id="staticBackdrop"
         aria-labelledby="staticBackdropLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">EMS</h5>
+            {% if request.user.is_superuser %}
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Admin</h5>
+            {% else %}
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">{{profile.name}}</h5>
+            {% endif %}
             <button type="button" class="c-btn" data-bs-dismiss="offcanvas" aria-label="Close"><span
                     class="material-symbols-outlined">
                     close
@@ -77,7 +82,9 @@
                 {% if request.user.is_superuser %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:ems' %}">Dashboard</a></li>
                 {% else %}
-                <li class="nav-item"><img src="{{profile.imageURL}}" alt="" class="profile-side"></li>
+                <div class="d-flex align-items-center justify-content-center">
+                    <img src="{{profile.imageURL}}" alt="" class="profile-side">
+                </div>
                 <li class="nav-item">
                     <a class="nav-link active" href="{% url 'ems:ems' %}">Home</a>
                 </li>
@@ -136,7 +143,7 @@
                     </li>
                 </div>
 
-                <li class="nav-item"><a class="nav-link" href="{% url 'ems:attendance' %}">Attendance</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'ems:attendance' %}">Clockify</a></li>
 
                 <li class="nav-item accordion-button collapsed sub-arrow-forward" data-bs-toggle="collapse"
                     data-bs-target="#payroll-nav" aria-expanded="false" aria-controls="payroll-nav" onclick="rotate()">
@@ -155,7 +162,6 @@
                 <li class="nav-item"><a class="nav-link" href="#">Hirings</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">IT</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Reimbursement</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Clockify</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Awards</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Reviews</a></li>
                 {% else %}
@@ -171,7 +177,7 @@
                     <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:all-leaves' %}">All Leaves</a>
                     </li>
                 </div>
-                <li class="nav-item"><a class="nav-link" href="{% url 'ems:all-attendance' %}">Attendance</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'ems:all-attendance' %}">Clockify</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:payroll' %}">PayRoll</a></li>
                 {% if profile.role.name == 'Manager' %}
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:all-queries' %}">Queries</a></li>
@@ -187,7 +193,6 @@
                 </div>
                 {% endif %}
                 <li class="nav-item"><a class="nav-link" href="#">Reimbursement</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Clockify</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Awards</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Reviews</a></li>
                 {% endif %}
@@ -202,7 +207,7 @@
     <main class="my-5 pt-3">
 
         {% for message in messages %}
-        <div class="alert alert-{{ message.tags }} alert-dismissible fade show w-50 m-auto mb-2 mt-1" role="alert">
+        <div id="notification" class="alert alert-{{ message.tags }} alert-dismissible fade show w-50 m-auto mb-2 mt-1 " role="alert" >
             <strong>Message: </strong> {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </button>
