@@ -98,6 +98,14 @@ class Events(models.Model):
     def __str__(self):
         return self.title
     
+    @property
+    def imageURL(self):
+        try:
+            url=self.image.url
+        except:
+            url=''
+        return url
+
 class PayRoll(models.Model):
     employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
     payroll_slip=models.FileField(upload_to='payrolls',null=True,blank=True)

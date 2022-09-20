@@ -10,7 +10,11 @@ font-size: 16px !important;
     <div class="container">
         <div class="row d-flex justify-content-center align-items-center flex-column">
             <div class="col-6 mb-5">
+                {% if request.user.is_superuser %}
+                <a href="{% url 'ems:view-events' %}" class="my-3 btn nav-bg text-white"><i class='bx bx-arrow-back'></i> Back</a>
+                {% else %}
                 <a href="{% url 'ems:profile' %}" class="my-3 btn nav-bg text-white"><i class='bx bx-arrow-back'></i> Back to Profile</a>
+                {% endif %}
             </div>
             <div class="col-6">
                 <div class="card mb-3">
@@ -18,6 +22,9 @@ font-size: 16px !important;
                         <i class="fa fa-area-chart"></i>{{event.title}}
                     </div>
                     <div class="card-body">
+                        <div class="mb-3">
+                            <img src="{{event.imageURL}}" alt="" class="img-fluid rounded">
+                        </div>
                         <div class="mb-2 text-muted">
                             <small>
                             <span class="text-muted">Event Date : </span>{{event.date | date:'d-M-Y'}}

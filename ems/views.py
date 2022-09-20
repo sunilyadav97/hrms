@@ -66,7 +66,7 @@ def dashboard(request):
                 else:
                     profile_obj=Employee.objects.get(user=request.user)
                     context['profile']=profile_obj
-                    events=Events.objects.all()[0:2]
+                    events=Events.objects.all()
                     context['events']=events
                     connects=Connect.objects.filter(Q(employee=profile_obj) and Q(is_completed=False)).order_by('-id')
                     print(connects)
@@ -859,7 +859,8 @@ def createEvent(request):
             title=request.POST['title']
             description=request.POST['description']
             date=request.POST['date']
-            obj=Events.objects.create(title=title,description=description, date=date)
+            image=request.FILES['image']
+            obj=Events.objects.create(title=title,description=description, date=date,image=image)
             print(obj)                          
             if obj:
                 messages.success(request,'Created Successfully!')
@@ -874,8 +875,8 @@ def createEvent(request):
 def viewEvents(request):
     context={}
     try:
-        events=Events.objects.all().order_by("-date")
-        paginator=Paginator(events,2)
+        events=Events.objects.all().order_by("-id")
+        paginator=Paginator(events,10)
         page_no=request.GET.get('page')
 
         total_pages=paginator.page_range
@@ -888,6 +889,14 @@ def viewEvents(request):
             description=request.POST['description']
             date=request.POST['date']
             try:
+                image=request.FILES['image']
+                
+            except Exception as e:
+                image=None
+                print('check image update of event update Exception E: ',e)
+            
+            try:
+
                 is_completed=request.POST['completed']
             except Exception as e:
                 is_completed=False
@@ -900,6 +909,8 @@ def viewEvents(request):
                 event_obj.description=description
                 event_obj.date=date
                 event_obj.is_completed=is_completed 
+                if image is not None:
+                    event_obj.image=image
                 event_obj.save()
                 messages.success(request,'Updated Successfully!')
                 

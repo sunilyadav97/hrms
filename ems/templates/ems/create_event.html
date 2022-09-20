@@ -13,12 +13,16 @@ font-size: 16px !important;
         <div class="col-12 col-sm-8">
             <h3 class=" my-3 derpartment-title">Create Event</h3>
            
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 {% csrf_token %}
             <div class="mb-3">
                 <label for="role-name" class="form-label">Title</label> <a class="float-end" href="{% url 'ems:view-events' %}">All Events</a>
                 <input type="text" class="form-control" id="role-name" placeholder="Enter Event Title....."
                 name="title">
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Image</label>
+                <input type="file" class="form-control" id="image" name="image" required>
             </div>
             <div class="mb-3">
                 <label for="description" class="form-label">Descripiton</label>
