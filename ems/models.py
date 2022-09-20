@@ -91,6 +91,7 @@ class Events(models.Model):
     description=models.TextField(max_length=300)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
+    image=models.ImageField(upload_to='events',null=True,blank=True)
     date=models.DateField()
     is_completed=models.BooleanField(default=False)
     
