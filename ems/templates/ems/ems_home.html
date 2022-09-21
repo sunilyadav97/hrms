@@ -29,32 +29,30 @@
 
                         {% for connect in connects %}
                         <div class="card mb-3">
-                            <div class="card-header">
-                                <i class="fa fa-area-chart"></i>Connect Notification
+                            <div class="card-header nav-bg text-white">
+                                <i class="fa fa-area-chart fw-semibold"></i><span class="fw-semibold">Connect Notification</span> 
                                 <small class="bg-success text-white float-end py-1 px-2 rounded">New</small>
                             </div>
-                            <div class="card-body p-5">
+                            <div class="card-body p-5 ">
                                 <p>{{connect.message}}</p>
                             </div>
-                            <div class="card-footer small text-dark">Time : {{connect.created_at | timesince}} Ago
+                            <div class="card-footer small nav-bg text-white">Time : {{connect.created_at | timesince}} Ago
                             </div>
                         </div>
                         {% endfor %}
                     </div>
 
 
-                    
-                    
-                </div>
-            </div>
-            <div class="col-4">
-                <div class="row d-flex align-items-center justify-content-center py-4">
-                    
                     {% for birthday in birthdays %}
                     <div class="col-12 my-2 " id="birthday">
                         <div class="card mb-3 rounded">
-                            <div class="card-body nav-bg rounded">
-                                <h3 class="text-center my-5 birthday-wish">Happy Birthday {{birthday.name}} 🎂🎉</h3>
+                            <div class="card-header nav-bg text-white">
+                                <i class="fa fa-area-chart fw-semibold"></i><span class="fw-semibold">Birthday Notification</span> 
+                            </div>
+                            <div class="card-body text-dark ">
+                                <h3 class="text-center my-5 birthday-wish text-dark">Happy Birthday {{birthday.name}} 🎂🎉</h3>
+                            </div>
+                            <div class="card-footer small nav-bg text-white">
                             </div>
                         </div>
                     </div>
@@ -63,22 +61,33 @@
                     {% for anniversary in anniversaries %}
                     <div class="col-12 my-2 anniversary" id="">
                         <div class="card mb-3">
-                            
-                            <div class="card-body nav-bg rounded">
-                                <h3 class="text-center my-5 birthday-wish">Congratulations {{anniversary.employee.name}}
+                            <div class="card-header nav-bg text-white">
+                                <i class="fa fa-area-chart fw-semibold"></i><span class="fw-semibold">Anniversary Notification</span> 
+                                
+                            </div>
+                            <div class="card-body ">
+                                <h3 class="text-center my-5 birthday-wish text-dark">Congratulations {{anniversary.employee.name}}
                                     👏 <br> You Have successfully completed {{anniversary.completed_years}} {% if anniversary.completed_years > 1 %}Years {% else %} Year {% endif %}</h3>
 
                             </div>
-
+                            <div class="card-footer small nav-bg text-white">
+                            </div>
                         </div>
                     </div>
                     {% endfor %}
+                    
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="row d-flex align-items-center justify-content-center py-4">
+                    
+                   
 
                     {% for event in events %}
                     <div class="col-12 my-2 anniversary">
                         <div class="card mb-3">
-                            <div class="card-header">
-                                <i class="fa fa-area-chart"></i>{{event.title}}
+                            <div class="card-header nav-bg text-white">
+                                <i class="fa fa-area-chart"></i><span class="fw-semibold">{{event.title}}</span>
                             </div>
                             <div class="card-body">
                                 <div class="mb-2 text-muted">
@@ -92,7 +101,7 @@
                                 <hr>
                                 <p>{{event.description}}</p>
                             </div>
-                            <div class="card-footer small text-muted">Posted: {{event.created_at|timesince}} Ago</div>
+                            <div class="card-footer small text-white nav-bg">Posted: {{event.created_at|timesince}} Ago</div>
                         </div>
                     </div>
                     {% endfor %}

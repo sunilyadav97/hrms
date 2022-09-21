@@ -66,7 +66,7 @@ def dashboard(request):
                 else:
                     profile_obj=Employee.objects.get(user=request.user)
                     context['profile']=profile_obj
-                    events=Events.objects.all()
+                    events=Events.objects.all().order_by('-id')
                     context['events']=events
                     connects=Connect.objects.filter(Q(employee=profile_obj) and Q(is_completed=False)).order_by('-id')
                     print(connects)
@@ -859,7 +859,11 @@ def createEvent(request):
             title=request.POST['title']
             description=request.POST['description']
             date=request.POST['date']
-            image=request.FILES['image']
+            try:
+                image=request.FILES['image']
+            except:
+                image=''
+
             obj=Events.objects.create(title=title,description=description, date=date,image=image)
             print(obj)                          
             if obj:
