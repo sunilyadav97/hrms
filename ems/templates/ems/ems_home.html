@@ -7,9 +7,9 @@
 {% block body %}
 <section>
     <div class="container">
-        <div class="row d-flex justify-content-center ">
-            <div class="col-6">
-                <div class="row px-2 py-5 d-flex justify-content-center flex-column align-items-center ">
+        <div class="row d-flex justify-content-center align-items-start gx-5">
+            <div class="col-7">
+                <div class="row px-2 py-5 d-flex justify-content-start flex-column align-items-start ">
 
                     {% comment %} <div class="col-12 d-flex justify-content-start  py-2 text-white  rounded"
                         style="background-color: #c30000e6;">
@@ -25,7 +25,7 @@
                                 And also Events Notifications. And some other stuff.</p>
                         </div>
                     </div> {% endcomment %}
-                    <div class="col-12">
+                    <div class="col-12 " id="connect">
 
                         {% for connect in connects %}
                         <div class="card mb-3">
@@ -42,38 +42,40 @@
                         {% endfor %}
                     </div>
 
-                    <div class="col-12">
-                        {% for birthday in birthdays %}
-                        <div class="card mb-3 ">
-                            <div class="card-header">
-                                <i class="fa fa-area-chart"></i><small class="text-muted"> Brithday Notification</small>
-                            </div>
-                            <div class="card-body nav-bg">
+
+                    
+                    
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="row d-flex align-items-center justify-content-center py-4">
+                    
+                    {% for birthday in birthdays %}
+                    <div class="col-12 my-2 " id="birthday">
+                        <div class="card mb-3 rounded">
+                            <div class="card-body nav-bg rounded">
                                 <h3 class="text-center my-5 birthday-wish">Happy Birthday {{birthday.name}} 🎂🎉</h3>
                             </div>
-
                         </div>
-                        {% endfor %}
                     </div>
+                    {% endfor %}
 
-                    <div class="col-12">
-                        {% for anniversary in anniversaries %}
+                    {% for anniversary in anniversaries %}
+                    <div class="col-12 my-2 anniversary" id="">
                         <div class="card mb-3">
-                            <div class="card-header">
-                                <i class="fa fa-area-chart"></i><small class="text-muted"> Anniversary
-                                    Notification</small>
-                            </div>
-                            <div class="card-body nav-bg">
+                            
+                            <div class="card-body nav-bg rounded">
                                 <h3 class="text-center my-5 birthday-wish">Congratulations {{anniversary.employee.name}}
                                     👏 <br> You Have successfully completed {{anniversary.completed_years}} {% if anniversary.completed_years > 1 %}Years {% else %} Year {% endif %}</h3>
 
                             </div>
 
                         </div>
-                        {% endfor %}
                     </div>
+                    {% endfor %}
+
                     {% for event in events %}
-                    <div class="col-12 my-2">
+                    <div class="col-12 my-2 anniversary">
                         <div class="card mb-3">
                             <div class="card-header">
                                 <i class="fa fa-area-chart"></i>{{event.title}}

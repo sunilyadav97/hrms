@@ -22,8 +22,9 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <!-- ===============JQUERY CDN============ -->
-    <script src="https://code.jquery.com/jquery-3.6.1.js"
-        integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+
+   
 
     <style>
         {
@@ -46,7 +47,7 @@
 <body>
 
 
-    <header class="shadow-sm">
+    <header class="shadow-sm header" >
         <nav class="navbar navbar-expand-lg nav-bg navbar-dark shadow-sm fixed-top">
             <div class="container d-flex align-items-center justify-content-start">
                 
@@ -218,14 +219,32 @@
         {% block body %}{% endblock body %}
 
     </main>
+    
     <!-- =============BOOSTRAP CDN JS LINK============== -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
-        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+
+      <!-- =============SCROLL JS CDN=============== -->
+    <script src="https://unpkg.com/scrollreveal"></script> 
 
     <!-- ============CUSTOM JS========= -->
     <script src="{% static 'js/main.js' %}"></script>
 
+    
+    <script>
+        console.log("Hello")
+        ScrollReveal().reveal(`.header`);
+        const sr=ScrollReveal({
+            origin:'top',
+            distance:'60px',
+            duration:2500,
+            delay:500,
+        })
+        sr.reveal('.header',{delay:500})
+        sr.reveal('#connect',{delay:700})
+        sr.reveal('#birthday',{delay:700, origin:'right'})
+        sr.reveal('.anniversary',{delay:800, origin:'bottom'})
+        sr.reveal('#notification',{delay:700, origin:'top', distance:'150px'})
+    </script>
 </body>
 
 </html>

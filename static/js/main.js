@@ -67,7 +67,7 @@ function showDescription(description)
 
 // ==========Remove Notification After Some time============
  window.addEventListener("load",function(){
-    setTimeout(removeNotification, 5000);
+    setTimeout(removeNotification, 7000);
 
 })
 function removeNotification()

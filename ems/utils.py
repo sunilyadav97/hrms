@@ -25,14 +25,15 @@ def expireConnect():
             create_time=item.created_at
             current_time=datetime.datetime.now(timezone.utc)
             difference=current_time-create_time
-            compare_time=datetime.time(22,00,00).hour
-            object_time=int(((difference.seconds)/60)/60)
+
+            compare_time=int(2)
             
-            if object_time > compare_time:
+            if difference.days >= compare_time:
                 item.delete()
                 print('Item Deleted')
             else:
                 print('Time Need to complete')
+
     except Exception as e:
         print('Expire Connect Exception : ',e)
     

@@ -28,7 +28,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark nav-bg">
+    <nav class="navbar navbar-expand-lg navbar-dark nav-bg header">
         <div class="container">
           <a class="navbar-brand" href="/">Techinterio</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -71,6 +71,28 @@
 
     <!-- ============CUSTOM JS========= -->
     <script src="{% static 'js/main.js' %}"></script>
+
+      <!-- =============SCROLL JS CDN=============== -->
+      <script src="https://unpkg.com/scrollreveal"></script> 
+  
+      
+      <script>
+          console.log("Hello")
+          ScrollReveal().reveal(`.header`);
+          const sr=ScrollReveal({
+              origin:'top',
+              distance:'60px',
+              duration:2500,
+              delay:500,
+          })
+          sr.reveal('.header',{delay:500})
+          sr.reveal('.carousel',{delay:650})
+          sr.reveal('#notification',{delay:700, origin:'top', distance:'150px'})
+          sr.reveal('.home-button',{delay:800 , origin:'bottom',distance:'10px'})
+          sr.reveal('.derpartment-title',{delay:700, origin:'left'})
+          sr.reveal('.form',{delay:750, origin:'right'})
+          sr.reveal('.anniversary',{delay:800, origin:'bottom'})
+      </script>
 
 </body>
 

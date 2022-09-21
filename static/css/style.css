@@ -257,8 +257,8 @@
   object-position: center;
 }
 .profile-side{
-  height: 85px;
-  width: 85px;
+  height: 120px;
+  width: 120px;
   object-fit: cover;
   object-position: center;
   border-radius: 5px;
