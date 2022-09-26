@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'home',
     'ems',
 ]
@@ -78,7 +79,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'techinterio.wsgi.application'
-
+SITE_ID = 1
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -140,3 +141,10 @@ STATICFILES_DIRS=[
 ]
 
 
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_HOST_USER='portal.techinterio@gmail.com'
+EMAIL_HOST_PASSWORD='eguwojapsixuztuj'
+EMAIL_PORT= 587
+EMAIL_USE_TLS= True
+EMAIL_USE_SSL= False

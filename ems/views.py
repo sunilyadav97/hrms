@@ -10,6 +10,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.core.paginator import Paginator
 from datetime import datetime,timedelta
+from django.contrib.sites.models import Site
 
 
 
@@ -238,10 +239,31 @@ def newUsers(request):
     if request.user.is_superuser:
         context={}
         try:
-            pass
+            newusers=Newuser.objects.filter(completed=False)
+            context['newusers']=newusers
         except Exception as e:
             print("New Users Exception : ",e)
         return render(request,'ems/new_users.html',context)
+    else:
+        messages.warning(request,"You don't have Permissions!")
+        return redirect("ems:ems")
+
+@login_required()
+def sendVerificationMail(request,username):
+    if request.user.is_superuser:
+        context={}
+        try:
+            current_site = Site.objects.get_current()
+            print(current_site.domain)
+            domain='http://localhost:8000'
+            print('Domain ',domain)
+            print('username ',username)
+            res=sendMail(username,domain)
+            if res == True:
+                messages.success(request,'Email Sended Successfully!')
+        except Exception as e:
+            print("Send Verification Mail Exception : ",e)
+        return redirect('ems:new-users')
     else:
         messages.warning(request,"You don't have Permissions!")
         return redirect("ems:ems")

@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from ems.models import *
 import random
+from ems.utils import *
 
 def home(request):
     
@@ -50,7 +51,10 @@ def register(request):
                         if lname != '':
                             obj.last_name=lname
                         obj.save()
-                        messages.success(request,'You have Registered successfully!')
+                        token=generateToken()
+                        newuser_obj=Newuser.objects.create(token=token,user=obj)
+                        print('New User obj ',newuser_obj)
+                        messages.success(request,'You have Registered successfully! Now Admin Will Send You Email in 24 Hour')
                         return redirect('home:login')
                     else:
                         messages.warning(request,'Somthing Went wrong!')
@@ -77,8 +81,8 @@ def signin(request):
                     messages.success(request,'Logged in successfully!')
                     return redirect('ems:ems')
                 else:
-                    messages.info(request,'Add Your Personal info!')
-                    return redirect('ems:add-employee')
+                    messages.info(request,'Please check your Email And follow Link to add Your Persional info!')
+                    return redirect('home:home')
             else:
                 messages.warning(request,'Credentials Not Match!')
     except Exception as e:

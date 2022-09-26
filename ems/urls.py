@@ -4,6 +4,7 @@ app_name='ems'
 urlpatterns=[
     path('',dashboard,name='ems'),
     path('new-users/',newUsers,name='new-users'),
+    path('send-verification-mail/<username>/',sendVerificationMail,name='send-verification-mail'),
     path('create-department/',createDepartment,name='create-department'),
     path('view-departments/',viewDepartment,name='view-department'),
     path('delete-department/<pk>/',deleteDepartment,name='delete-department'),
