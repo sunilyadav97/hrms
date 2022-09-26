@@ -19,6 +19,11 @@ class Role(models.Model):
     def __str__(self):
         return self.name
 
+class Newuser(models.Model):
+    user=models.OneToOneField(User,on_delete=models.CASCADE)
+    token=models.CharField(max_length=40)
+    completed=models.BooleanField(default=False)
+
 class Address(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE, blank=True,null=True)
     address=models.CharField(max_length=150)
