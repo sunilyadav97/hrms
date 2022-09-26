@@ -233,6 +233,18 @@ def changePassword(request):
         
     return redirect('ems:profile')
     
+@login_required()
+def newUsers(request):
+    if request.user.is_superuser:
+        context={}
+        try:
+            pass
+        except Exception as e:
+            print("New Users Exception : ",e)
+        return render(request,'ems/new_users.html',context)
+    else:
+        messages.warning(request,"You don't have Permissions!")
+        return redirect("ems:ems")
 
 @login_required()
 def createDepartment(request):

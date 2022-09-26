@@ -26,10 +26,16 @@ def register(request):
     try:
         if request.method == 'POST':
             username=request.POST['username']
+            fname=request.POST['fname']
+            lname=request.POST['lname']
+            email=request.POST['email']
             password=request.POST['password']
             print(username)
+            print(fname)
+            print(email)
             print(password)
-            if username and password == '':
+
+            if username and password and fname and email == '':
                 messages.warning(request,'All Fields Mandatry')
                 return redirect('home:home')
             else:
@@ -37,9 +43,12 @@ def register(request):
                 if user_obj:
                     messages.warning(request,'This Username not Available')
                 else:
-                    obj=User.objects.create(username=username)
+                    obj=User.objects.create(username=username,email=email)
                     if obj:
                         obj.set_password(password)
+                        obj.first_name=fname
+                        if lname != '':
+                            obj.last_name=lname
                         obj.save()
                         messages.success(request,'You have Registered successfully!')
                         return redirect('home:login')

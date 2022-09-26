@@ -192,6 +192,33 @@
   font-size: var(--h3-font-size);
   font-weight: var(--font-bold);
 }
+
+.connect-messages{
+  animation: glowing 5s infinite;
+}
+
+@keyframes color-change {
+  0% { color: red; }
+  50% { color: blue; }
+  100% { color: red; }
+}
+
+
+
+@keyframes glowing {
+  0% {
+    text-shadow: 0 0 10px #2ba805;
+    color: red;
+  }
+  50% {
+    text-shadow: 0 0 100px #49e819;
+    color: blue;
+  }
+  100% {
+    text-shadow: 0 0 10px #2ba805;
+    color: black;
+  }
+}
 /* =========DEPARTMENT SECTION========= */
 .derpartment-title{
   font-size: var(--h3-font-size);

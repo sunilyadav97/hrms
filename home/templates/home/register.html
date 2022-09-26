@@ -17,11 +17,23 @@
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
-                        <input type="text" class="form-control" id="username" name="username" required>
+                        <input type="text" class="form-control" id="username" name="username" required placeholder="Choose Username">
+                    </div>
+                    <div class="mb-3">
+                        <label for="fname" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="fname" name="fname" required placeholder="Enter Your First Name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="lname" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="lname" name="lname" placeholder="Enter Your Last Name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required placeholder="Enter Your Email">
                     </div>
                     <div class="mb-3">
                         <label for="pass" class="form-label">Password</label>
-                        <input type="password" class="form-control" id="pass" name="password" required>
+                        <input type="password" class="form-control" id="pass" name="password" required placeholder="Passowrd">
                     </div>
                     <div class="d-grid">
                         <button type="submit" class="btn btn-danger">Register</button>

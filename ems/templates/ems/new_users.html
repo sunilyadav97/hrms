@@ -1,0 +1,45 @@
+{% extends './base.html' %}
+{% load static %}
+{% block title %}New Users | EMS{% endblock title %}
+{% block css %}
+
+{% endblock css %}
+{% block body %}
+<section class="py-5">
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-8">
+                <h3 class="my-3 derpartment-title">New Users</h3>
+                <a href="{% url 'ems:ems' %}" class="mb-2">Dashboard</a>
+                <table class="table table-bordered event-table">
+                  <tr>
+                    <th>SN</th>
+                    <th>username</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                  </tr>
+                  <!-- {% for event in events %}
+                  <tr>
+                    <td>{{forloop.counter}}.</td>
+                    <td><a href="{% url 'ems:event' event.id %}">{{event.title}}</a></td>
+                    <td>{{event.description}}</td>
+                    <td>{{event.date | date:'d-M-Y'}}</td>
+                    <td>
+                      {% if event.is_completed %}
+                      <span class="material-symbols-outlined text-success fw-blod">
+                        done
+                      </span>
+                      {% else %}
+                      <span class="material-symbols-outlined text-danger"> close </span>
+          
+                      {% endif %}
+                    </td>
+
+                  </tr>
+                  {% endfor %} -->
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock body %}

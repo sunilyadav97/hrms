@@ -1,6 +1,6 @@
 {% extends './base.html' %}
 {% block head %}
-<meta http-equiv="refresh" content="20">
+<meta http-equiv="refresh" content="600">
 {% endblock head %}
 {% block title %} EMS | Home {% endblock title %}
 
@@ -33,8 +33,8 @@
                                 <i class="fa fa-area-chart fw-semibold"></i><span class="fw-semibold">Connect Notification</span> 
                                 <small class="bg-success text-white float-end py-1 px-2 rounded">New</small>
                             </div>
-                            <div class="card-body p-5 ">
-                                <p>{{connect.message}}</p>
+                            <div class="card-body ">
+                                <p class="connect-messages">{{connect.message}}</p>
                             </div>
                             <div class="card-footer small nav-bg text-white">Time : {{connect.created_at | timesince}} Ago
                             </div>
