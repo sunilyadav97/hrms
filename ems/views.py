@@ -62,8 +62,8 @@ def dashboard(request):
             if not request.user.is_superuser:
                 emp_obj=Employee.objects.filter(user=request.user).exists()
                 if not emp_obj:
-                    messages.info(request,'Add Personal Information!')
-                    return redirect('ems:add-employee')
+                    messages.info(request,'Please check Your Email!')
+                    return redirect('/')
                 else:
                     profile_obj=Employee.objects.get(user=request.user)
                     context['profile']=profile_obj
@@ -268,6 +268,22 @@ def sendVerificationMail(request,username):
         messages.warning(request,"You don't have Permissions!")
         return redirect("ems:ems")
 
+def verifyLink(request,token):
+    try:
+        obj=Newuser.objects.filter(token=token).exists()
+        
+        if obj:
+            new_obj=Newuser.objects.get(token=token)
+            print(new_obj)
+            messages.info(request,'Please Add your Personal Info!')
+            return redirect('ems:add-employee',token)
+        else:
+            messages.warning(request,'This Link has been Expired!')
+            return redirect('home:login')
+
+    except Exception as e:
+        print('Verify Link Exception : ',e)
+
 @login_required()
 def createDepartment(request):
     context = {}
@@ -382,21 +398,29 @@ def deleteRole(request, pk):
     except Exception as e:
         print('Delete Role Exception : ', e)
 
-@login_required()
-def addEmployee(request):
+
+def addEmployee(request,token):
     context = {}
     try:
+        newuser_check=Newuser.objects.filter(token=token).exists()
+        if newuser_check:
+            newuser_obj=Newuser.objects.get(token=token)
+        else:
+            messages.warning(request,'Invaild Link!')
+            return redirect('home:login')
         
+        print('New user in Add Employee',newuser_obj.user)
+        print(type(newuser_obj.user))
         if request.method == 'POST':
             print('Post Method add Employee')
-            user = request.user
-            full_name = request.POST['employee-name']
+            user = newuser_obj.user
+            full_name = newuser_obj.get_full_name()
             father_name = request.POST['father-name']
             dob = request.POST['employee-dob']
             document = request.FILES['document']
             phone_number = request.POST['phone-number']
             ephone_number= request.POST['ephone-number']
-            email = request.POST['email']
+            email = newuser_obj.email
             address = request.POST['address']
             street = request.POST['street']
             locality = request.POST['locality']
@@ -409,7 +433,7 @@ def addEmployee(request):
             if ephone_number == '':
                 ephone_number=None
 
-            if user and full_name and father_name and dob and email and phone_number and address and street and locality and city and state and pincode and country and joining_date:
+            if father_name and dob  and phone_number and address and street and locality and city and state and pincode and country and joining_date:
 
                 check_employee = Employee.objects.filter(
                     user=user).exists()

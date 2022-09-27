@@ -8,17 +8,16 @@
             <form action="" method="post" class="mt-4 add-employee" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row gy-1">
-                    <div class="mb-3 col-6">
-                        <label for="fname" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" id="fname" placeholder="Enter Name....."
-                            name="employee-name" required>
-                    </div>
-
-
+                    
                     <div class="mb-3 col-6">
                         <label for="father-name" class="form-label">Father Name</label>
                         <input type="text" class="form-control" id="father-name" placeholder="Enter Father Name....."
-                            name="father-name" required>
+                        name="father-name" required>
+                    </div>
+                    <div class="mb-3 col-6">
+                        <label for="mother-name" class="form-label">Mother Name</label>
+                        <input type="text" class="form-control" id="mother-name" placeholder="Enter Mother Name....."
+                            name="mother-name" required>
                     </div>
                     <div class="mb-3 col-6">
                         <label for="dob" class="form-label">Date of Birth</label>
@@ -26,11 +25,11 @@
                     </div>
 
 
-                    <div class="mb-3 col-6">
+                    {% comment %} <div class="mb-3 col-6">
                         <label for="document" class="form-label">Upload Document</label>
                         <input type="file" class="form-control" id="document" 
                             name="document" required>
-                    </div>
+                    </div> {% endcomment %}
                     <div class="mb-3 col-6">
                         <label for="phone" class="form-label">Phone No.</label>
                         <input type="number" class="form-control" id="phone" placeholder="Enter Phone Number...."
@@ -41,10 +40,10 @@
                         <input type="number" class="form-control" id="ephone" placeholder="Enter Emergency Phone Number......"
                             name="ephone-number">
                     </div>
-                    <div class="mb-3 col-6">
+                    {% comment %} <div class="mb-3 col-6">
                         <label for="email" class="form-label">Email</label>
                         <input type="email" class="form-control" id="email" placeholder="Enter Email...." name="email" required>
-                    </div>
+                    </div> {% endcomment %}
 
 
 
@@ -71,7 +70,7 @@
 
                     <div class="mb-3 col-3">
                         <label for="state" class="form-label">State</label>
-                        <input type="text" class="form-control" id="state" placeholder="Locality....." name="state" required>
+                        <input type="text" class="form-control" id="state" placeholder="State....." name="state" required>
                     </div>
                     <div class="mb-3 col-3">
                         <label for="pincode" class="form-label">Pin Code</label>
@@ -79,10 +78,9 @@
                             name="pincode" required>
                     </div>
 
-
                     <div class="mb-3 col-6">
                         <label for="country" class="form-label">Country</label>
-                        <input type="text" class="form-control" id="country" placeholder="Locality....." name="country" required>
+                        <input type="text" class="form-control" id="country" placeholder="Country....." name="country" required>
                     </div>
                     <div class="mb-3 col-6">
                         <label for="joining_date" class="form-label">Joining Date</label>

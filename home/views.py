@@ -15,8 +15,6 @@ def home(request):
         images=list(SliderImage.objects.all())
         random.shuffle(images)
         context['images']=images
-        if request.user.is_authenticated:
-            return redirect('ems:ems')
     except Exception as e:
        print('Home Exception : ',e)
 
@@ -71,7 +69,7 @@ def signin(request):
             if user is not None:
                 login(request,user)
                 print('user : ',user)
-                emp_obj=Employee.objects.filter(user=user)
+                emp_obj=Employee.objects.filter(user=user).exists()
                 
                 if user.is_superuser:
                     messages.success(request,'Logged in successfully!')
@@ -82,7 +80,7 @@ def signin(request):
                     return redirect('ems:ems')
                 else:
                     messages.info(request,'Please check your Email And follow Link to add Your Persional info!')
-                    return redirect('home:home')
+                    return redirect('/')
             else:
                 messages.warning(request,'Credentials Not Match!')
     except Exception as e:

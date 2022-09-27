@@ -78,7 +78,7 @@ def sendMail(username,domain):
     print('send mail new user :',newuser_obj)
     token=newuser_obj.token
     subject="Welcome To Techinterio"
-    message="This is Verification Email by Admin \n \n \n Follow Link given below. \n You can add your personal Info by following link. \n \n Note- This link only work when you will be connected with Techinterio Internal Server. \n \n Link: "+domain+"/verify/"+token
+    message="This is Verification Email by Admin \n \n \n Follow Link given below. \n You can add your personal Info by following link. \n \n Note- This link only work when you will be connected with Techinterio Internal Server. \n \n Link: "+domain+"/ems/verify/"+token
     # message="Hello Dear Clients"
     from_email=settings.EMAIL_HOST_USER
     recipient_list=[email]
