@@ -12,6 +12,10 @@ def home(request):
     
     context={}
     try:
+        if request.user.is_authenticated:
+            check=Employee.objects.filter(user=request.user).exists()
+            if check:
+                return redirect('ems:ems')
         images=list(SliderImage.objects.all())
         random.shuffle(images)
         context['images']=images
@@ -62,6 +66,8 @@ def register(request):
 
 def signin(request):
     try:
+        if request.user.is_authenticated:
+            return redirect('ems:ems')
         if request.method == 'POST':
             username=request.POST['username']
             password=request.POST['password']

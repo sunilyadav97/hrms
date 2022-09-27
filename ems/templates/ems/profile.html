@@ -1,5 +1,5 @@
 {% extends './base.html' %}
-{% block title %}{{request.user.username}} | EMS{% endblock title %}
+{% block title %}{{request.user.get_full_name}} | EMS{% endblock title %}
 {% block body %}
 <section class="py-5">
     <div class="container">
@@ -40,36 +40,40 @@
                             <td><b>Father Name - </b>{{profile.father_name}}</td>
                         </tr>
                         <tr>
+                            <td><b>Mother Name - </b>{{profile.mother_name}}</td>
                             <td><b>Date of Birth - </b>{{profile.dob |date:'d M Y'}}</td>
+                        </tr>
+                        <tr>
                             <td><b>Phone No. - </b>{{profile.mobile_no}}</td>
-                        </tr>
-                        <tr>
                             <td><b>Emergency Phone No. - </b>{{profile.emergency_mobile_no}}</td>
+                        </tr>
+                        <tr>
                             <td><b>Email- </b>{{profile.email}}</td>
-                        </tr>
-                        <tr>
                             <td><b>Address - </b>{{address.address}}</td>
+                        </tr>
+                        <tr>
                             <td><b>Street No. - </b>{{address.street}}</td>
-                        </tr>
-                        <tr>
                             <td><b>Locality - </b>{{address.locality}}</td>
+                        </tr>
+                        <tr>
                             <td><b>City - </b>{{address.city}}</td>
-                        </tr>
-                        <tr>
                             <td><b>State - </b>{{address.state}}</td>
+                        </tr>
+                        <tr>
                             <td><b>Pin Code - </b>{{address.pincode|floatformat:'0'}}</td>
-                        </tr>
-                        <tr>
                             <td><b>Country - </b>{{address.country}}</td>
+                        </tr>
+                        <tr>
                             <td><b>Designation - </b>{{profile.designation}}</td>
-                        </tr>
-                        <tr>
                             <td><b>Department - </b>{{profile.department}}</td>
-                            <td><b>Role - </b>{{profile.role}}</td>
                         </tr>
                         <tr>
+                            <td><b>Role - </b>{{profile.role}}</td>
                             <td><b>Joining Date - </b>{{profile.joining_date}}</td>
+                        </tr>
+                        <tr>
                             <td><b>Status - </b>{{profile.status}}</td>
+
                         </tr>
                     </table>
                 </div>

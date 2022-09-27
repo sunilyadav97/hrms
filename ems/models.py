@@ -37,9 +37,18 @@ class Address(models.Model):
     pincode=models.FloatField(max_length=50)
     country=models.CharField(max_length=50, default='India')
     def __str__(self):
-        return self.city
+        return self.user.get_full_name()
 
+class Document(models.Model):
+    user=models.OneToOneField(User, on_delete=models.CASCADE)
+    adhar_card=models.FileField(upload_to='employee_documents/adhar_card',null=True,blank=True)
+    pan_card=models.FileField(upload_to='employee_documents/pan_card',null=True,blank=True)
+    secondary_marksheet=models.FileField(upload_to='employee_documents/secondary',null=True,blank=True)
+    senior_secondary_marksheet=models.FileField(upload_to='employee_documents/senior_secondary',null=True,blank=True)
+    resume=models.FileField(upload_to='employee_documents/resume',null=True,blank=True)
 
+    def __str__(self):
+        return self.user.get_full_name()
 
 class Employee(models.Model):
     empid=models.AutoField(primary_key=True)
@@ -47,8 +56,9 @@ class Employee(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
     name=models.CharField(max_length=50)
     father_name=models.CharField(max_length=50)
+    mother_name=models.CharField(max_length=50,null=True,blank=True)
     avtar=models.ImageField(upload_to='employee_profile_images', blank=True , default='profile.jpg')
-    # document=models.FileField(upload_to='employee_documents',null=True,blank=True)
+    document=models.OneToOneField(Document, on_delete=models.CASCADE, blank=True,null=True)
     dob=models.DateField()
     email=models.EmailField(max_length=100)
     mobile_no=models.IntegerField()

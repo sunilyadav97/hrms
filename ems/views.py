@@ -254,10 +254,11 @@ def sendVerificationMail(request,username):
         context={}
         try:
             current_site = Site.objects.get_current()
+            print("current site domain ",current_site)
             print(current_site.domain)
-            domain='http://localhost:8000'
-            print('Domain ',domain)
-            print('username ',username)
+            domain=request.get_host()
+            print('Host : ',request.get_host())
+            
             res=sendMail(username,domain)
             if res == True:
                 messages.success(request,'Email Sended Successfully!')
@@ -356,8 +357,7 @@ def createRole(request):
         for r in role_pool:
             item = str(r).upper()
             if text == item:
-                messages.warning(request, 'This '+role_name +
-                                 ' Role Already Exits')
+                messages.warning(request, 'This '+role_name + ' Role Already Exits')
                 return redirect('ems:create-role')
 
         obj = Role.objects.create(name=role_name, description=role_description)
@@ -405,6 +405,7 @@ def addEmployee(request,token):
         newuser_check=Newuser.objects.filter(token=token).exists()
         if newuser_check:
             newuser_obj=Newuser.objects.get(token=token)
+            context['user']=newuser_obj.user
         else:
             messages.warning(request,'Invaild Link!')
             return redirect('home:login')
@@ -414,13 +415,13 @@ def addEmployee(request,token):
         if request.method == 'POST':
             print('Post Method add Employee')
             user = newuser_obj.user
-            full_name = newuser_obj.get_full_name()
+            full_name = newuser_obj.user.get_full_name()
             father_name = request.POST['father-name']
+            mother_name = request.POST['mother-name']
             dob = request.POST['employee-dob']
-            document = request.FILES['document']
             phone_number = request.POST['phone-number']
             ephone_number= request.POST['ephone-number']
-            email = newuser_obj.email
+            email = newuser_obj.user.email
             address = request.POST['address']
             street = request.POST['street']
             locality = request.POST['locality']
@@ -466,8 +467,8 @@ def addEmployee(request,token):
                     user=user,
                     name=full_name,
                     father_name=father_name,
+                    mother_name=mother_name,
                     dob=dob,
-                    document=document,
                     email=email,
                     mobile_no=phone_number,
                     emergency_mobile_no=ephone_number,
@@ -477,6 +478,9 @@ def addEmployee(request,token):
                 )
                 print('Employee Obj : ', emp_obj)
                 if emp_obj:
+                    newuser_obj.completed=True
+                    newuser_obj.token=generateToken()
+                    newuser_obj.save()
                     messages.success(request, 'Added Successfully!')
                     return redirect('ems:profile')
                 else:

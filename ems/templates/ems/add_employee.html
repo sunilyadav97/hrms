@@ -5,6 +5,7 @@
     <div class="row d-felx justify-content-center align-items-center">
         <div class="col-9">
             <h3 class="employee-title my-2">Add Personal Info</h3>
+            <span class="text-success">Your Name : {{user.get_full_name}}</span>
             <form action="" method="post" class="mt-4 add-employee" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row gy-1">
@@ -35,9 +36,9 @@
                             name="phone-number" required>
                     </div>
                     <div class="mb-3 col-6">
-                        <label for="ephone" class="form-label">Emergency Phone No. <span class="text-muted">(optional)</span> </label>
+                        <label for="ephone" class="form-label">Emergency Phone No. <span class="text-muted"></span> </label>
                         <input type="number" class="form-control" id="ephone" placeholder="Enter Emergency Phone Number......"
-                            name="ephone-number">
+                            name="ephone-number" required>
                     </div>
                     {% comment %} <div class="mb-3 col-6">
                         <label for="email" class="form-label">Email</label>
@@ -79,7 +80,10 @@
 
                     <div class="mb-3 col-6">
                         <label for="country" class="form-label">Country</label>
-                        <input type="text" class="form-control" id="country" placeholder="Country....." name="country" required>
+                        <!-- <input type="text" class="form-control" id="country" placeholder="Country....." name="country" required> -->
+                        <select class="form-select" aria-label="Default select example" id="country" name="country" required>
+                            <option selected value="India">India</option>
+                          </select>
                     </div>
                     <div class="mb-3 col-6">
                         <label for="joining_date" class="form-label">Joining Date</label>
