@@ -15,6 +15,7 @@ urlpatterns=[
     path('add-personal-info/<token>/',addEmployee,name='add-employee'),
     path('documents/',documents,name='documents'),
     path('document-delete/<id>/',deleteDocument,name='document-delete'),
+    path('document/<empid>',adminDocument,name='employee-document'),
     path('employee-view/',viewEmployee,name='employee-view'),
     path('employee-detail/<empid>/',employeeDetail,name='employee-detail'),
     path('employee-delete/<empid>/',deleteEmployee,name='employee-delete'),

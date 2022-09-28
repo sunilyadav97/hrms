@@ -12,7 +12,7 @@
                     <th>Profile</th>
                     <th>Name</th>
                     <th>Father Name</th>
-                    <th>Document</th>
+                    <th>Documents</th>
                     <th>Department</th>
                     <th>Role</th>
                     <th>Delete</th>
@@ -26,11 +26,9 @@
                     </td>
                     <td><a class="" href="{% url 'ems:employee-detail' employee.empid %}">{{employee.name}}</a></td>
                     <td>{{employee.father_name}}</td>
-                    {% if employee.document %}
-                    <td><a href="{{employee.document.url}}" download="{{employee.document.url}}">Download</a></td>
-                    {% else %}
-                    <td><a class="text-muted disabled">Download</a></td>
-                    {% endif %}
+                    
+                    <td><a href="{% url 'ems:employee-document' employee.empid %}">Document</a></td>
+
                     <td>{{employee.department}}</td>
                     <td>{{employee.role}}</td>
                     <td><a href="{% url 'ems:employee-delete' employee.empid %}" class="delete"><span class="material-symbols-outlined">

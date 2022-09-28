@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row d-felx justify-content-center align-items-center">
             <div class="col-8">
-                <h3 class="employee-title my-2">All Docuemnts</h3>
+                <h3 class="employee-title my-3">All Docuemnts</h3>
                 {% if not document_limit_exceed %}
                 <div class="d-grid">
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#document">Upload Docuemnts</button>
@@ -17,6 +17,7 @@
                     {% endif %}
             </div>
             <div class="col-8 my-3">
+              <a href="{% url 'ems:profile' %}" class="mb-1">Back to Profile</a>
                 <table class="table table-bordered border-primary">
                     <tr>
                         <th>SN.</th>

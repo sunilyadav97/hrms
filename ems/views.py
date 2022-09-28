@@ -340,6 +340,19 @@ def deleteDocument(request,id):
         return redirect('/')
 
 @login_required()
+def adminDocument(request,empid):
+    context={}
+    try:
+        employee=Employee.objects.get(empid=empid)
+        documents=Document.objects.filter(employee=employee)
+        context['documents']=documents
+        context['employee']=employee
+    except Exception as e:
+        print('Admin Document Exception : ',e)
+    return render(request,'ems/admin_document.html',context)
+
+
+@login_required()
 def createDepartment(request):
     context = {}
     if not request.user.is_superuser:
