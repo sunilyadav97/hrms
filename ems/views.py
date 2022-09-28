@@ -292,6 +292,14 @@ def documents(request):
         if not request.user.is_superuser:
             profile_obj=Employee.objects.get(user=request.user)
             context['profile']=profile_obj
+            if request.method == "POST":
+                document_name=request.POST['document-name']
+                document=request.POST['document']
+                employee=Employee.objects.get(user=request.user)
+                obj=Document.objects.create(employee=employee,name=document_name,document=document)
+                if obj:
+                    messages.success(request,'Document Added Successfully!')
+                    return redirect('ems:documents')
     except Exception as e:
         print("Document Exception : ",e)
     return render(request,'ems/documents.html',context)

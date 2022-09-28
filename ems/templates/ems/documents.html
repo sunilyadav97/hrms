@@ -7,7 +7,7 @@
             <div class="col-8">
                 <h3 class="employee-title my-2">All Docuemnts</h3>
                 <div class="d-grid">
-                    <a href="#" class="btn btn-success">Upload Docuemnts</a>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#document">Upload Docuemnts</button>
                 </div>
             </div>
             <div class="col-8 my-3">
@@ -23,4 +23,34 @@
         </div>
     </div>
 </section>
+
+  <!-- Modal -->
+  <div class="modal fade" id="document" tabindex="-1" aria-labelledby="documentLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="documentLabel">Document</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="" method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="document-name" class="form-label">Document Name</label>
+                  <input type="text" class="form-control" id="document-name" name="document-name">
+                </div>
+                <div class="mb-3">
+                  <label for="document" class="form-label">Document File</label>
+                  <input type="file" class="form-control" id="document" name="document">
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+              </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  
 {% endblock body %}
