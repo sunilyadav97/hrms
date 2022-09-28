@@ -290,19 +290,54 @@ def documents(request):
     context={}
     try:
         if not request.user.is_superuser:
+            document_limit_exceed=False
             profile_obj=Employee.objects.get(user=request.user)
             context['profile']=profile_obj
+            number_of_documents=Document.objects.filter(employee=profile_obj)
+            context['documents']=number_of_documents
+            if number_of_documents.count() == 10:
+                document_limit_exceed=True
+                context['document_limit_exceed']=document_limit_exceed
+
             if request.method == "POST":
+                if number_of_documents.count() == 10:
+                    messages.warning(request,"You can't Add More than 10 Documents!")
+                    return redirect('ems:documents')
+
                 document_name=request.POST['document-name']
-                document=request.POST['document']
+                try:
+                    document=request.FILES['document']
+                except:
+                    document=None
                 employee=Employee.objects.get(user=request.user)
                 obj=Document.objects.create(employee=employee,name=document_name,document=document)
                 if obj:
                     messages.success(request,'Document Added Successfully!')
                     return redirect('ems:documents')
+        else:
+            messages.warning(request,"You don't have access of this page!")
+            return redirect('/')
+
     except Exception as e:
         print("Document Exception : ",e)
     return render(request,'ems/documents.html',context)
+
+@login_required()
+def deleteDocument(request,id):
+    if not request.user.is_superuser:
+        employee=Employee.objects.get(user=request.user)
+        obj=Document.objects.get(id=id)
+        if obj.employee == employee:
+            res=obj.delete()
+            if res:
+                messages.success(request,"Document Deleted Successfully!")
+            return redirect('ems:documents')
+        else:
+            messages.warning(request,'Something Went Wrong!')
+            return redirect('/')
+    else:
+        messages.warning(request,"You don't have access!")
+        return redirect('/')
 
 @login_required()
 def createDepartment(request):
