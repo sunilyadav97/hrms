@@ -286,6 +286,17 @@ def verifyLink(request,token):
         print('Verify Link Exception : ',e)
 
 @login_required()
+def documents(request):
+    context={}
+    try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
+    except Exception as e:
+        print("Document Exception : ",e)
+    return render(request,'ems/documents.html',context)
+
+@login_required()
 def createDepartment(request):
     context = {}
     if not request.user.is_superuser:

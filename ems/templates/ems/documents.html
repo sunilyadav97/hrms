@@ -1,0 +1,26 @@
+{% extends './base.html' %}
+{% block title %}{{request.user.get_full_name}}'s Documents{% endblock title %}
+{% block body %}
+<section class="py-5">
+    <div class="container">
+        <div class="row d-felx justify-content-center align-items-center">
+            <div class="col-8">
+                <h3 class="employee-title my-2">All Docuemnts</h3>
+                <div class="d-grid">
+                    <a href="#" class="btn btn-success">Upload Docuemnts</a>
+                </div>
+            </div>
+            <div class="col-8 my-3">
+                <table class="table table-bordered border-primary">
+                    <tr>
+                        <th>SN.</th>
+                        <th>Docuemnt Name</th>
+                        <th>File</th>
+                        <th>View</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock body %}

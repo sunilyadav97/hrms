@@ -6,9 +6,10 @@
         <div class="row d-flex justify-content-between">
             <div class="col-7 ">
                 <table class="table table-bordered">
-                    <tr class="text-center w-100">
-                        <td class="w-50"><a href="{% url 'ems:profile-edit' %}">Edit Profile</a></td>
-                        <td class="w-50"><a href="" data-bs-toggle="modal" data-bs-target="#changePassword" >Change Password</a></td>
+                    <tr class="text-center">
+                        <td class=""><a href="{% url 'ems:profile-edit' %}">Edit Profile</a></td>
+                        <td class=""><a href="" data-bs-toggle="modal" data-bs-target="#changePassword" >Change Password</a></td>
+                        <td><a href="{% url 'ems:documents' %}">Documents</a></td>
                     </tr>
                 </table>
                 <div class="personal-info">
