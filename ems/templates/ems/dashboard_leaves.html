@@ -12,7 +12,7 @@ font-size: 16px !important;
     <div class="col-lg-10 col-12 my-5">
       <h3 class="my-3 derpartment-title">All Leaves</h3>
       <div class="border my-3 rounded p-3 d-none" id="discription-container"></div>
-      <table class="table table-bordered">
+      <table class="table table-bordered border-danger">
         <tr>
           <th>SN</th>
           <th>Name</th>
@@ -27,7 +27,7 @@ font-size: 16px !important;
         </tr>
         {% for leave in leaves %}
         <tr class="my-4">
-          <td>{{forloop.counter}}</td>
+          <td>{{forloop.counter}}.</td>
           <td>{{leave.employee.name}}</td>
           <td>{{leave.date_from | date:'d/M/Y'}}</td>
           <td>{{leave.date_to | date:'d/M/Y'}}</td>

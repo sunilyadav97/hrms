@@ -110,15 +110,32 @@
                         
                         <div class="row">
                             <div class="col-8  p-5 ">
-                                <h6>Main Home Feed</h6>
+                                <div class="row">
+                                    {% for item in filter_leaves %}
+                                    <div class="col-12">
+                                        <div class="card mb-3 ">
+                                            <div class="card-header nav-bg">
+                                                <i class="fa fa-area-chart "></i><small class="text-white fw-semibold"> Leave
+                                                    Notification</small>
+                                            </div>
+                                            <div class="card-body">
+                                                <h6 class="text-start fw-semibold ">{{item}} Requested For New Leave</h6>
+                                                <p class=" my-1 ">{{item.description | title}}</p>
+                                            </div>
+                                            <div class="card-footer small text-white nav-bg">{{item.created_at | timesince}} Ago</div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                
                             </div>
-                            <div class="col-4">
+                            <div class="col-4 py-5">
                                 <div class="row">
                                     {% for birthday in birthdays %}
                                     <div class="col-12">
                                         <div class="card mb-3 ">
-                                            <div class="card-header">
-                                                <i class="fa fa-area-chart"></i><small class="text-muted"> Brithday
+                                            <div class="card-header nav-bg">
+                                                <i class="fa fa-area-chart "></i><small class="text-white fw-semibold"> Brithday
                                                     Notification</small>
                                             </div>
                                             <div class="card-body bg-danger">
@@ -126,7 +143,7 @@
                                                     {{birthday.name}} 🎂🎉
                                                 </h3>
                                             </div>
-
+                                            <div class="card-footer small text-white nav-bg"></div>
                                         </div>
 
                                     </div>
@@ -134,8 +151,8 @@
                                     {% for anniversary in anniversaries %}
                                     <div class="col-12">
                                         <div class="card mb-3">
-                                            <div class="card-header">
-                                                <i class="fa fa-area-chart"></i><small class="text-muted"> Anniversary
+                                            <div class="card-header nav-bg">
+                                                <i class="fa fa-area-chart"></i><small class="text-white fw-semibold"> Anniversary
                                                     Notification</small>
                                             </div>
                                             <div class="card-body bg-danger" >
@@ -144,7 +161,7 @@
                                                     👏 <br> You Have successfully completed
                                                     {{anniversary.completed_years}} {% if anniversary.completed_years > 1 %}Years {% else %} Year {% endif %}</h3>
                                             </div>
-
+                                            <div class="card-footer small text-white nav-bg"></div>
                                         </div>
                                     </div>
                                     {% endfor %}

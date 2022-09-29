@@ -7,6 +7,23 @@ from django.contrib.auth.models import User
 from techinterio import settings
 from django.core.mail import send_mail
 
+
+def filterLeave():
+    leaves=Leave.objects.filter(status='Pending')
+    
+    filterd_leaves=[]
+
+    for leave in leaves:
+        created_time=leave.created_at
+        current_time=datetime.datetime.now(timezone.utc)
+        difference=current_time-created_time
+        if difference.days <= 2:
+            filterd_leaves.append(leave)
+        print('Filterd Leaves : ',filterd_leaves)
+    return filterd_leaves
+
+
+
 def generateId():
     id=''
     for i in range(0,6):

@@ -43,7 +43,7 @@
                     </div>
 
 
-                    {% for birthday in birthdays %}
+                    <!-- {% for birthday in birthdays %}
                     <div class="col-12 my-2 " id="birthday">
                         <div class="card mb-3 rounded">
                             <div class="card-header nav-bg text-white">
@@ -74,14 +74,39 @@
                             </div>
                         </div>
                     </div>
-                    {% endfor %}
+                    {% endfor %} -->
                     
                 </div>
             </div>
             <div class="col-4">
                 <div class="row d-flex align-items-center justify-content-center py-4">
                     
-                   
+                   <div class="col-12 my-2 nav-bg text-white rounded p-2">
+                       <h5 class="text-center text-uppercase text-dark fw-semibold my-2">Celebrations</h5>
+                    <div class="birthday my-3">
+                        <h6 class="text-center text-light fw-semibold">Birthdays</h6>
+                        <hr>
+                        <ul>
+                            {% for birthday in birthdays  %}
+                              <li>Happy Birthday {{birthday.name}} 🎂🎉</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <hr>
+                    <div class="anniversarys">
+                        <h6 class="text-center text-light fw-semibold">Anniversary</h6>
+                        <hr>
+                        <ul>
+                            {% for anniversary in anniversaries %}
+                            <li class="my-1">
+                                Congratulations {{anniversary.employee.name}}
+                                    👏 You Have successfully completed {{anniversary.completed_years}} {% if anniversary.completed_years > 1 %}Years {% else %} Year {% endif %}
+                            </li>
+                            <hr>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                   </div>
 
                     {% for event in events %}
                     <div class="col-12 my-2 anniversary">

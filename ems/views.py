@@ -1,3 +1,4 @@
+import os
 from .utils import *
 from django.shortcuts import render
 from django.shortcuts import redirect
@@ -11,6 +12,8 @@ from django.db.models import Q
 from django.core.paginator import Paginator
 from datetime import datetime,timedelta
 from django.contrib.sites.models import Site
+import zipfile
+from io import StringIO
 
 
 
@@ -69,7 +72,8 @@ def dashboard(request):
                     context['profile']=profile_obj
                     events=Events.objects.all().order_by('-id')
                     context['events']=events
-                    connects=Connect.objects.filter(Q(employee=profile_obj) and Q(is_completed=False)).order_by('-id')
+                    sub_connects=Connect.objects.filter(employee=profile_obj).order_by('-id')
+                    connects=sub_connects.filter(is_completed=False)
                     print(connects)
                     context['connects']=connects
                     return render(request,'ems/ems_home.html',context)
@@ -78,6 +82,7 @@ def dashboard(request):
                 roles=Role.objects.all()
                 employees=Employee.objects.all()
                 leaves=Leave.objects.filter(status='Pending')
+                context['filter_leaves']=filterLeave()
                 context['departments']=departments.count()
                 context['employees']=employees.count()
                 context['leaves']=leaves.count()
@@ -347,9 +352,11 @@ def adminDocument(request,empid):
         documents=Document.objects.filter(employee=employee)
         context['documents']=documents
         context['employee']=employee
+
     except Exception as e:
         print('Admin Document Exception : ',e)
     return render(request,'ems/admin_document.html',context)
+
 
 
 @login_required()
@@ -921,7 +928,7 @@ def dashboardLeaves(request):
             context['profile']=profile_obj
             
         leaves=Leave.objects.all().order_by('-id')
-        paginator=Paginator(leaves,2)
+        paginator=Paginator(leaves,10)
         page_no=request.GET.get('page')
 
         total_pages=paginator.page_range
