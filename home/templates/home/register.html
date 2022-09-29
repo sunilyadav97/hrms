@@ -7,9 +7,9 @@
     <div class="container">
         <div class="row d-flex justify-content-center ">
             {% if not request.user.is_authenticated %}
-            <div class="col-12 col-sm-6 mb-3">
+            {% comment %} <div class="col-12 col-sm-6 mb-3">
                 <p><b>Note-</b> If you are a New Employee then Register Here with username and password. After completion of your Registration admin will Add you as Employee.</p>
-            </div>
+            </div> {% endcomment %}
             <div class="w-100"></div>
             <div class="col-12 col-sm-6">
                 <h3 class="derpartment-title ">Register</h3>
