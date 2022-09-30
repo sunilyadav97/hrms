@@ -74,7 +74,7 @@ def dashboard(request):
                     context['events']=events
                     sub_connects=Connect.objects.filter(employee=profile_obj).order_by('-id')
                     connects=sub_connects.filter(is_completed=False)
-                    print(connects)
+                    context['appreciations']=Appreciation.objects.all()
                     context['connects']=connects
                     return render(request,'ems/ems_home.html',context)
             else:
@@ -1355,3 +1355,58 @@ def connectStatus(request):
         print('Connect Status Exception : ',e)
         
     return HttpResponse('Something Went wrong, Please Try After Sometime!')
+
+@login_required()
+def appreciation(request):
+    context={}
+    try:
+        employees=Employee.objects.all()
+        appreciations=Appreciation.objects.all()
+        context['employees']=employees
+        context['appreciations']=appreciations
+        if request.method == 'POST':
+            id=request.POST['id']
+            message=request.POST['message']
+            employee_obj=Employee.objects.get(empid=id)
+            obj=Appreciation.objects.create(
+                employee=employee_obj,
+                message=message
+            )
+            if obj:
+                messages.success(request,'Appreciated Successfully!')
+                return redirect('ems:appreciation')
+    except Exception as e:
+        print('Appreciation Exception : ',e)
+    return render(request,'ems/appreciation.html',context)
+
+@login_required()
+def editAppreciation(request):
+    context={}
+    try:
+        if request.method == 'POST':
+            id=request.POST['id']
+            message=request.POST['editmessage']
+            appricate=Appreciation.objects.get(id=id)
+            appricate.message=message
+            appricate.save()
+            messages.success(request,'Updated Successfully!')
+            return redirect('ems:appreciation')
+        
+    except Exception as e:
+        print('Appreciation Edit Exception : ',e)
+        
+    return HttpResponse('Something Went wrong, Please Try After Sometime!')
+
+@login_required()
+def deleteAppreciation(request,id):
+    try:
+        obj=Appreciation.objects.get(id=id)
+
+        if obj.delete():
+            messages.success(request,'Deleted Successfully!')
+        else:
+            messages.warning(request,'Something Went Wrong!')
+    except Exception as e:
+        print("Delete Appreciation Exception : ",e)
+
+    return redirect('ems:appreciation')

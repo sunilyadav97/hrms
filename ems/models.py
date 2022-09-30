@@ -168,13 +168,21 @@ class Connect(models.Model):
 
 
 class NewsLetter(models.Model):
-    title=models.CharField(max_length=100)
     message=models.TextField(max_length=400)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.title
+        return self.message
+
+class Appreciation(models.Model):
+    employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
+    message=models.TextField(max_length=400)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.message
 
 class AllocatedLeave(models.Model):
     employee=models.ForeignKey(Employee,on_delete=models.CASCADE)

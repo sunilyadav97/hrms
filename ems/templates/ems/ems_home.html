@@ -41,6 +41,21 @@
                         </div>
                         {% endfor %}
                     </div>
+                    <div class="col-12 " id="appreciation">
+
+                        {% for item in appreciations %}
+                        <div class="card mb-3">
+                            <div class="card-header nav-bg text-white">
+                                <i class="fa fa-area-chart fw-semibold"></i><span class="fw-semibold">Appreciation Notification 👏</span> 
+                            </div>
+                            <div class="card-body ">
+                                <p >{{item.message}}</p>
+                            </div>
+                            <div class="card-footer small nav-bg text-white">Time : {{item.created_at | timesince}} Ago
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
 
 
                     <!-- {% for birthday in birthdays %}

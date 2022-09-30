@@ -206,13 +206,10 @@
 
 
 @keyframes glowing {
+  
   0% {
     text-shadow: 0 0 10px #2ba805;
-    color: red;
-  }
-  50% {
-    text-shadow: 0 0 100px #49e819;
-    color: blue;
+    color: black;
   }
   100% {
     text-shadow: 0 0 10px #2ba805;

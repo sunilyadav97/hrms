@@ -1,0 +1,104 @@
+{% extends './base.html' %}
+{% block title%}
+Appreciation
+{% endblock title%}
+{% block css%}
+mportant;
+}
+{% endblock css%}
+{% block body %}
+<section>
+    <div class="container">
+    <div class="row d-flex align-items-center justify-content-center">
+        <div class="col-8">
+            <h3 class="derpartment-title my-3 text-uppercase text-white" style="background-color: #c30000e6 !important;">All Appreciation</h3>
+            <div class="d-grid">
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addAppreciation">Appreciate</button>
+            </div>
+        </div>
+        {% for item in appreciations %}
+        <div class="col-8 my-3">
+            <div class="card mb-3">
+                <div class="card-header bg-danger text-white" style="background-color: #c30000e6 !important;">
+                    <i class="fa fa-area-chart"></i><b>{{item.employee.name}}</b>
+                    
+                    <span class="float-end"><button class="btn btn-outline-light mx-2 btn-sm" data-bs-toggle="modal" data-bs-target="#connectStatus"  onclick="updateStatus({{item.id}},'{{item.message}}')">Edit</button></span>
+                    <a href="{% url 'ems:delete-appreciation' item.id %}" class="btn btn-sm btn-outline-light float-end">Delete</a>
+                </div>
+                <div class="card-body p-5">
+                    <p>{{item.message}}</p>
+                </div>
+                <div class="card-footer small text-white" style="background-color: #c30000e6 !important;">{{item.created_at | timesince}} Ago</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</section>
+
+<!-- Add connect Modal -->
+<div class="modal fade " id="addAppreciation" tabindex="-1" aria-labelledby="addAppreciationLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Appreciation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="employee">Employee</label>
+                <select class="form-select" aria-label="Default select example" name="id" required id="employee">
+                    <option selected disabled>Please Select Employee</option>
+                    {% for employee in employees %}
+                    <option value="{{employee.empid}}">{{employee.name}}</option>
+                    {% endfor %}
+                  </select>
+            </div>
+              <div class="mb-3">
+                <label for="message" class="form-label" >Message</label>
+                <textarea class="form-control" id="message" rows="3" name="message"></textarea>
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Appreciate</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Change Status Modal -->
+  <div class="modal fade " id="connectStatus" tabindex="-1" aria-labelledby="connectStatusLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Status</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'ems:edit-appreciation' %}" method="post">
+            {% csrf_token %}
+            
+              <div class="mb-3">
+                <input type="number" id="id" name="id" hidden>
+                <label for="status" class="form-label" >Message</label>
+                <textarea class="form-control" id="editmessage" rows="3" name="editmessage"></textarea>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function updateStatus(id,message) {
+        document.getElementById('id').value = id
+        document.getElementById('editmessage').value=message
+    }
+  </script>
+
+{% endblock body %}
