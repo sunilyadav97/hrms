@@ -166,6 +166,16 @@ class Connect(models.Model):
     def __str__(self):
         return self.employee.name
 
+
+class NewsLetter(models.Model):
+    title=models.CharField(max_length=100)
+    message=models.TextField(max_length=400)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.title
+
 class AllocatedLeave(models.Model):
     employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
     allocated=models.IntegerField(default=18)
@@ -173,3 +183,5 @@ class AllocatedLeave(models.Model):
     month=models.CharField(max_length=12)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
+
+
