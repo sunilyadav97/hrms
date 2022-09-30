@@ -193,3 +193,16 @@ class AllocatedLeave(models.Model):
     updated_at=models.DateTimeField(auto_now=True)
 
 
+class ReimbursementCab(models.Model):
+    employee=models.ForeignKey(Employee ,on_delete=models.CASCADE)
+    cab_name=models.CharField(max_length=50)
+    vehcle_name=models.CharField(max_length=50)
+    vehicle_number=models.CharField(max_length=50)
+    amount=models.FloatField()
+    date=models.DateField()
+    status=models.CharField(max_length=50, default='pending')
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    
+
+

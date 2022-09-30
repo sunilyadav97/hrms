@@ -18,4 +18,5 @@ admin.site.register(Newuser)
 admin.site.register(Document)
 admin.site.register(NewsLetter)
 admin.site.register(Appreciation)
+admin.site.register(ReimbursementCab)
 

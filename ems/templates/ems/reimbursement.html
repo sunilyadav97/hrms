@@ -1,0 +1,80 @@
+{% extends './base.html' %}
+{% block title%}
+Appreciation
+{% endblock title%}
+{% block css%}
+
+{% endblock css%}
+{% block body %}
+<section class="py-5">
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-8">
+                <h3 class="derpartment-title my-3 ">Claim Your Expenditures</h3>
+
+            </div>
+            <div class="col-8">
+                <div class="type-of-bill">
+                    <form action="type-of-bill" id="form">
+                        <div class="mb-3">
+                            <label for="type-of-bill" class="form-label">Please Select Type Of Bill</label>
+                            <select class="form-select" aria-label="Default select example" name="type-of-bill" id="type-of-bill">
+                                <option selected disabled>---------------</option>
+                                <option value="food">Food</option>
+                                <option value="cab">Cab</option>
+                            </select>
+                        </div>
+                        <div class="mb-3" id="bill-button">
+                            <button class="btn btn-primary float-end" type="button" onclick="tyepofbill()">Next</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    function tyepofbill()
+    {
+        var bill=document.getElementById('type-of-bill')
+        var billButton=document.getElementById('bill-button')
+        var form=document.getElementById('form')
+        if (bill.value=='cab')
+        {
+            let ndiv=`<div class="mb-3">
+                            <label for="company-name" class="form-label">Please Select Vehicle Company</label>
+                            <select class="form-select" aria-label="Default select example" name="company-name" id="company-name">
+                                <option selected disabled>---------------</option>
+                                <option value="ola">OLA</option>
+                                <option value="rapido">Uber</option>
+                                <option value="rapdio">Rapido</option>
+                            </select>
+                        </div> <div class="mb-3" id="bill-button">
+                            <button class="btn btn-primary float-end" type="button" onclick="tyepofbill()">Next</button>
+                        </div>`
+                        // insertAfter(ndiv,  billButton.lastElementChild);
+                        billButton.insertAdjacentHTML('afterend', ndiv);
+                        billButton.classList.add('d-none')
+                        bill.setAttribute('disabled','disabled')
+        }else{
+            let companyName=document.getElementById('company-name')
+            if (companyName.value == 'uber'){
+                let ndiv=`<div class="mb-3">
+                            <label for="company-name" class="form-label">Please Select Vehicle Name</label>
+                            <select class="form-select" aria-label="Default select example" name="vahicle-name" id="vahicle-name">
+                                <option selected disabled>---------------</option>
+                                <option value="ola">OLA</option>
+                                <option value="rapido">Uber</option>
+                                <option value="rapdio">Rapido</option>
+                            </select>
+                        </div> <div class="mb-3" id="bill-button">
+                            <button class="btn btn-primary float-end" type="button" onclick="tyepofbill()">Next</button>
+                        </div>`
+                        billButton.insertAdjacentHTML('afterend', ndiv);
+                        billButton.classList.add('d-none')
+                        companyName.setAttribute('disabled','disabled')
+            }
+        }
+    }
+</script>
+{% endblock body %}

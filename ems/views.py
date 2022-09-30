@@ -1462,3 +1462,17 @@ def deleteNewsletter(request,id):
         print("Delete NewsLetter Exception : ",e)
 
     return redirect('ems:news-letter')
+
+@login_required()
+def reimbursement(request):
+    context={}
+    try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
+
+        else:
+            messages.warning(request,"You Don't have Access!")
+    except Exception as e:
+        print("Reimbursement Exception : ",e)
+    return render(request,'ems/reimbursement.html',context)

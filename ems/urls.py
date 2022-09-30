@@ -53,4 +53,5 @@ urlpatterns=[
     path('news-letter',newsletter,name='news-letter'),
     path('edit-news-letter',editNewsLetter,name='edit-news-letter'),
     path('delete-news-letter/<id>/',deleteNewsletter,name='delete-news-letter'),
+    path('reimbursement',reimbursement,name='reimbursement'),
 ]
