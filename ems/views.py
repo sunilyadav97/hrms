@@ -75,6 +75,7 @@ def dashboard(request):
                     sub_connects=Connect.objects.filter(employee=profile_obj).order_by('-id')
                     connects=sub_connects.filter(is_completed=False)
                     context['appreciations']=Appreciation.objects.all()
+                    context['newsletters']=NewsLetter.objects.all()
                     context['connects']=connects
                     return render(request,'ems/ems_home.html',context)
             else:
@@ -1410,3 +1411,54 @@ def deleteAppreciation(request,id):
         print("Delete Appreciation Exception : ",e)
 
     return redirect('ems:appreciation')
+
+@login_required()
+def newsletter(request):
+    context={}
+    try:
+        newsletters=NewsLetter.objects.all()
+        context['newsletters']=newsletters
+        if request.method == 'POST':
+            message=request.POST['message']
+            obj=NewsLetter.objects.create(
+                message=message
+            )
+            if obj:
+                messages.success(request,'Added Successfully!')
+                return redirect('ems:news-letter')
+    except Exception as e:
+        print('NewsLetter Exception : ',e)
+
+    return render(request,'ems/news_letter.html',context)
+
+@login_required()
+def editNewsLetter(request):
+    context={}
+    try:
+        if request.method == 'POST':
+            id=request.POST['id']
+            message=request.POST['editmessage']
+            appricate=NewsLetter.objects.get(id=id)
+            appricate.message=message
+            appricate.save()
+            messages.success(request,'Updated Successfully!')
+            return redirect('ems:news-letter')
+        
+    except Exception as e:
+        print('NewsLetter Edit Exception : ',e)
+        
+    return HttpResponse('Something Went wrong, Please Try After Sometime!')
+
+@login_required()
+def deleteNewsletter(request,id):
+    try:
+        obj=NewsLetter.objects.get(id=id)
+
+        if obj.delete():
+            messages.success(request,'Deleted Successfully!')
+        else:
+            messages.warning(request,'Something Went Wrong!')
+    except Exception as e:
+        print("Delete NewsLetter Exception : ",e)
+
+    return redirect('ems:news-letter')

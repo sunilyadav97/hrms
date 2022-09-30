@@ -1,0 +1,100 @@
+{% extends './base.html' %}
+{% block title%}
+NewsLetter | Techinterio
+{% endblock title%}
+{% block css%}
+}
+{% endblock css%}
+{% block body %}
+<section>
+    <div class="container">
+    <div class="row d-flex align-items-center justify-content-center">
+        <div class="col-8">
+            <h3 class="derpartment-title my-3 ">All NewsLetters</h3>
+            <div class="d-grid">
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addnewsLetter">Add NewsLetter</button>
+            </div>
+        </div>
+        <div class="col-8 my-4">
+        <table class="table table-bordered newuser-table border-danger">
+          <tr>
+            <th>SN</th>
+            <th>Message</th>
+            <th>Add Date</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+          {% for item in newsletters %}
+          <tr>
+            <td>{{forloop.counter}}.</td>
+            <td>{{item.message}}</td>            
+            <td>{{item.created_at | date:'d-M-Y'}}</td>
+            <td ><i data-bs-toggle="modal" data-bs-target="#edit-newsLetter" class='bx bx-edit text-primary cursor-pointer' onclick="editnewsLetter({{item.id}},'{{item.message}}')"></i></a</td>            
+            <td><a href="{% url 'ems:delete-news-letter' item.id %}" class="delete"><span class="material-symbols-outlined">
+              delete</span></a></td>
+          </tr>
+          {% endfor %}
+        </table>
+      </div>
+    </div>
+</div>
+</section>
+
+<!-- Add connect Modal -->
+<div class="modal fade " id="addnewsLetter" tabindex="-1" aria-labelledby="addnewsLetterLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Appreciation</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="" method="post">
+            {% csrf_token %}
+            
+              <div class="mb-3">
+                <label for="message" class="form-label" >Message</label>
+                <textarea class="form-control" id="message" rows="3" name="message"></textarea>
+              </div>
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Add</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Change Status Modal -->
+  <div class="modal fade " id="edit-newsLetter" tabindex="-1" aria-labelledby="edit-newsLetterLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form action="{% url 'ems:edit-news-letter' %}" method="post">
+            {% csrf_token %}
+            
+              <div class="mb-3">
+                <input type="number" id="id" name="id" hidden>
+                <label for="status" class="form-label" >Message</label>
+                <textarea class="form-control" id="editmessage" rows="3" name="editmessage"></textarea>
+                </div>
+              <div class="d-grid ">
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function editnewsLetter(id,message) {
+        document.getElementById('id').value = id
+        document.getElementById('editmessage').value=message
+    }
+  </script>
+{% endblock body %}
