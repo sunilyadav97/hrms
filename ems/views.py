@@ -1471,8 +1471,48 @@ def reimbursement(request):
             profile_obj=Employee.objects.get(user=request.user)
             context['profile']=profile_obj
 
+            if request.method =='POST':
+                
+                bill=request.POST['type-of-bill']
+                return redirect('ems:reimbursement-bill',bill)
         else:
             messages.warning(request,"You Don't have Access!")
     except Exception as e:
         print("Reimbursement Exception : ",e)
     return render(request,'ems/reimbursement.html',context)
+
+@login_required()
+
+def reimbursementBill(request,bill):
+    context={}
+    try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
+            context['bill']=bill
+            if request.method =='POST':
+                
+                vehicle_company=request.POST['vehicle-company']
+                print('bill ',vehicle_company)
+                return redirect('ems:reimbursement-vehicle-company',bill,vehicle_company)
+        else:
+            messages.warning(request,"You Don't have Access!")
+    except Exception as e:
+        print('Reimbursement Bill Exception : ',e)
+    return render(request,'ems/reimbursement_bill.html',context)
+
+def reimbursementVehicleCompany(request,bill,vehicle_company):
+    context={}
+    try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
+            context['bill']=bill
+            context['vehicle_company']=vehicle_company
+            if request.method =='POST':
+                
+                vehicle_company=request.POST['vehicle-company']
+        
+    except Exception as e:
+        print('Reimbursement Vehicle Company Exception : ',e)
+    return render(request,'ems/vehicle_company.html',context)

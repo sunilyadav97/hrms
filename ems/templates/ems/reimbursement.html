@@ -1,6 +1,6 @@
 {% extends './base.html' %}
 {% block title%}
-Appreciation
+Reimbursement
 {% endblock title%}
 {% block css%}
 
@@ -15,17 +15,77 @@ Appreciation
             </div>
             <div class="col-8">
                 <div class="type-of-bill">
-                    <form action="type-of-bill" id="form">
+                    <form action="" id="form" method="post">
+                        {% csrf_token %}
+
+                        <!-- {% if cab_list %}
+                        <div class="mb-3">
+                            <label for="type-of-bill" class="form-label">Type Of Bill</label>
+                            <input type="text" value="cab" disabled class="form-control" readonly required name="type-of-bill">
+                            
+                        </div>
+                        <div class="mb-3">
+                            <label for="vehicle_company" class="form-label">Please Select Vehicle Company</label>
+                            <select class="form-select" aria-label="Default select example" name="vehicle_company"
+                                id="vehicle_company">
+                                <option selected disabled>---------------</option>
+                                {% for item in cab_list %}
+                                <option value="{{item}}">{{item | title}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {% elif vehicle_list %}
+                        <div class="mb-3">
+                            <label for="type-of-bill" class="form-label">Type Of Bill</label>
+                            <select class="form-select" aria-label="Default select example" name="type-of-bill"
+                                id="type-of-bill" disabled>
+                                <option value="cab" selected disabled>Cab</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="vehicle_company" class="form-label">Vehicle Company {{seleted_vehicle_company}} Hello</label>
+                            <select class="form-select" aria-label="Default select example" name="vehicle_company"
+                                id="vehicle_company" >
+                                <option value="{{seleted_vehicle_company}}" selected >{{seleted_vehicle_company | title}}</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="vehicle_company" class="form-label">Vehicle</label>
+                            <select class="form-select" aria-label="Default select example" name="vehicle_name"
+                                id="vehicle_company">
+                                <option selected disabled>---------------</option>
+                                {% for item in vehicle_list %}
+                                <option value="{{item}}">{{item | title}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        {% elif vehicole_name %}
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" name="date">
+                        </div>
+                        <div class="mb-3">
+                            <label for="vehicle_number" class="form-label">Vehicle Number</label>
+                            <input type="text" class="form-control" id="vehicle_number" name="vehicle_number">
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Amount</label>
+                            <input type="number" class="form-control" id="amount" name="amount">
+                        </div>
+
+                        {% else %} sd{% endif %}-->
                         <div class="mb-3">
                             <label for="type-of-bill" class="form-label">Please Select Type Of Bill</label>
-                            <select class="form-select" aria-label="Default select example" name="type-of-bill" id="type-of-bill">
+                            <select class="form-select" aria-label="Default select example" name="type-of-bill"
+                                id="type-of-bill">
                                 <option selected disabled>---------------</option>
                                 <option value="food">Food</option>
                                 <option value="cab">Cab</option>
                             </select>
                         </div>
                         <div class="mb-3" id="bill-button">
-                            <button class="btn btn-primary float-end" type="button" onclick="tyepofbill()">Next</button>
+                            <button class="btn btn-primary float-end" type="submit">Next</button>
                         </div>
                     </form>
                 </div>
@@ -34,47 +94,47 @@ Appreciation
     </div>
 </section>
 <script>
-    function tyepofbill()
-    {
-        var bill=document.getElementById('type-of-bill')
-        var billButton=document.getElementById('bill-button')
-        var form=document.getElementById('form')
-        if (bill.value=='cab')
-        {
-            let ndiv=`<div class="mb-3">
-                            <label for="company-name" class="form-label">Please Select Vehicle Company</label>
-                            <select class="form-select" aria-label="Default select example" name="company-name" id="company-name">
-                                <option selected disabled>---------------</option>
-                                <option value="ola">OLA</option>
-                                <option value="rapido">Uber</option>
-                                <option value="rapdio">Rapido</option>
-                            </select>
-                        </div> <div class="mb-3" id="bill-button">
-                            <button class="btn btn-primary float-end" type="button" onclick="tyepofbill()">Next</button>
-                        </div>`
-                        // insertAfter(ndiv,  billButton.lastElementChild);
-                        billButton.insertAdjacentHTML('afterend', ndiv);
-                        billButton.classList.add('d-none')
-                        bill.setAttribute('disabled','disabled')
-        }else{
-            let companyName=document.getElementById('company-name')
-            if (companyName.value == 'uber'){
-                let ndiv=`<div class="mb-3">
-                            <label for="company-name" class="form-label">Please Select Vehicle Name</label>
-                            <select class="form-select" aria-label="Default select example" name="vahicle-name" id="vahicle-name">
-                                <option selected disabled>---------------</option>
-                                <option value="ola">OLA</option>
-                                <option value="rapido">Uber</option>
-                                <option value="rapdio">Rapido</option>
-                            </select>
-                        </div> <div class="mb-3" id="bill-button">
-                            <button class="btn btn-primary float-end" type="button" onclick="tyepofbill()">Next</button>
-                        </div>`
-                        billButton.insertAdjacentHTML('afterend', ndiv);
-                        billButton.classList.add('d-none')
-                        companyName.setAttribute('disabled','disabled')
-            }
-        }
-    }
+    // function tyepofbill()
+    // {
+    //     var bill=document.getElementById('type-of-bill')
+    //     var billButton=document.getElementById('bill-button')
+    //     var form=document.getElementById('form')
+    //     if (bill.value=='cab')
+    //     {
+    //         let ndiv=`<div class="mb-3">
+    //                         <label for="company-name" class="form-label">Please Select Vehicle Company</label>
+    //                         <select class="form-select" aria-label="Default select example" name="company-name" id="company-name">
+    //                             <option selected disabled>---------------</option>
+    //                             <option value="ola">OLA</option>
+    //                             <option value="rapido">Uber</option>
+    //                             <option value="rapdio">Rapido</option>
+    //                         </select>
+    //                     </div> <div class="mb-3" id="bill-button">
+    //                         <button class="btn btn-primary float-end" type="button" onclick="tyepofbill()">Next</button>
+    //                     </div>`
+    //                     // insertAfter(ndiv,  billButton.lastElementChild);
+    //                     billButton.insertAdjacentHTML('afterend', ndiv);
+    //                     billButton.classList.add('d-none')
+    //                     bill.setAttribute('disabled','disabled')
+    //     }else{
+    //         let companyName=document.getElementById('company-name')
+    //         if (companyName.value == 'uber'){
+    //             let ndiv=`<div class="mb-3">
+    //                         <label for="company-name" class="form-label">Please Select Vehicle Name</label>
+    //                         <select class="form-select" aria-label="Default select example" name="vahicle-name" id="vahicle-name">
+    //                             <option selected disabled>---------------</option>
+    //                             <option value="ola">OLA</option>
+    //                             <option value="rapido">Uber</option>
+    //                             <option value="rapdio">Rapido</option>
+    //                         </select>
+    //                     </div> <div class="mb-3" id="bill-button">
+    //                         <button class="btn btn-primary float-end" type="button" onclick="tyepofbill()">Next</button>
+    //                     </div>`
+    //                     billButton.insertAdjacentHTML('afterend', ndiv);
+    //                     billButton.classList.add('d-none')
+    //                     companyName.setAttribute('disabled','disabled')
+    //         }
+    //     }
+    // }
 </script>
 {% endblock body %}

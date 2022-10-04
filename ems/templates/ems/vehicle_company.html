@@ -1,0 +1,90 @@
+{% extends './base.html' %}
+{% block title%}
+Reimbursement
+{% endblock title%}
+{% block css%}
+
+{% endblock css%}
+{% block body %}
+<section class="py-5">
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-8">
+                <h3 class="derpartment-title my-3 ">Claim Your Expenditures</h3>
+            </div>
+            <div class="col-8">
+                <div class="type-of-bill">
+                    <form action="" id="form" method="post">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="type-of-bill" class="form-label">Type Of Bill</label>
+                            <select class="form-select" aria-label="Default select example" name="type-of-bill"
+                                id="type-of-bill" disabled>
+                                <option value="{{bill}}">{{bill | title}}</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="type-of-vehicle_company" class="form-label">Vehicle Company</label>
+                            <select class="form-select" aria-label="Default select example" name="vehicle-company"
+                                id="vehicle_company" disabled>
+                                <option value="{{vehicle_company}}" selected >{{vehicle_company | title}}</option>
+                            </select>
+                        </div>
+                        {% if vehicle_company == 'ola' %}
+                        <div class="mb-3">
+                            <label for="type-of-vehicle_company" class="form-label">Please Select Vehicle</label>
+                            <select class="form-select" aria-label="Default select example" name="vehicle-company"
+                                id="vehicle_company" >
+                                <option selected disabled>---------------</option>
+                                <option value="mini">Mini</option>
+                                <option value="micro">Micro</option>
+                                <option value="auto">Auto</option>
+                                <option value="bike">Bike</option>
+                            </select>
+                        </div>
+                         {% elif vehicle_company == 'uber' %}
+                        <div class="mb-3">
+                            <label for="type-of-vehicle_company" class="form-label">Please Select Vehicle</label>
+                            <select class="form-select" aria-label="Default select example" name="vehicle-company"
+                                id="vehicle_company" >
+                                <option selected disabled>---------------</option>
+                                <option value="uber go">Uber Go</option>
+                                <option value="uber moto">Uber Moto</option>
+                                <option value="auto">Auto</option>
+                            </select>
+                        </div>
+                        {% elif vehicle_company == 'rapido' %}
+                        <div class="mb-3">
+                            <label for="type-of-vehicle_company" class="form-label">Please Select Vehicle</label>
+                            <select class="form-select" aria-label="Default select example" name="vehicle-company"
+                                id="vehicle_company" >
+                                <option selected disabled>---------------</option>
+                                <option value="bike">Bike</option>
+                                <option value="auto">Auto</option>
+                            </select>
+                        </div>
+                        {% endif %}
+                        <div class="mb-3">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" name="date" id="date" >
+                        </div>
+                        <div class="mb-3">
+                            <label for="vehicle-number" class="form-label">Vehicle Number</label>
+                            <input type="text" name="vehicle-number" class="form-control" id="vehicle-number" >
+                          </div>
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Amount</label>
+                            <input type="number" class="form-control" name="amount" id="amount" >
+                          </div>
+                        <div class="d-grid" >
+                            <button class="btn btn-primary float-end" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock body %}
