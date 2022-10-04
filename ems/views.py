@@ -1490,6 +1490,8 @@ def reimbursementBill(request,bill):
             profile_obj=Employee.objects.get(user=request.user)
             context['profile']=profile_obj
             context['bill']=bill
+            if bill == 'food':
+                return render(request,'ems/reimbursement_food.html',context)
             if request.method =='POST':
                 
                 vehicle_company=request.POST['vehicle-company']
@@ -1501,6 +1503,7 @@ def reimbursementBill(request,bill):
         print('Reimbursement Bill Exception : ',e)
     return render(request,'ems/reimbursement_bill.html',context)
 
+
 def reimbursementVehicleCompany(request,bill,vehicle_company):
     context={}
     try:
@@ -1511,8 +1514,29 @@ def reimbursementVehicleCompany(request,bill,vehicle_company):
             context['vehicle_company']=vehicle_company
             if request.method =='POST':
                 
-                vehicle_company=request.POST['vehicle-company']
-        
+                vehicle_name=request.POST['vehicle-name']
+                vehicle_number=request.POST['vehicle-number']
+                date=request.POST['date']
+                amount=request.POST['amount']
+                obj=ReimbursementCab.objects.create(employee=profile_obj,
+                cab_name=vehicle_company,
+                vehicle_name=vehicle_name,
+                vehicle_number=vehicle_number,
+                amount=amount,
+                date=date,
+                )
+                if obj:
+                    print(obj)
+                    return HttpResponse('Success')
     except Exception as e:
         print('Reimbursement Vehicle Company Exception : ',e)
     return render(request,'ems/vehicle_company.html',context)
+
+@login_required()
+def allReimbursement(request):
+    context={}
+    try:
+        reimbursements=ReimbursementCab.objects.all
+    except Exception as e:
+        print('All Reimbursement Exception : ',e)
+    return render(request,'ems/all_reimbursement.html',context)

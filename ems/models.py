@@ -196,13 +196,17 @@ class AllocatedLeave(models.Model):
 class ReimbursementCab(models.Model):
     employee=models.ForeignKey(Employee ,on_delete=models.CASCADE)
     cab_name=models.CharField(max_length=50)
-    vehcle_name=models.CharField(max_length=50)
+    vehicle_name=models.CharField(max_length=50)
     vehicle_number=models.CharField(max_length=50)
     amount=models.FloatField()
     date=models.DateField()
     status=models.CharField(max_length=50, default='pending')
+    remark=models.CharField(max_length=150, null=True, blank=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.employee.name
     
 
 

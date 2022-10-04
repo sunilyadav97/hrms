@@ -25,16 +25,16 @@ Reimbursement
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="type-of-vehicle_company" class="form-label">Vehicle Company</label>
-                            <select class="form-select" aria-label="Default select example" name="vehicle-company"
+                            <label for="type-of-vehicle_company" class="form-label">Cab Company</label>
+                            <select class="form-select" aria-label="Default select example" name="cab-company"
                                 id="vehicle_company" disabled>
                                 <option value="{{vehicle_company}}" selected >{{vehicle_company | title}}</option>
                             </select>
                         </div>
                         {% if vehicle_company == 'ola' %}
                         <div class="mb-3">
-                            <label for="type-of-vehicle_company" class="form-label">Please Select Vehicle</label>
-                            <select class="form-select" aria-label="Default select example" name="vehicle-company"
+                            <label for="type-of-vehicle_company" class="form-label">Select Vehicle</label>
+                            <select class="form-select" aria-label="Default select example" name="vehicle-name"
                                 id="vehicle_company" >
                                 <option selected disabled>---------------</option>
                                 <option value="mini">Mini</option>
@@ -45,8 +45,8 @@ Reimbursement
                         </div>
                          {% elif vehicle_company == 'uber' %}
                         <div class="mb-3">
-                            <label for="type-of-vehicle_company" class="form-label">Please Select Vehicle</label>
-                            <select class="form-select" aria-label="Default select example" name="vehicle-company"
+                            <label for="type-of-vehicle_company" class="form-label">Select Vehicle</label>
+                            <select class="form-select" aria-label="Default select example" name="vehicle-name"
                                 id="vehicle_company" >
                                 <option selected disabled>---------------</option>
                                 <option value="uber go">Uber Go</option>
@@ -56,8 +56,8 @@ Reimbursement
                         </div>
                         {% elif vehicle_company == 'rapido' %}
                         <div class="mb-3">
-                            <label for="type-of-vehicle_company" class="form-label">Please Select Vehicle</label>
-                            <select class="form-select" aria-label="Default select example" name="vehicle-company"
+                            <label for="type-of-vehicle_company" class="form-label">Select Vehicle</label>
+                            <select class="form-select" aria-label="Default select example" name="vehicle-name"
                                 id="vehicle_company" >
                                 <option selected disabled>---------------</option>
                                 <option value="bike">Bike</option>
