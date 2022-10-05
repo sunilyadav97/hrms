@@ -1564,13 +1564,18 @@ def reimbursementCabAll(request):
 
 
 # Reimbursement For Admin
-
 @login_required()
 def adminCabReimbursement(request):
     context={}
     try:
         cab_reimbursements=ReimbursementCab.objects.all().order_by('-id')
-        context['cab_reimbursements']=cab_reimbursements
+        paginator=Paginator(cab_reimbursements,10)
+        page_no=request.GET.get('page')
+
+        total_pages=paginator.page_range
+        cab_reimbursementspages=paginator.get_page(page_no) 
+        context['cab_reimbursements']=cab_reimbursementspages
+        context['pages']=total_pages
         if request.method == 'POST':
             id=request.POST['id']
             status=request.POST['status']
