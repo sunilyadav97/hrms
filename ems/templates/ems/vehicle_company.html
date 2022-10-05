@@ -35,7 +35,7 @@ Reimbursement
                         <div class="mb-3">
                             <label for="type-of-vehicle_company" class="form-label">Select Vehicle</label>
                             <select class="form-select" aria-label="Default select example" name="vehicle-name"
-                                id="vehicle_company" >
+                                id="vehicle_company" required>
                                 <option selected disabled>---------------</option>
                                 <option value="mini">Mini</option>
                                 <option value="micro">Micro</option>
@@ -47,7 +47,7 @@ Reimbursement
                         <div class="mb-3">
                             <label for="type-of-vehicle_company" class="form-label">Select Vehicle</label>
                             <select class="form-select" aria-label="Default select example" name="vehicle-name"
-                                id="vehicle_company" >
+                                id="vehicle_company" required>
                                 <option selected disabled>---------------</option>
                                 <option value="uber go">Uber Go</option>
                                 <option value="uber moto">Uber Moto</option>
@@ -58,7 +58,7 @@ Reimbursement
                         <div class="mb-3">
                             <label for="type-of-vehicle_company" class="form-label">Select Vehicle</label>
                             <select class="form-select" aria-label="Default select example" name="vehicle-name"
-                                id="vehicle_company" >
+                                id="vehicle_company" required>
                                 <option selected disabled>---------------</option>
                                 <option value="bike">Bike</option>
                                 <option value="auto">Auto</option>
@@ -67,15 +67,15 @@ Reimbursement
                         {% endif %}
                         <div class="mb-3">
                             <label for="date" class="form-label">Date</label>
-                            <input type="date" class="form-control" name="date" id="date" >
+                            <input type="date" class="form-control" name="date" id="date" required>
                         </div>
                         <div class="mb-3">
                             <label for="vehicle-number" class="form-label">Vehicle Number</label>
-                            <input type="text" name="vehicle-number" class="form-control" id="vehicle-number" >
+                            <input type="text" name="vehicle-number" class="form-control" id="vehicle-number" required>
                           </div>
                         <div class="mb-3">
                             <label for="amount" class="form-label">Amount</label>
-                            <input type="number" class="form-control" name="amount" id="amount" >
+                            <input type="number" class="form-control" name="amount" id="amount" required>
                           </div>
                         <div class="d-grid" >
                             <button class="btn btn-primary float-end" type="submit">Submit</button>

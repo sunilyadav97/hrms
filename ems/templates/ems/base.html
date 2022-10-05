@@ -158,14 +158,24 @@
                     <li class="nav-item sub-nav"><a href="{% url 'ems:view-payrolls' %}" class="nav-link">View PayRolls</a>
                     </li>
                 </div>
+                <li class="nav-item accordion-button collapsed sub-arrow-forward" data-bs-toggle="collapse"
+                    data-bs-target="#reimbursement-nav" aria-expanded="false" aria-controls="reimbursement-nav" onclick="rotate()">
+                    <a class="nav-link w-100 arrow" href="#">Reimbursement</a><span
+                        class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
+                </li>
+                <div id="reimbursement-nav" class="accordion-collapse collapse">
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:admin-cab-reimbursement' %}" class="nav-link">View Cab's</a></li>
+                    <li class="nav-item sub-nav"><a href="#" class="nav-link">View Food's</a>
+                    </li>
+                </div>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:all-queries' %}">Queries</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:connect' %}">Connect</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:allocated-leaves' %}">Allocated Leave</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:appreciation' %}">Appreciation</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:news-letter' %}">NewsLetter</a></li>
+                
                 <li class="nav-item"><a class="nav-link" href="#">Hirings</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">IT</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Reimbursement</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Awards</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Reviews</a></li>
                 {% else %}
@@ -196,7 +206,17 @@
                     <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:queries' %}">All Query</a></li>
                 </div>
                 {% endif %}
-                <li class="nav-item"><a class="nav-link" href="{% url 'ems:reimbursement' %}">Reimbursement</a></li>
+                <!-- <li class="nav-item"><a class="nav-link" href="{% url 'ems:reimbursement' %}">Reimbursement</a></li> -->
+                <li class="nav-item accordion-button collapsed sub-arrow-forward" data-bs-toggle="collapse"
+                    data-bs-target="#reimbursement-nav" aria-expanded="false" aria-controls="reimbursement-nav" onclick="rotate()">
+                    <a class="nav-link w-100 arrow" href="#">Reimbursement</a><span
+                        class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
+                </li>
+                <div id="reimbursement-nav" class="accordion-collapse collapse">
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:reimbursement' %}" class="nav-link">Request </a></li>
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:reimbursement-cab-all' %}" class="nav-link">All Cab </a></li>
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:reimbursement-food-all' %}" class="nav-link">All Food </a></li>
+                </div>
                 <li class="nav-item"><a class="nav-link" href="#">Awards</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Reviews</a></li>
                 {% endif %}

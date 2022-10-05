@@ -1,0 +1,120 @@
+{% extends './base.html' %}
+{% block title%}
+Reimbursement Cab
+{% endblock title%}
+{% block css%}
+
+{% endblock css%}
+{% block body %}
+<section class="py-5">
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-11">
+                <h3 class="derpartment-title my-3 ">All Cab Reimbursement</h3>
+                <a href="#">See All Food Reimbursements</a>
+
+                <table class="table table-bordered border-danger">
+                    <tr>
+                        <th>SN.</th>
+                        <th>Employee</th>
+                        <th>Date</th>
+                        <th>Cab</th>
+                        <th>Vehicle Name</th>
+                        <th>Vehicle Number</th>
+                        <th>Amount</th>
+                        <th>Remark</th>
+                        <th>Status</th>
+                    </tr>
+                    {% for item in cab_reimbursements %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{item.employee.name}}</td>
+                        <td>{{item.date | date:'d-M-Y'}}</td>
+                        <td>{{item.cab_name | title}}</td>
+                        <td>{{item.vehicle_name|title}}</td>
+                        <td>{{item.vehicle_number}}</td>
+                        <td>{{item.amount}}</td>
+                        <td>{{item.remark}}</td>
+                        {% if item.status == 'pending' %}
+
+                        <td class="bg-warning"><a href="" class="text-dark" data-bs-target="#reimbursementmodal"
+                                onclick="reimbursement({{item.id}},'{{item.status}}','{{item.remark}}')"
+                                data-bs-toggle="modal">{{item.status | title}}</a></td>
+                        {% elif item.status == 'accepted' %}
+                        <td class="bg-success"><a href="" class="text-light" data-bs-toggle="modal"
+                                data-bs-target="#reimbursementmodal" onclick="reimbursement({{item.id}},'{{item.status}}','{{item.remark}}')">{{item.status | title}}</a></td>
+                        {% elif item.status == 'rejected' %}
+                        <td class="bg-danger"><a class="text-light" data-bs-target="#reimbursementmodal"
+                                onclick="reimbursement({{item.id}},'{{item.status}}','{{item.remark}}')" href="" data-bs-toggle="modal">{{item.status |title}}</a></td>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Modal -->
+<div class="modal fade" id="reimbursementmodal" tabindex="-1" aria-labelledby="reimbursementModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reimbursementModalLabel">Reimbursement</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <input type="text" name="id" id="reimbursement-id" hidden>
+                    <div class="mb-3">
+                        <label for="reimbursement-type" class="form-label">Status</label>
+                        <select class="form-select" aria-label="Default select example" name="status"
+                            id="reimbursement-type">
+                            <option value="accepted" id="accepted">Accept</option>
+                            <option value="pending" id="pending">Pending</option>
+                            <option value="rejected" id="rejected">Reject</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Remark</label>
+                        <textarea class="form-control" id="remark" rows="3" placeholder="Write Remark....."
+                            name="remark"></textarea>
+                    </div>
+                    <div class="d-grid">
+
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function reimbursement(id, status, remark) {
+        document.getElementById('reimbursement-id').value = id
+        var remarkElement = document.getElementById('remark')
+        var pedning = document.getElementById('pending')
+        var accepted = document.getElementById('accepted')
+        var rejected = document.getElementById('rejected')
+        if (remark != 'None') {
+            remarkElement.value = remark
+        }
+        console.log(status)
+        if (pedning.value == status) {
+            pedning.setAttribute('selected', 'selected')
+        } else if (accepted.value == status) {
+            accepted.setAttribute('selected', 'selected')
+        } else if (rejected.value == status)
+        {
+            rejected.setAttribute('selected', 'selected')
+
+        }
+    }
+</script>
+
+
+
+{% endblock body %}

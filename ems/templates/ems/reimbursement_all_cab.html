@@ -1,0 +1,51 @@
+{% extends './base.html' %}
+{% block title%}
+Reimbursement Cab
+{% endblock title%}
+{% block css%}
+
+{% endblock css%}
+{% block body %}
+<section class="py-5">
+    <div class="container">
+        <div class="row d-flex align-itmes-center justify-content-center">
+            <div class="col-10">
+                <h3 class="derpartment-title my-3 ">All Cab Reimbursement</h3>
+                <a href="">See All Food Reimbursements</a>
+                <a href="{% url 'ems:reimbursement' %}" class="float-end">Request Reimbursement</a>
+                <table class="table table-bordered border-danger">
+                    <tr>
+                        <th>SN.</th>
+                        <th>Date</th>
+                        <th>Cab</th>
+                        <th>Vehicle Name</th>
+                        <th>Vehicle Number</th>
+                        <th>Amount</th>
+                        <th>Remark</th>
+                        <th>Status</th>
+                    </tr>
+                    {% for item in cabreimbursements %}
+                    <tr>
+                      <td>{{forloop.counter}}</td>
+                      <td>{{item.date | date:'d-M-Y'}}</td>
+                      <td>{{item.cab_name | title}}</td>
+                      <td>{{item.vehicle_name|title}}</td>
+                      <td>{{item.vehicle_number}}</td>
+                      <td>{{item.amount}}</td>
+                      <td>{{item.remark}}</td>
+                      {% if item.status == 'pending' %}
+                        
+                      <td class="bg-warning">{{item.status | title}}</td>
+                      {% elif item.status == 'accepted' %}
+                      <td class="bg-success text-light">{{item.status | title}}</td>
+                      {% elif item.status == 'rejected' %}
+                      <td class="bg-danger">{{item.status | title}}</td>
+                      {% endif %}
+                    </tr>
+                    {% endfor %}
+                  </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock body %}

@@ -1482,7 +1482,6 @@ def reimbursement(request):
     return render(request,'ems/reimbursement.html',context)
 
 @login_required()
-
 def reimbursementBill(request,bill):
     context={}
     try:
@@ -1503,7 +1502,7 @@ def reimbursementBill(request,bill):
         print('Reimbursement Bill Exception : ',e)
     return render(request,'ems/reimbursement_bill.html',context)
 
-
+@login_required()
 def reimbursementVehicleCompany(request,bill,vehicle_company):
     context={}
     try:
@@ -1527,16 +1526,68 @@ def reimbursementVehicleCompany(request,bill,vehicle_company):
                 )
                 if obj:
                     print(obj)
-                    return HttpResponse('Success')
+                    messages.success(request,'Reimbursement Requested Successfully!')
+                    return redirect('ems:reimbursement-cab-all')
+                else:
+                    messages.warning(request,'Something went wrong please try again!')
+                    return redirect('ems:reimbursement')
     except Exception as e:
         print('Reimbursement Vehicle Company Exception : ',e)
+        messages.warning(request,'Please fill al the Details!')
     return render(request,'ems/vehicle_company.html',context)
 
+# Displaying All Food Reimubrsement of Employee
 @login_required()
-def allReimbursement(request):
+def reimbursementFoodAll(request):
     context={}
     try:
-        reimbursements=ReimbursementCab.objects.all
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
     except Exception as e:
         print('All Reimbursement Exception : ',e)
-    return render(request,'ems/all_reimbursement.html',context)
+    return render(request,'ems/reimbursement_all_food.html',context)
+
+# Displaying All Cab Reimubrsement of Employee
+@login_required()
+def reimbursementCabAll(request):
+    context={}
+    try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
+            cabreimbursements=ReimbursementCab.objects.filter(employee=profile_obj).order_by('-id')
+            context['cabreimbursements']=cabreimbursements
+    except Exception as e:
+        print('Display All Reimbursement Exception : ',e)
+    return render(request,'ems/reimbursement_all_cab.html',context)
+
+
+# Reimbursement For Admin
+
+@login_required()
+def adminCabReimbursement(request):
+    context={}
+    try:
+        cab_reimbursements=ReimbursementCab.objects.all().order_by('-id')
+        context['cab_reimbursements']=cab_reimbursements
+        if request.method == 'POST':
+            id=request.POST['id']
+            status=request.POST['status']
+            remark=request.POST['remark']
+            try:
+                obj=ReimbursementCab.objects.get(id=id)
+            except Exception as e:
+                print('Admin Cab Reimbursement Inside  Exception : ',e)
+                messages.warning(request,'Something went wrong!')
+            
+            if obj:
+                obj.status=status
+                obj.remark=remark
+                obj.save()
+                messages.success(request,'Updated Successfully!')
+                return redirect('ems:admin-cab-reimbursement')
+
+    except Exception as e:
+        print('Admin Cab Reimbursement  Exception : ',e)
+    return render(request,'ems/admin_cab_reimbursement.html',context)
