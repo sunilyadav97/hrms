@@ -19,4 +19,5 @@ admin.site.register(Document)
 admin.site.register(NewsLetter)
 admin.site.register(Appreciation)
 admin.site.register(ReimbursementTransport)
+admin.site.register(ReimbursementFood)
 

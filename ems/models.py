@@ -214,4 +214,16 @@ class ReimbursementTransport(models.Model):
         return self.employee.name
     
 
+class ReimbursementFood(models.Model):
+    employee=models.ForeignKey(Employee, on_delete=models.CASCADE)
+    number_of_employee=models.IntegerField()
+    amount=models.IntegerField()
+    date=models.DateField()
+    bill_number=models.CharField(max_length=100)
+    status=models.CharField(max_length=30, default='pending')
+    remark=models.CharField(max_length=150, null=True, blank=True)
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+
+
 
