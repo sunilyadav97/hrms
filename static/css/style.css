@@ -97,7 +97,10 @@
 .delete span {
   font-size: 16px !important;
 }
-
+.light-purple{
+  background-color: #CBC3E3 !important;
+  color: black;
+}
 
 /* ============SCROLL BAR============= */
 ::-webkit-scrollbar {

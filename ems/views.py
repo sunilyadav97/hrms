@@ -756,19 +756,21 @@ def attendance(request):
                 attendance_status=request.POST['attendance-status'+str(i)]
                 if intime == '':
                     intime=None
-                    
+                else:
+                    split_intime=str(intime).split(":")
+                    intime_hour=int(split_intime[0])
+                    intime_minute=int(split_intime[1])
+                    if intime_hour == 9:
+                        if intime_minute >45:
+                            is_late=True
+                        elif intime_hour >9:
+                            is_late=True
+
                 if outtime == '':
                     outtime=None
-                split_intime=str(intime).split(":")
-                intime_hour=int(split_intime[0])
-                intime_minute=int(split_intime[1])
-                print('Split Intime : ',split_intime)
+                
 
-                if intime_hour == 9:
-                    if intime_minute >45:
-                        is_late=True
-                elif intime_hour >9:
-                    is_late=True
+                
                      
                 emp_obj=Employee.objects.get(empid=empid)
                 att_obj=Attendance.objects.create(
@@ -779,10 +781,13 @@ def attendance(request):
                     present=attendance_status,
                     is_late=is_late
                     )
-                print(att_obj)
-                print(i,'empid-',empid,'intime-',intime,'outime-',outtime,'present-',attendance_status)
-            messages.success(request,'Attendance Added successfully!')
-            return redirect('ems:attendance')
+                if att_obj:
+                    messages.success(request,'Attendance Added successfully!')
+                    return redirect('ems:attendance')
+                else:
+                    messages.warning(request,'Something went wrong Please try Again!')
+                    return redirect('ems:attendance')
+                    
     except Exception as e:
         print('Attendance Exception ',e)
         
@@ -790,16 +795,49 @@ def attendance(request):
 
 
 @login_required()
-def filterAttendance(request):
+def attendanceDateFilter(request):
     context={}
     try:
         filter_date=request.GET['filter-date']
         print('filter date ',filter_date)
         attendances=Attendance.objects.filter(date=filter_date)
         context['attendances']=attendances
+        context['date']=True
+    except Exception as e:
+        print('Filter Attendace Exception : ',e)
+    return render(request,'ems/filter_attendate.html',context)
+
+@login_required()
+def attendanceDepartmentFilter(request):
+    context={}
+    try:
+        filter_department=request.POST['filter-department']
+        obj=Department.objects.get(id=filter_department)
+        employees=Employee.objects.filter(department=obj)
+        attendances=[]
+        for item in employees:
+            item_obj=Attendance.objects.filter(employee=item)
+            for i in item_obj:
+                attendances.append(i)
+                
+        context['attendances']=attendances
+        context['department']=obj
         print(attendances)
     except Exception as e:
         print('Filter Attendace Exception : ',e)
+    return render(request,'ems/filter_attendate.html',context)
+
+@login_required()
+def attendanceEmployeeFilter(request):
+    context={}
+    try:
+        empid=request.POST['empid']
+        obj=Employee.objects.get(empid=empid)
+        attendances=Attendance.objects.filter(employee=obj)
+        context['attendances']=attendances
+        context['employee']=obj
+    except Exception as e:
+        print('Attendace Employee Filter Exception : ',e)
     return render(request,'ems/filter_attendate.html',context)
 
 @login_required()

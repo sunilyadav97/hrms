@@ -89,6 +89,32 @@ class Attendance(models.Model):
     updated_at = models.DateTimeField(auto_now=True,blank=True,null=True)
     def __str__(self):
         return self.employee.name
+
+    @property
+    def nocolor(self):
+        if self.intime != None:
+            split_intime=str(self.intime).split(":")
+            intime_hour=int(split_intime[0])
+            intime_minute=int(split_intime[1])
+            if intime_hour == 9:
+                if intime_minute >20 and intime_minute < 45:
+                    return True
+    
+    @property 
+    def lightPurple(self):
+        if self.outtime != None:
+            split_outtime=str(self.outtime).split(":")
+            outtime_hour=int(split_outtime[0])
+            outtime_minute=int(split_outtime[1])
+            if outtime_hour >= 16 and outtime_hour <= 18:
+                if outtime_hour == 18 and outtime_minute >20:
+                    return False
+                return True
+
+
+
+        
+
     
 class Leave(models.Model):
     employee=models.ForeignKey(Employee,on_delete=models.CASCADE)

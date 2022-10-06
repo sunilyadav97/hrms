@@ -22,7 +22,45 @@ width:8rem !important;
                         Add New Attendance
                     </button>
                 </div>
-                <table class="table border border-1 border-dark my-5">
+                
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="w-25 my-3 mb-4">
+                        <form action="{% url 'ems:attendance-date-filter' %}" method="get">
+                            {% csrf_token %}
+                            <label for="date" class="form-label">Filter Date</label><small><button type="submit"
+                                    class="btn btn-primary float-end mb-1 btn-sm">Submit</button></small>
+                                    <input type="date" class="form-control  form-control-sm" id="filter-date" name="filter-date">
+                            
+                        </form>
+                    </div>
+                    <div class="w-25 my-3 mb-4">
+                        <form action="{% url 'ems:attendance-department-filter' %}" method="post">
+                            {% csrf_token %}
+                            <label for="filter-department" class="form-label">Filter Department</label><small><button type="submit"
+                                    class="btn btn-primary float-end mb-1 btn-sm">Submit</button></small>
+                            
+                            <select class="form-select" aria-label="Default select example" name="filter-department" id="filter-department">
+                                {% for item in departments  %}
+                                <option value="{{item.id}}">{{item.name}}</option>
+                                {% endfor %}
+                              </select>
+                        </form>
+                    </div>
+                    <div class="w-25 my-3 mb-4">
+                        <form action="{% url 'ems:attendance-employee-filter' %}" method="POST">
+                            {% csrf_token %}
+                            <label for="date" class="form-label">Filter Employee</label><small><button type="submit"
+                                    class="btn btn-primary float-end mb-1 btn-sm">Submit</button></small>
+                                    <select class="form-select" aria-label="Default select example" name="empid" id="filter-employee">
+                                        {% for item in filter_employees  %}
+                                        <option value="{{item.empid}}">{{item.name}}</option>
+                                        {% endfor %}
+                                      </select>
+                        </form>
+                    </div>
+                </div>
+                
+                <table class="table border border-1 border-dark my-2">
                     <tr>
                         <th>SN</th>
                         <th>Name</th>
@@ -34,42 +72,7 @@ width:8rem !important;
                         <th class="me-4">Delete</th>
                     </tr>
                 </table>
-                <div class="d-flex align-items-center justify-content-between">
-                <div class="w-25 my-3 mb-4">
-                    <form action="{% url 'ems:attendance-filter' %}" method="get">
-                        {% csrf_token %}
-                        <label for="date" class="form-label">Filter Date</label><small><button type="submit"
-                                class="btn btn-primary float-end mb-1 btn-sm">Submit</button></small>
-                                <input type="date" class="form-control  form-control-sm" id="filter-date" name="filter-date">
-                        
-                    </form>
-                </div>
-                <div class="w-25 my-3 mb-4">
-                    <form action="{% url 'ems:attendance-filter' %}" method="get">
-                        {% csrf_token %}
-                        <label for="filter-department" class="form-label">Filter Department</label><small><button type="submit"
-                                class="btn btn-primary float-end mb-1 btn-sm">Submit</button></small>
-                        
-                        <select class="form-select" aria-label="Default select example" name="filter-department" id="filter-department">
-                            {% for item in departments  %}
-                            <option value="{{item.id}}">{{item.name}}</option>
-                            {% endfor %}
-                          </select>
-                    </form>
-                </div>
-                <div class="w-25 my-3 mb-4">
-                    <form action="{% url 'ems:attendance-filter' %}" method="get">
-                        {% csrf_token %}
-                        <label for="date" class="form-label">Filter Employee</label><small><button type="submit"
-                                class="btn btn-primary float-end mb-1 btn-sm">Submit</button></small>
-                                <select class="form-select" aria-label="Default select example" name="filter-employee" id="filter-employee">
-                                    {% for item in filter_employees  %}
-                                    <option value="{{item.empid}}">{{item.name}}</option>
-                                    {% endfor %}
-                                  </select>
-                    </form>
-                </div>
-            </div>
+                
                 {% for nest in nested_attendence %}
                 <div class="d-flex align-items-center my-2 mb-3 justify-content-between">
                     {% if nest.count == 1 %}
@@ -88,11 +91,20 @@ width:8rem !important;
                         {% if item.is_late == True %}
                         
                         <td ><span class="bg-danger text-light p-1 py-2">{{item.intime | time}}</span></td>
+                        {% elif item.nocolor == True %}
+                        <td><span class=" text-dark p-1 py-2">{{item.intime | time}} </span></td>
                         {% elif item.intime %}
-                        <td><span class="bg-success text-dark p-1 py-2">{{item.intime | time}}</span></td>
+                        <td><span class="bg-success text-dark p-1 py-2">{{item.intime | time}} </span></td>
+                        {% else %}
+                        <td></td>
+                        {% endif %}
+                         
+                        {% if item.lightPurple == True %}
+                        <td><span class="light-purple p-1 py-2">{{item.outtime | time}}</span></td>
+                        {% else %}
+                        <td>{{item.outtime | time}} </td>
                         {% endif %}
 
-                        <td>{{item.outtime | time}}</td>
                         {% if item.present %}
                         <td class="text-success fw-semibold ">Present</td>
                         {% else %}
