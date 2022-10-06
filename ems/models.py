@@ -87,8 +87,12 @@ class Attendance(models.Model):
     is_late=models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True,blank=True,null=True)
     updated_at = models.DateTimeField(auto_now=True,blank=True,null=True)
+
     def __str__(self):
         return self.employee.name
+
+    def get_year(self):
+        return self.date.year
 
     @property
     def nocolor(self):
@@ -218,10 +222,14 @@ class Appreciation(models.Model):
 class AllocatedLeave(models.Model):
     employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
     allocated=models.IntegerField(default=18)
-    earn=models.IntegerField()
-    month=models.CharField(max_length=12)
+    earn=models.IntegerField(null=True,blank=True)
+    start_date=models.DateField(null=True,blank=True)
+    end_date=models.DateField(null=True,blank=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.employee.name
 
 
 class ReimbursementTransport(models.Model):

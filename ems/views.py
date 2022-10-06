@@ -22,6 +22,7 @@ def dashboard(request):
     context={}
     try:
         expireConnect()
+        AllocatedLeaveOperation()
         if request.user.is_authenticated:
             employees=list(Employee.objects.all())
             birthdays=[]

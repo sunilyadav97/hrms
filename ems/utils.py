@@ -103,3 +103,30 @@ def sendMail(username,domain):
     send_mail(subject,message,from_email,recipient_list, fail_silently=True)
     print(message)
     return True
+
+def AllocatedLeaveOperation():
+    allocatedLeaves=AllocatedLeave.objects.all()
+    for item in allocatedLeaves:
+        employee=item.employee
+        year=item.start_date.year
+
+        all_attendance=Attendance.objects.filter(employee=employee)
+        print('Allocated Leaves Attedance : ',all_attendance)
+        print('Allocated Leaves Employee : ',employee)
+        print('Allocated Leaves Year : ',year)
+        year_attendance=[]
+        for i in all_attendance:
+            if i.get_year() == year:
+                year_attendance.append(i)
+        is_late_count=0
+        for i in year_attendance:
+            if i.present == False:
+                val=int(item.allocated)
+                item.allocated=val-1
+                item.save()
+            if i.is_late == True:
+                is_late_count+=1
+        late=int(is_late_count/2)
+        x=int(item.allocated)
+        item.allocated=x-late
+        item.save()
