@@ -18,15 +18,15 @@ Reimbursement
                         {% csrf_token %}
 
                         <div class="mb-3">
-                            <label for="type-of-bill" class="form-label">Type Of Bill</label>
+                            <label for="type-of-bill" class="form-label">Type of Bill</label>
                             <select class="form-select" aria-label="Default select example" name="type-of-bill"
                                 id="type-of-bill" disabled>
                                 <option value="{{bill}}">{{bill | title}}</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label for="type-of-bill" class="form-label">Please Cab Company</label>
-                            <select class="form-select" aria-label="Default select example" name="vehicle-company"
+                            <label for="type-of-bill" class="form-label">Mode of Transport</label>
+                            <select class="form-select" aria-label="Default select example" name="transport-company"
                                 id="type-of-bill" required>
                                 <option selected disabled>---------------</option>
                                 <option value="ola">OLA</option>

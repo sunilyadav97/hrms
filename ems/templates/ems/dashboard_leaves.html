@@ -18,6 +18,7 @@ font-size: 16px !important;
           <th>Name</th>
           <th>From date</th>
           <th>From to</th>
+          <th>Days</th>
           <th>Descripiton</th>
           <th>Reply</th>
           <th>Type</th>
@@ -31,6 +32,7 @@ font-size: 16px !important;
           <td>{{leave.employee.name}}</td>
           <td>{{leave.date_from | date:'d/M/Y'}}</td>
           <td>{{leave.date_to | date:'d/M/Y'}}</td>
+          <td>{{leave.days}}</td>
           <td onclick="showDescription('{{leave.description}}')" class="text-primary">{{leave.description|truncatewords:4}}</td>
           <td>{{leave.reply}}</td>
           <td>{{leave.type}}</td>

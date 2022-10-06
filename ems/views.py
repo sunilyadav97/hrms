@@ -711,6 +711,7 @@ def attendance(request):
         attendance_dates=list()
         nested_attendance=list()
         employees=Employee.objects.all()
+        departments=Department.objects.all()
         attendances_objs=Attendance.objects.all().order_by('-date')
 
         # Getting All Attendance Dates
@@ -740,6 +741,8 @@ def attendance(request):
         context['pages']=total_pages
 
         context['employees']=em_list
+        context['departments']=departments
+        context['filter_employees']=employees
         context['nested_attendence']=nested_attendance_pages
        
         if request.method == 'POST':
@@ -1493,9 +1496,9 @@ def reimbursementBill(request,bill):
                 return render(request,'ems/reimbursement_food.html',context)
             if request.method =='POST':
                 
-                vehicle_company=request.POST['vehicle-company']
-                print('bill ',vehicle_company)
-                return redirect('ems:reimbursement-vehicle-company',bill,vehicle_company)
+                transport_company=request.POST['transport-company']
+                print('bill ',transport_company)
+                return redirect('ems:reimbursement-transport-company',bill,transport_company)
         else:
             messages.warning(request,"You Don't have Access!")
     except Exception as e:
@@ -1503,22 +1506,22 @@ def reimbursementBill(request,bill):
     return render(request,'ems/reimbursement_bill.html',context)
 
 @login_required()
-def reimbursementVehicleCompany(request,bill,vehicle_company):
+def reimbursementTransportCompany(request,bill,transport_company):
     context={}
     try:
         if not request.user.is_superuser:
             profile_obj=Employee.objects.get(user=request.user)
             context['profile']=profile_obj
             context['bill']=bill
-            context['vehicle_company']=vehicle_company
+            context['vehicle_company']=transport_company
             if request.method =='POST':
                 
                 vehicle_name=request.POST['vehicle-name']
                 vehicle_number=request.POST['vehicle-number']
                 date=request.POST['date']
                 amount=request.POST['amount']
-                obj=ReimbursementCab.objects.create(employee=profile_obj,
-                cab_name=vehicle_company,
+                obj=ReimbursementTransport.objects.create(employee=profile_obj,
+                transport_company=transport_company,
                 vehicle_name=vehicle_name,
                 vehicle_number=vehicle_number,
                 amount=amount,
@@ -1527,14 +1530,14 @@ def reimbursementVehicleCompany(request,bill,vehicle_company):
                 if obj:
                     print(obj)
                     messages.success(request,'Reimbursement Requested Successfully!')
-                    return redirect('ems:reimbursement-cab-all')
+                    return redirect('ems:reimbursement-transport-all')
                 else:
                     messages.warning(request,'Something went wrong please try again!')
                     return redirect('ems:reimbursement')
     except Exception as e:
         print('Reimbursement Vehicle Company Exception : ',e)
         messages.warning(request,'Please fill al the Details!')
-    return render(request,'ems/vehicle_company.html',context)
+    return render(request,'ems/reimbursement_transport_company.html',context)
 
 # Displaying All Food Reimubrsement of Employee
 @login_required()
@@ -1550,25 +1553,25 @@ def reimbursementFoodAll(request):
 
 # Displaying All Cab Reimubrsement of Employee
 @login_required()
-def reimbursementCabAll(request):
+def reimbursementTransportAll(request):
     context={}
     try:
         if not request.user.is_superuser:
             profile_obj=Employee.objects.get(user=request.user)
             context['profile']=profile_obj
-            cabreimbursements=ReimbursementCab.objects.filter(employee=profile_obj).order_by('-id')
+            cabreimbursements=ReimbursementTransport.objects.filter(employee=profile_obj).order_by('-id')
             context['cabreimbursements']=cabreimbursements
     except Exception as e:
         print('Display All Reimbursement Exception : ',e)
-    return render(request,'ems/reimbursement_all_cab.html',context)
+    return render(request,'ems/reimbursement_all_transport.html',context)
 
 
 # Reimbursement For Admin
 @login_required()
-def adminCabReimbursement(request):
+def adminTransportReimbursement(request):
     context={}
     try:
-        cab_reimbursements=ReimbursementCab.objects.all().order_by('-id')
+        cab_reimbursements=ReimbursementTransport.objects.all().order_by('-id')
         paginator=Paginator(cab_reimbursements,10)
         page_no=request.GET.get('page')
 
@@ -1581,7 +1584,7 @@ def adminCabReimbursement(request):
             status=request.POST['status']
             remark=request.POST['remark']
             try:
-                obj=ReimbursementCab.objects.get(id=id)
+                obj=ReimbursementTransport.objects.get(id=id)
             except Exception as e:
                 print('Admin Cab Reimbursement Inside  Exception : ',e)
                 messages.warning(request,'Something went wrong!')
@@ -1595,4 +1598,4 @@ def adminCabReimbursement(request):
 
     except Exception as e:
         print('Admin Cab Reimbursement  Exception : ',e)
-    return render(request,'ems/admin_cab_reimbursement.html',context)
+    return render(request,'ems/admin_transport_reimbursement.html',context)

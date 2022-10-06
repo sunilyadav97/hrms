@@ -55,8 +55,8 @@ urlpatterns=[
     path('delete-news-letter/<id>/',deleteNewsletter,name='delete-news-letter'),
     path('reimbursement',reimbursement,name='reimbursement'),
     path('reimbursement/<bill>',reimbursementBill,name='reimbursement-bill'),
-    path('reimbursement/<bill>/<vehicle_company>/',reimbursementVehicleCompany,name='reimbursement-vehicle-company'),
+    path('reimbursement/<bill>/<transport_company>/',reimbursementTransportCompany,name='reimbursement-transport-company'),
     path('reimbursement-food-all',reimbursementFoodAll,name='reimbursement-food-all'),
-    path('reimbursement-cab-all',reimbursementCabAll,name='reimbursement-cab-all'),
-    path('reimbursements-cab',adminCabReimbursement,name='admin-cab-reimbursement'),
+    path('reimbursement-transport-all',reimbursementTransportAll,name='reimbursement-transport-all'),
+    path('reimbursements-transport',adminTransportReimbursement,name='admin-transport-reimbursement'),
 ]

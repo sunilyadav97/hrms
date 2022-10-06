@@ -10,7 +10,7 @@ Reimbursement Cab
     <div class="container">
         <div class="row d-flex justify-content-center align-items-center">
             <div class="col-11">
-                <h3 class="derpartment-title my-3 ">All Cab Reimbursement</h3>
+                <h3 class="derpartment-title my-3 ">All Transport Reimbursement</h3>
                 <a href="#">See All Food Reimbursements</a>
 
                 <table class="table table-bordered border-danger">
@@ -27,10 +27,10 @@ Reimbursement Cab
                     </tr>
                     {% for item in cab_reimbursements %}
                     <tr>
-                        <td>{{forloop.counter}}</td>
+                        <td>{{forloop.counter}}.</td>
                         <td>{{item.employee.name}}</td>
                         <td>{{item.date | date:'d-M-Y'}}</td>
-                        <td>{{item.cab_name | title}}</td>
+                        <td>{{item.transport_company | title}}</td>
                         <td>{{item.vehicle_name|title}}</td>
                         <td>{{item.vehicle_number}}</td>
                         <td>{{item.amount}}</td>

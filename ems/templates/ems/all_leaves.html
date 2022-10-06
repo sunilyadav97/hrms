@@ -18,6 +18,7 @@
                         <th>SN</th>
                         <th>From date</th>
                         <th>From to</th>
+                        <th>Days</th>
                         <th>Descripiton</th>
                         <th>Type</th>
                         <th>Status</th>
@@ -32,6 +33,7 @@
                         <td>{{forloop.counter}}.</td>
                         <td>{{leave.date_from | date:'d/M/Y'}}</td>
                         <td>{{leave.date_to | date:'d/M/Y'}}</td>
+                        <td>{{leave.days}}</td>
                         <td><a data-bs-toggle="collapse" href="#description{{forloop.counter}}" role="button" aria-expanded="false" aria-controls="description{{forloop.counter}}">{{leave.description|truncatewords:5}}</a></td>
                         <div class="collapse my-3" id="description{{forloop.counter}}">
                             <div class="card card-body ">

@@ -19,12 +19,12 @@ Reimbursement
                         {% csrf_token %}
 
                         <div class="mb-3">
-                            <label for="type-of-bill" class="form-label">Please Select Type Of Bill</label>
+                            <label for="type-of-bill" class="form-label">Please Select Type of Bill</label>
                             <select class="form-select" aria-label="Default select example" name="type-of-bill"
                                 id="type-of-bill" required>
                                 <option selected disabled>---------------</option>
                                 <option value="food">Food</option>
-                                <option value="cab">Cab</option>
+                                <option value="transport">Transport</option>
                             </select>
                         </div>
                         <div class="mb-3" id="bill-button">

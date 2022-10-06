@@ -34,14 +34,42 @@ width:8rem !important;
                         <th class="me-4">Delete</th>
                     </tr>
                 </table>
+                <div class="d-flex align-items-center justify-content-between">
                 <div class="w-25 my-3 mb-4">
                     <form action="{% url 'ems:attendance-filter' %}" method="get">
                         {% csrf_token %}
                         <label for="date" class="form-label">Filter Date</label><small><button type="submit"
                                 class="btn btn-primary float-end mb-1 btn-sm">Submit</button></small>
-                        <input type="date" class="form-control  form-control-sm" id="filter-date" name="filter-date">
+                                <input type="date" class="form-control  form-control-sm" id="filter-date" name="filter-date">
+                        
                     </form>
                 </div>
+                <div class="w-25 my-3 mb-4">
+                    <form action="{% url 'ems:attendance-filter' %}" method="get">
+                        {% csrf_token %}
+                        <label for="filter-department" class="form-label">Filter Department</label><small><button type="submit"
+                                class="btn btn-primary float-end mb-1 btn-sm">Submit</button></small>
+                        
+                        <select class="form-select" aria-label="Default select example" name="filter-department" id="filter-department">
+                            {% for item in departments  %}
+                            <option value="{{item.id}}">{{item.name}}</option>
+                            {% endfor %}
+                          </select>
+                    </form>
+                </div>
+                <div class="w-25 my-3 mb-4">
+                    <form action="{% url 'ems:attendance-filter' %}" method="get">
+                        {% csrf_token %}
+                        <label for="date" class="form-label">Filter Employee</label><small><button type="submit"
+                                class="btn btn-primary float-end mb-1 btn-sm">Submit</button></small>
+                                <select class="form-select" aria-label="Default select example" name="filter-employee" id="filter-employee">
+                                    {% for item in filter_employees  %}
+                                    <option value="{{item.empid}}">{{item.name}}</option>
+                                    {% endfor %}
+                                  </select>
+                    </form>
+                </div>
+            </div>
                 {% for nest in nested_attendence %}
                 <div class="d-flex align-items-center my-2 mb-3 justify-content-between">
                     {% if nest.count == 1 %}

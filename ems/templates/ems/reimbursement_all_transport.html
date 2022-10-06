@@ -10,7 +10,7 @@ Reimbursement Cab
     <div class="container">
         <div class="row d-flex align-itmes-center justify-content-center">
             <div class="col-10">
-                <h3 class="derpartment-title my-3 ">All Cab Reimbursement</h3>
+                <h3 class="derpartment-title my-3 ">All Transport Reimbursements</h3>
                 <a href="">See All Food Reimbursements</a>
                 <a href="{% url 'ems:reimbursement' %}" class="float-end">Request Reimbursement</a>
                 <table class="table table-bordered border-danger">
@@ -28,7 +28,7 @@ Reimbursement Cab
                     <tr>
                       <td>{{forloop.counter}}</td>
                       <td>{{item.date | date:'d-M-Y'}}</td>
-                      <td>{{item.cab_name | title}}</td>
+                      <td>{{item.transport_company | title}}</td>
                       <td>{{item.vehicle_name|title}}</td>
                       <td>{{item.vehicle_number}}</td>
                       <td>{{item.amount}}</td>

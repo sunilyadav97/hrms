@@ -103,6 +103,11 @@ class Leave(models.Model):
     def __str__(self):
         return self.employee.name
 
+    @property
+    def days(self):
+        difference=self.date_to-self.date_from
+        return difference.days
+
 class Events(models.Model):
     title=models.CharField(max_length=150)
     description=models.TextField(max_length=300)
@@ -193,9 +198,9 @@ class AllocatedLeave(models.Model):
     updated_at=models.DateTimeField(auto_now=True)
 
 
-class ReimbursementCab(models.Model):
+class ReimbursementTransport(models.Model):
     employee=models.ForeignKey(Employee ,on_delete=models.CASCADE)
-    cab_name=models.CharField(max_length=50)
+    transport_company=models.CharField(max_length=50)
     vehicle_name=models.CharField(max_length=50)
     vehicle_number=models.CharField(max_length=50)
     amount=models.FloatField()
