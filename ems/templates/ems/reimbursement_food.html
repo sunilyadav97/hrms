@@ -24,10 +24,29 @@ Reimbursement
                                 <option value="food" selected>Food</option>
                             </select>
                         </div>
-                            <div class="mb-3">
-                                <label for="bill-number" class="form-label">Bill No.</label>
-                                <input type="text" class="form-control" id="bill-number" name="bill-number">
-                              </div>
+                        <div class="mb-3 d-flex align-items-center jsutify-content-between">
+                        <div class="me-2 w-50">
+                            <label for="date" class="form-label">Date</label>
+                            <input type="date" class="form-control" id="date" name="date">
+                        </div>
+                        <div class="ms-2 w-50">
+                            <label for="number-of-employee" class="form-label">Number of Employee</label>
+                            <select class="form-select" aria-label="Default select example" id="number-of-employee" name="number-of-employee">
+                                <option value="1" selected>1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                              </select>
+                        </div>
+                    </div>
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Amount</label>
+                            <input type="number" class="form-control" id="amount" name="amount">
+                        </div>
                         <div class="mb-3" id="bill-button">
                             <button class="btn btn-primary float-end" type="submit">Next</button>
                         </div>
