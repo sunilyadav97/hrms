@@ -1,0 +1,37 @@
+{% extends './base.html' %}
+{% block title%}
+Reimbursement |  Food Employee
+{% endblock title%}
+{% block css%}
+
+{% endblock css%}
+{% block body %}
+<section class="py-5">
+    <div class="container">
+        <div class="row d-flex align-itmes-center justify-content-center">
+            <div class="col-8">
+                <h3 class="derpartment-title my-3 ">See ALL Food Employee</h3>
+                {% if not request.user.is_superuser %}
+                <a href="{% url 'ems:reimbursement-food-all' %}">See All Food Reimbursements</a>
+                <a href="{% url 'ems:reimbursement' %}" class="float-end">Request Reimbursement</a>
+                {% endif %}
+                <table class="table table-bordered border-danger">
+                    <tr>
+                        <th>SN.</th>
+                        <th>Name</th>
+                        <th>Department</th>
+                    </tr>
+                    {% for item in reimbursements_employees %}
+                    <tr>
+                      <td>{{forloop.counter}}.</td>
+                      <td>{{item.name | title}}</td>
+                      <td>{{item.department | title}}</td>
+
+                    </tr>
+                    {% endfor %}
+                  </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock body %}

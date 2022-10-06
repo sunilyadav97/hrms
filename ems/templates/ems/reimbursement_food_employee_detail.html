@@ -1,0 +1,94 @@
+{% extends './base.html' %}
+{% block title%}
+Reimbursement | Food
+{% endblock title%}
+{% block css%}
+
+{% endblock css%}
+{% block body %}
+<section class="py-5">
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-8">
+                <h3 class="derpartment-title my-3 ">Claim Your Expenditures</h3>
+
+            </div>
+            <div class="col-8">
+                <div class="type-of-bill">
+                    <form action="{% url 'ems:reimbursement-food-submit' %}" id="form" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="type-of-bill" class="form-label">Type of Bill </label>
+                            <select class="form-select" aria-label="Default select example" name="type-of-bill"
+                                id="type-of-bill" disabled>
+                                <option value="food">Food</option>
+                            </select>
+                        </div>
+                        <div class="mb-3 d-flex align-items-center jsutify-content-between">
+                            <div class="me-2 w-50">
+                                <label for="amount" class="form-label">Amount</label>
+                                <input type="number" class="form-control" id="amount" name="amount" value="{{amount}}"
+                                    readonly required>
+
+                            </div>
+                            <div class="ms-2 w-50">
+                                <label for="number-of-employee" class="form-label">Number of Employee</label>
+                                <select class="form-select" aria-label="Default select example" id="number-of-employee"
+                                    name="number-of-employee" >
+                                    <option value="{{number_of_employee}}" selected >{{number_of_employee}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between mb-3" id="sbiling-element">
+                            <div class="me-2 w-50">
+                                <label for="date" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="date" name="date" required>
+                            </div>
+                            <div class=" w-50 d-grid ms-2 mt-4">
+                                <button class="btn btn-success" type="button"
+                                    onclick="addEmployee('{{number_of_employee}}')" id="add-employee">Add Employee</button>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="bill-number" class="form-label">Bill Number</label>
+                                <input type="text" class="form-control" id="bill-number" name="bill-number" required>
+                        </div>
+                        <div class="mb-3 d-grid">
+                            <button class="btn btn-primary float-end" type="submit" >Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        state=false
+        function addEmployee(val) {
+            var element = document.getElementById('sbiling-element')
+            var btn=document.getElementById('add-employee')
+            let i=1
+            
+            if (state == false){            
+            while (i < val) {
+                element.insertAdjacentHTML("afterend", `<div class="d-flex align-items-center justify-content-between mb-3" id="sbiling-element">
+                            <div class="me-2 w-50">
+                                <label for="employee${i}" class="form-label">Employee Name</label>
+                                <input type="text" class="form-control" id="employee${i}" name="employee${i}" required>
+                            </div>
+                            <div class="ms-2 w-50">
+                                <label for="department${i}" class="form-label">Department Name</label>
+                                <input type="text" class="form-control" id="department${i}" name="department${i}">
+                            </div>
+                        </div>`);
+                i++;
+            }
+            btn.setAttribute('disabled','disabled')
+        }else{
+            alert('Can not add more!')
+        }
+        }
+    </script>
+</section>
+
+{% endblock body %}

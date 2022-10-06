@@ -1,6 +1,6 @@
 {% extends './base.html' %}
 {% block title%}
-Reimbursement
+Reimbursement | Food
 {% endblock title%}
 {% block css%}
 
@@ -15,21 +15,17 @@ Reimbursement
             </div>
             <div class="col-8">
                 <div class="type-of-bill">
-                    <form action="" id="form" method="post">
+                    <form action="{% url 'ems:reimbursement-food' %}" id="form" method="post">
                         {% csrf_token %}
                         <div class="mb-3">
                             <label for="type-of-bill" class="form-label">Type of Bill </label>
                             <select class="form-select" aria-label="Default select example" name="type-of-bill"
                                 id="type-of-bill" disabled>
-                                <option value="food" selected>Food</option>
+                                <option value="{{bill}}">{{bill | title}}</option>
                             </select>
                         </div>
-                        <div class="mb-3 d-flex align-items-center jsutify-content-between">
-                        <div class="me-2 w-50">
-                            <label for="date" class="form-label">Date</label>
-                            <input type="date" class="form-control" id="date" name="date">
-                        </div>
-                        <div class="ms-2 w-50">
+                        <div class="mb-3 ">
+                        
                             <label for="number-of-employee" class="form-label">Number of Employee</label>
                             <select class="form-select" aria-label="Default select example" id="number-of-employee" name="number-of-employee">
                                 <option value="1" selected>1</option>
@@ -42,7 +38,7 @@ Reimbursement
                                 <option value="8">8</option>
                               </select>
                         </div>
-                    </div>
+
                         <div class="mb-3">
                             <label for="amount" class="form-label">Amount</label>
                             <input type="number" class="form-control" id="amount" name="amount">

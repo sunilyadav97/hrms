@@ -1539,17 +1539,6 @@ def reimbursementTransportCompany(request,bill,transport_company):
         messages.warning(request,'Please fill al the Details!')
     return render(request,'ems/reimbursement_transport_company.html',context)
 
-# Displaying All Food Reimubrsement of Employee
-@login_required()
-def reimbursementFoodAll(request):
-    context={}
-    try:
-        if not request.user.is_superuser:
-            profile_obj=Employee.objects.get(user=request.user)
-            context['profile']=profile_obj
-    except Exception as e:
-        print('All Reimbursement Exception : ',e)
-    return render(request,'ems/reimbursement_all_food.html',context)
 
 # Displaying All Cab Reimubrsement of Employee
 @login_required()
@@ -1594,8 +1583,150 @@ def adminTransportReimbursement(request):
                 obj.remark=remark
                 obj.save()
                 messages.success(request,'Updated Successfully!')
-                return redirect('ems:admin-cab-reimbursement')
+                return redirect('ems:admin-transport-reimbursement')
 
     except Exception as e:
         print('Admin Cab Reimbursement  Exception : ',e)
     return render(request,'ems/admin_transport_reimbursement.html',context)
+
+
+# Reimbursement Food 
+
+@login_required()
+def reimbursementFood(request):
+    context={}
+    try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
+            if request.method == 'POST':
+                number_of_employee=request.POST['number-of-employee']
+                amount=request.POST['amount']
+                x=int(amount)/int(number_of_employee)
+                if x > 200:
+                    print('Inside condition ',x)
+                    messages.warning(request,'Your Amount is Exceeding! Per Person Allowed only ₹200/. ')
+                    bill='food'
+                    return redirect('ems:reimbursement-bill',bill)
+                else:
+                    context['amount']=amount
+                    context['number_of_employee']=number_of_employee
+    except Exception as e:
+        print('Reimbursement Food Exception : ',e)
+
+    return render(request,'ems/reimbursement_food_employee_detail.html',context)
+
+@login_required()
+def reimbursmentFoodSubmit(request):
+    context={}
+    try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
+            if request.method == 'POST':
+                amount=request.POST['amount']
+                number_of_employee=request.POST['number-of-employee']
+                date=request.POST['date']
+                bill_number=request.POST['bill-number']
+
+                x=int(amount)/int(number_of_employee)
+
+                if x>200:
+                    messages.warning(request,'Your Amount is Exceeding! Per Person Allowed only ₹200/. ')
+                    bill='food'
+                    return redirect('ems:reimbursement-bill',bill)
+                else:
+                    obj=ReimbursementFood.objects.create(
+                        employee=profile_obj,
+                        number_of_employee=number_of_employee,
+                        amount=amount,
+                        bill_number=bill_number,
+                        date=date
+                    )
+                    if obj:
+                        for i in range(int(number_of_employee)-1):
+                            employee_name=request.POST['employee'+str(i+1)]
+                            department_name=request.POST['department'+str(i+1)]
+                            obj_employee=ReimbursementFoodEmployee.objects.create(
+                                reimbursement_food=obj,
+                                name=employee_name,
+                                department=department_name,
+                            )    
+                            print('Reimbursment Employee Object ',obj_employee)
+                        messages.success(request,'Reimbursement Requested Successfully!')
+
+
+
+    except Exception as e:
+        print("Reimbursment Food Submit Exception : ",e)
+    
+    return redirect('ems:reimbursement-food-all')
+
+# Displaying All Food Reimubrsement of Employee
+@login_required()
+def reimbursementFoodAll(request):
+    context={}
+    try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
+
+            reimbursement_foods=ReimbursementFood.objects.filter(employee=profile_obj).order_by('-id')
+            context['reimbursement_foods']=reimbursement_foods
+    except Exception as e:
+        print('All Reimbursement Exception : ',e)
+    return render(request,'ems/reimbursement_all_food.html',context)
+
+
+# Seeing The Food Reimbursment Employee for both Employee and Admin
+
+@login_required()
+def reimbursementEmployee(request,id):
+    context={}
+    try:
+        if not request.user.is_superuser:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
+        obj=ReimbursementFood.objects.get(id=id)
+        print(obj)
+        reimbursements_employees=ReimbursementFoodEmployee.objects.filter(reimbursement_food=obj)
+        print('reimbursement EMployee ',reimbursements_employees)
+        context['reimbursements_employees']=reimbursements_employees
+    except Exception as e:
+        print("Reimbursement Employee Exception : ",e)
+    return render(request,'ems/reimbursment_employee.html',context)
+
+
+# Displying All Food Reimbursement For Admin
+
+@login_required()
+def adminReimbursementFood(request):
+    context={}
+    try:
+        reimbursement_foods=ReimbursementFood.objects.all().order_by('-id')
+        paginator=Paginator(reimbursement_foods,10)
+        page_no=request.GET.get('page')
+
+        total_pages=paginator.page_range
+        reimbursement_foodspages=paginator.get_page(page_no) 
+        context['reimbursement_foods']=reimbursement_foodspages
+        context['pages']=total_pages
+        if request.method == 'POST':
+            id=request.POST['id']
+            status=request.POST['status']
+            remark=request.POST['remark']
+            try:
+                obj=ReimbursementFood.objects.get(id=id)
+            except Exception as e:
+                print('Admin Cab Reimbursement Inside  Exception : ',e)
+                messages.warning(request,'Something went wrong!')
+            
+            if obj:
+                obj.status=status
+                obj.remark=remark
+                obj.save()
+                messages.success(request,'Updated Successfully!')
+                return redirect('ems:reimbursement-food-admin')
+    except Exception as e:
+        print('Admin Reimbursement Food Exception : ',e)
+    return render(request,'ems/admin_reimbursement_food.html',context)

@@ -1,10 +1,50 @@
 {% extends './base.html' %}
 {% block title%}
-Reimbursement Food
+Reimbursement |  Food
 {% endblock title%}
 {% block css%}
 
 {% endblock css%}
 {% block body %}
-Hello
+<section class="py-5">
+    <div class="container">
+        <div class="row d-flex align-itmes-center justify-content-center">
+            <div class="col-10">
+                <h3 class="derpartment-title my-3 ">All Food Reimbursements</h3>
+                <a href="{% url 'ems:reimbursement-transport-all' %}">See All Transport Reimbursements</a>
+                <a href="{% url 'ems:reimbursement' %}" class="float-end">Request Reimbursement</a>
+                <table class="table table-bordered border-danger">
+                    <tr>
+                        <th>SN.</th>
+                        <th>Date</th>
+                        <th>No. of Employee</th>
+                        <th>Bill No.</th>
+                        <th>Amount</th>
+                        <th>Remark</th>
+                        <th>Status</th>
+                    </tr>
+                    {% for item in reimbursement_foods %}
+                    <tr>
+                      <td>{{forloop.counter}}.</td>
+                      <td>{{item.date | date:'d-M-Y'}}</td>
+                      <td>{{item.number_of_employee | title}} <a href="{% url 'ems:reimbursement-see-employee' item.id %}" class="float-end">See Employee</a></td>
+                      <td>{{item.bill_number}}</td>
+                      <td>{{item.amount}}</td>
+                      <td>{{item.remark}}</td>
+                      {% if item.status == 'pending' %}
+                        
+                      <td class="bg-warning">{{item.status | title}}</td>
+                      {% elif item.status == 'accepted' %}
+                      <td class="bg-success text-light">{{item.status | title}}</td>
+                      {% elif item.status == 'rejected' %}
+                      <td class="bg-danger">{{item.status | title}}</td>
+                      {% endif %}
+                    </tr>
+                    {% endfor %}
+                  </table>
+                  
+            </div>
+        </div>
+    </div>
+</section>
 {% endblock body %}

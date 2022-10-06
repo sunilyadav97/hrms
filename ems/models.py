@@ -217,7 +217,7 @@ class ReimbursementTransport(models.Model):
 class ReimbursementFood(models.Model):
     employee=models.ForeignKey(Employee, on_delete=models.CASCADE)
     number_of_employee=models.IntegerField()
-    amount=models.IntegerField()
+    amount=models.FloatField()
     date=models.DateField()
     bill_number=models.CharField(max_length=100)
     status=models.CharField(max_length=30, default='pending')
@@ -225,12 +225,18 @@ class ReimbursementFood(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return self.employee.name
+
 class ReimbursementFoodEmployee(models.Model):
     reimbursement_food=models.ForeignKey(ReimbursementFood, on_delete=models.CASCADE)
     name=models.CharField(max_length=50)
     department=models.CharField(max_length=70)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.name}   {self.department}"
 
 
 

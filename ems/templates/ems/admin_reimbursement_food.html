@@ -1,6 +1,6 @@
 {% extends './base.html' %}
 {% block title%}
-Reimbursement Cab
+Reimbursement |  Food
 {% endblock title%}
 {% block css%}
 
@@ -8,60 +8,57 @@ Reimbursement Cab
 {% block body %}
 <section class="py-5">
     <div class="container">
-        <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-11">
-                <h3 class="derpartment-title my-3 ">All Transport Reimbursement</h3>
-                <a href="{% url 'ems:reimbursement-food-admin' %}">See All Food Reimbursements</a>
-
+        <div class="row d-flex align-itmes-center justify-content-center">
+            <div class="col-10">
+                <h3 class="derpartment-title my-3 ">All Food Reimbursements</h3>
+                <a href="{% url 'ems:admin-transport-reimbursement' %}">See All Transport Reimbursements</a>
                 <table class="table table-bordered border-danger">
                     <tr>
                         <th>SN.</th>
                         <th>Employee</th>
                         <th>Date</th>
-                        <th>Cab</th>
-                        <th>Vehicle Name</th>
-                        <th>Vehicle Number</th>
+                        <th>No. of Employee</th>
+                        <th>Bill No.</th>
                         <th>Amount</th>
                         <th>Remark</th>
                         <th>Status</th>
                     </tr>
-                    {% for item in cab_reimbursements %}
+                    {% for item in reimbursement_foods %}
                     <tr>
-                        <td>{{forloop.counter}}.</td>
-                        <td>{{item.employee.name}}</td>
-                        <td>{{item.date | date:'d-M-Y'}}</td>
-                        <td>{{item.transport_company | title}}</td>
-                        <td>{{item.vehicle_name|title}}</td>
-                        <td>{{item.vehicle_number}}</td>
-                        <td>{{item.amount}}</td>
-                        <td>{{item.remark}}</td>
-                        {% if item.status == 'pending' %}
+                      <td>{{forloop.counter}}.</td>
+                      <td>{{item.employee | title}}</td>
+                      <td>{{item.date | date:'d-M-Y'}}</td>
+                      <td>{{item.number_of_employee | title}} <a href="{% url 'ems:reimbursement-see-employee' item.id %}" class="float-end">See Employee</a></td>
+                      <td>{{item.bill_number}}</td>
+                      <td>{{item.amount}}</td>
+                      <td>{{item.remark}}</td>
+                      {% if item.status == 'pending' %}
 
-                        <td class="bg-warning"><a href="" class="text-dark" data-bs-target="#reimbursementmodal"
-                                onclick="reimbursement({{item.id}},'{{item.status}}','{{item.remark}}')"
-                                data-bs-toggle="modal">{{item.status | title}}</a></td>
-                        {% elif item.status == 'accepted' %}
-                        <td class="bg-success"><a href="" class="text-light" data-bs-toggle="modal"
-                                data-bs-target="#reimbursementmodal" onclick="reimbursement({{item.id}},'{{item.status}}','{{item.remark}}')">{{item.status | title}}</a></td>
-                        {% elif item.status == 'rejected' %}
-                        <td class="bg-danger"><a class="text-light" data-bs-target="#reimbursementmodal"
-                                onclick="reimbursement({{item.id}},'{{item.status}}','{{item.remark}}')" href="" data-bs-toggle="modal">{{item.status |title}}</a></td>
-                        {% endif %}
+                      <td class="bg-warning"><a href="" class="text-dark" data-bs-target="#reimbursementmodal"
+                              onclick="reimbursement({{item.id}},'{{item.status}}','{{item.remark}}')"
+                              data-bs-toggle="modal">{{item.status | title}}</a></td>
+                      {% elif item.status == 'accepted' %}
+                      <td class="bg-success"><a href="" class="text-light" data-bs-toggle="modal"
+                              data-bs-target="#reimbursementmodal" onclick="reimbursement({{item.id}},'{{item.status}}','{{item.remark}}')">{{item.status | title}}</a></td>
+                      {% elif item.status == 'rejected' %}
+                      <td class="bg-danger"><a class="text-light" data-bs-target="#reimbursementmodal"
+                              onclick="reimbursement({{item.id}},'{{item.status}}','{{item.remark}}')" href="" data-bs-toggle="modal">{{item.status |title}}</a></td>
+                      {% endif %}
                     </tr>
                     {% endfor %}
-                </table>
-                <nav aria-label="Page navigation example">
+                  </table>
+                  <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-end">
-                        {% if cab_reimbursements.has_previous %}
+                        {% if reimbursement_foods.has_previous %}
                         <li class="page-item ">
-                            <a class="page-link" href="?page={{cab_reimbursements.previous_page_number}}">Previous</a>
+                            <a class="page-link" href="?page={{reimbursement_foods.previous_page_number}}">Previous</a>
                         </li>
                         {% endif %}
                         {% if pages %}
     
                         {% for p in pages %}
     
-                        {% if p == cab_reimbursements.number %}
+                        {% if p == reimbursement_foods.number %}
                         <li class="page-item active" aria-current="page"><a class="page-link "
                                 href="?page={{p}}">{{p}}</a></li>
                         {% else %}
@@ -72,9 +69,9 @@ Reimbursement Cab
     
                         {% endif %}
     
-                        {% if cab_reimbursements.has_next %}
+                        {% if reimbursement_foods.has_next %}
                         <li class="page-item">
-                            <a class="page-link" href="?page={{cab_reimbursements.next_page_number}}">Next</a>
+                            <a class="page-link" href="?page={{reimbursement_foods.next_page_number}}">Next</a>
                         </li>
                         {% endif %}
                     </ul>
@@ -143,7 +140,4 @@ Reimbursement Cab
         }
     }
 </script>
-
-
-
 {% endblock body %}

@@ -56,7 +56,11 @@ urlpatterns=[
     path('reimbursement',reimbursement,name='reimbursement'),
     path('reimbursement/<bill>',reimbursementBill,name='reimbursement-bill'),
     path('reimbursement/<bill>/<transport_company>/',reimbursementTransportCompany,name='reimbursement-transport-company'),
-    path('reimbursement-food-all',reimbursementFoodAll,name='reimbursement-food-all'),
     path('reimbursement-transport-all',reimbursementTransportAll,name='reimbursement-transport-all'),
     path('reimbursements-transport',adminTransportReimbursement,name='admin-transport-reimbursement'),
+    path('reimbursement-food',reimbursementFood,name='reimbursement-food'),
+    path('reimbursement-food-submit',reimbursmentFoodSubmit,name='reimbursement-food-submit'),
+    path('reimbursement-food-all',reimbursementFoodAll,name='reimbursement-food-all'),
+    path('reimbursement-see-employee/<id>/',reimbursementEmployee   ,name='reimbursement-see-employee'),
+    path('reimbursement-food-admin',adminReimbursementFood,name='reimbursement-food-admin'),
 ]
