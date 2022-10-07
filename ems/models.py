@@ -115,6 +115,18 @@ class Attendance(models.Model):
                     return False
                 return True
 
+    @property 
+    def OnionPurple(self):
+        if self.outtime != None:
+            split_outtime=str(self.outtime).split(":")
+            outtime_hour=int(split_outtime[0])
+            outtime_minute=int(split_outtime[1])
+            if outtime_hour >= 8 and outtime_hour <= 16:
+                return True
+        return False
+
+
+
 
 
         

@@ -60,16 +60,16 @@ width:8rem !important;
                     </div>
                 </div>
                 
-                <table class="table border border-1 border-dark my-2">
+                <table class=" attendance-table my-2">
                     <tr>
-                        <th>SN</th>
-                        <th>Name</th>
-                        <th>In-Time</th>
-                        <th>Out-Time</th>
-                        <th>Attendance Status</th>
-                        <th class="me-4">Date</th>
-                        <th class="me-4">Edit</th>
-                        <th class="me-4">Delete</th>
+                        <th class="sn">SN</th>
+                        <th class="name">Name</th>
+                        <th class="in-time">In-Time</th>
+                        <th class="out-time">Out-Time</th>
+                        <th class="status">Status</th>
+                        <th class="date">Date</th>
+                        <th class="edit">Edit</th>
+                        <th class="delete">Delete</th>
                     </tr>
                 </table>
                 
@@ -82,41 +82,43 @@ width:8rem !important;
                     {% endif %}
 
                 </div>
-                <table class="table border attendance-table">
+                <table class="attendance-table">
 
                     {% for item in nest %}
                     <tr>
-                        <td>{{forloop.counter}}</td>
-                        <td>{{item.employee.name}}</td>
+                        <td class="sn" >{{forloop.counter}}.</td>
+                        <td class="name">{{item.employee.name}}</td>
                         {% if item.is_late == True %}
                         
-                        <td ><span class="bg-danger text-light p-1 py-2">{{item.intime | time}}</span></td>
+                        <td  class="bg-danger text-light in-time">{{item.intime | time}}</td>
                         {% elif item.nocolor == True %}
-                        <td><span class=" text-dark p-1 py-2">{{item.intime | time}} </span></td>
+                        <td class=" text-dark in-time">{{item.intime | time}} </td>
                         {% elif item.intime %}
-                        <td><span class="bg-success text-dark p-1 py-2">{{item.intime | time}} </span></td>
+                        <td class="bg-success text-dark in-time">{{item.intime | time}} </td>
                         {% else %}
-                        <td></td>
+                        <td class="in-time"></td>
                         {% endif %}
                          
                         {% if item.lightPurple == True %}
-                        <td><span class="light-purple p-1 py-2">{{item.outtime | time}}</span></td>
+                        <td class="light-purple out-time">{{item.outtime | time}}</td>
+                        {% elif item.OnionPurple %}
+                        <td class="onion-purple out-time">{{item.outtime | time}} </td>
                         {% else %}
-                        <td>{{item.outtime | time}} </td>
+                        <td class="out-time">{{item.outtime | time}} </td>
                         {% endif %}
 
                         {% if item.present %}
-                        <td class="text-success fw-semibold ">Present</td>
+                        <td class="text-success fw-semibold status">Present</td>
                         {% else %}
-                        <td class="text-danger fw-semibold ">Absent</td>
+                        <td class="text-danger fw-semibold status">Absent</td>
                         {% endif %}
-                        <td>{{item.date | date:"d-m-Y"}}</td>
-                        <td class="text-primary ">
+                        <td class="date">{{item.date | date:"d-m-Y"}}</td>
+                        <td class="text-primary  edit">
                             <i class='bx bx-edit'
                                 onclick="editAttendance('{{item.employee.name}}','{{item.intime | time:'G'}}','{{item.outtime| time:'G'}}','{{item.present}}','{{item.date| date:'Y-m-d'}}','{{item.id}}')"
                                 data-bs-toggle="modal" data-bs-target="#editmodal"></i>
                         </td>
-                        <td class="pe-3"><a href="{% url 'ems:attendance-delete' item.id %}"
+                        <td class=" delete"><a href="{% url 'ems:attendance-delete' item.id %}"
                                 class="attedance-delete"><span class="material-symbols-outlined">
                                     delete
                                 </span></a></td>

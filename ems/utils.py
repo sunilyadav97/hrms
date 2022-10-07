@@ -128,5 +128,5 @@ def AllocatedLeaveOperation():
                 is_late_count+=1
         late=int(is_late_count/2)
         x=int(item.allocated)
-        item.allocated=x-late
-        item.save()
+        # item.allocated=x-late
+        # item.save()

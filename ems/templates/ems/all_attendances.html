@@ -11,7 +11,7 @@ font-size: 16px !important;
         <div class="row d-flex justify-content-center">
             <div class="col-12 col-sm-10">
                 <h3 class="derpartment-title my-3">All Attendance</h3>
-                <table class="table table-bordered border-danger border-1 ">
+                <table class="table table-bordered border-dark border-1 ">
                     <tr>
                         <th>SN</th>
                         <th>Name</th>
@@ -25,15 +25,26 @@ font-size: 16px !important;
                     <tr>
                         <td>{{forloop.counter}}.</td>
                         <td>{{item.employee.name}}</td>
-                        {% comment %} <td>{{item.intime | time}}</td> {% endcomment %}
+                       
 
                         {% if item.is_late == True %}
-                        <td class="bg-danger text-light p-1 py-2">{{item.intime | time}}</td>
+                        
+                        <td class="bg-danger text-light ">{{item.intime | time}}</td>
+                        {% elif item.nocolor == True %}
+                        <td class="text-dark ">{{item.intime | time}}</td>
+                        {% elif item.intime %}
+                        <td class="bg-success text-light ">{{item.intime | time}}</td>
                         {% else %}
-                        <td>{{item.intime | time}}</td>
+                        <td></td>
                         {% endif %}
-
-                        <td>{{item.outtime | time}}</td>
+                         
+                        {% if item.lightPurple == True %}
+                        <td class="light-purple ">{{item.outtime | time}}</td>
+                        {% elif item.OnionPurple %}
+                        <td class="onion-purple">{{item.outtime | time}}</td>
+                        {% else %}
+                        <td>{{item.outtime | time}} </td>
+                        {% endif %}
                         {% if item.present %}
                         <td class="text-success fw-semibold ">Present</td>
                         {% else %}

@@ -1,16 +1,17 @@
 /*=============== GOOGLE FONTS ===============*/
 @import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Red+Hat+Display:wght@400;700;900&display=swap");
 
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
 /*=============== VARIABLES CSS ===============*/
-:root{
+:root {
 
 
-    /*========== Font and typography ==========*/
+  /*========== Font and typography ==========*/
   --body-font: 'Red Hat Display', sans-serif;
   --second-font: 'Kaushan Script', cursive;
   --biggest-font-size: 2rem;
@@ -27,78 +28,92 @@
   --font-bold: 700;
   --font-black: 900;
 
-  
+
 }
 
 /* Responsive typography */
 @media screen and (min-width: 1024px) {
-    :root {
-      --biggest-font-size: 6rem;
-      --bigger-font-size: 3.5rem;
-      --big-font-size: 2.75rem;
-      --h1-font-size: 2.25rem;
-      --h2-font-size: 1.5rem;
-      --h3-font-size: 1.25rem;
-      --normal-font-size: 1rem;
-      --small-font-size: .875rem;
-      --smaller-font-size: .813rem;
-      --bs-modal-width:700px;
-    }
+  :root {
+    --biggest-font-size: 6rem;
+    --bigger-font-size: 3.5rem;
+    --big-font-size: 2.75rem;
+    --h1-font-size: 2.25rem;
+    --h2-font-size: 1.5rem;
+    --h3-font-size: 1.25rem;
+    --normal-font-size: 1rem;
+    --small-font-size: .875rem;
+    --smaller-font-size: .813rem;
+    --bs-modal-width: 700px;
   }
+}
 
 /*=============== BASE ===============*/
 * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-  }
-
-  html {
-    scroll-behavior: smooth;
-  }
-  body,
-  button,
-  label,
-  select,
-  input {
-    font-family: var(--body-font);
-    font-size: var(--normal-font-size);
-  }
-  
-  input:focus{
-    box-shadow: none !important;
-    border: 1px solid black !important;
-  }
-  select:focus{
-    box-shadow: none !important;
-    border: 1px solid black !important;
-  }
-  textarea:focus{
-    box-shadow: none !important;
-    border: 1px solid black !important;
-
-  }
-  h1, h2, h3 {
-    font-weight: var(--font-bold);
-  }
-
-  a {
-    text-decoration: none;
-  }
-  
-  img {
-    max-width: 100%;
-    height: auto;
-  }
-/* ======UTILITY======= */
-.cursor-pointer{
-    cursor: pointer;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+body,
+button,
+label,
+select,
+input {
+  font-family: var(--body-font);
+  font-size: var(--normal-font-size);
+}
+
+input:focus {
+  box-shadow: none !important;
+  border: 1px solid black !important;
+}
+
+select:focus {
+  box-shadow: none !important;
+  border: 1px solid black !important;
+}
+
+textarea:focus {
+  box-shadow: none !important;
+  border: 1px solid black !important;
+
+}
+
+h1,
+h2,
+h3 {
+  font-weight: var(--font-bold);
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ======UTILITY======= */
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .delete span {
   font-size: 16px !important;
 }
-.light-purple{
+
+.light-purple {
   background-color: #CBC3E3 !important;
+  color: black;
+}
+
+.onion-purple {
+  background-color: #E0CEDF !important;
   color: black;
 }
 
@@ -110,7 +125,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color:#ff021c;
+  background-color: #ff021c;
   border-radius: .5rem;
 }
 
@@ -121,153 +136,176 @@
 
 
 /* ========Navbar======= */
-.dropdown-item:hover{
-    background-color:#212529 !important;
+.dropdown-item:hover {
+  background-color: #212529 !important;
 }
-.nav-bg{
+
+.nav-bg {
   background-color: #c30000e6 !important;
 }
-.home-button{
+
+.home-button {
   /* position: fixed; */
-  top: 50% !important;  
-  left: 12% !important; 
+  top: 50% !important;
+  left: 12% !important;
   /* transform: translate(-50%, -50%) !important; */
 }
-.home-body{
-  background:url('../css/../images/home.jpeg');
+
+.home-body {
+  background: url('../css/../images/home.jpeg');
   height: 100vh;
   width: 100%;
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 /* ============SIDE NAVBAR========= */
-.offcanvas.offcanvas-start{
-    top: 56px !important;
-    width: 15rem !important;
+.offcanvas.offcanvas-start {
+  top: 56px !important;
+  width: 15rem !important;
 }
 
 
-.btn-close{
-    color: white !important;
+.btn-close {
+  color: white !important;
 }
-.sub-arrow-forward{
+
+.sub-arrow-forward {
   display: flex !important;
   align-items: center !important;
   justify-content: space-between !important;
 }
-.arrow-forward{
+
+.arrow-forward {
   font-size: 13px !important;
 }
-.rotate-arrow{
+
+.rotate-arrow {
   transform: rotate(-90deg);
   transition: 0.3s ease;
-  
+
 }
-.sub-nav{
+
+.sub-nav {
   margin-left: 2rem !important;
   color: #ffffffb8 !important;
 }
-.side-drop-down{
-    border: none !important;
-    border-width: none !important;
+
+.side-drop-down {
+  border: none !important;
+  border-width: none !important;
 }
 
 /* =======Admin DashBoard====== */
-.dashboard{
+.dashboard {
   font-size: var(--h3-font-size);
   font-weight: var(--normal-font);
 }
 
 /* ======EMS HOME=========== */
-.birthday-wish{
+.birthday-wish {
   font-weight: var(--font-bold);
   font-size: var(--h3-font-size);
   color: white;
 }
-.home-title{
+
+.home-title {
   font-size: var(--h3-font-size);
 }
-.home-description{
+
+.home-description {
   font-size: var(--small-font-size);
 }
 
-.dashboard-title{
+.dashboard-title {
   font-size: var(--h3-font-size);
   font-weight: var(--font-bold);
 }
 
-.connect-messages{
+.connect-messages {
   animation: glowing 5s infinite;
 }
 
 @keyframes color-change {
-  0% { color: red; }
-  50% { color: blue; }
-  100% { color: red; }
+  0% {
+    color: red;
+  }
+
+  50% {
+    color: blue;
+  }
+
+  100% {
+    color: red;
+  }
 }
 
 
 
 @keyframes glowing {
-  
+
   0% {
     text-shadow: 0 0 10px #2ba805;
     color: black;
   }
+
   100% {
     text-shadow: 0 0 10px #2ba805;
     color: black;
   }
 }
+
 /* =========DEPARTMENT SECTION========= */
-.derpartment-title{
+.derpartment-title {
   font-size: var(--h3-font-size);
   background-color: #dadada70;
   padding: 1rem;
   border-radius: 3px;
 }
-.department-table tr th{
+
+.department-table tr th {
   font-size: var(--normal-font);
   font-weight: var(--font-black);
 }
 
-.department-table tr td{
+.department-table tr td {
   font-size: var(--small-font-size);
-  font-weight:600;
+  font-weight: 600;
 }
 
-.department-table tr td .edit i{
+.department-table tr td .edit i {
   font-size: 16px !important;
   text-align: center;
 }
 
-.department-table tr td .delete span
-{
+.department-table tr td .delete span {
   font-size: 16px !important;
 }
 
 /* edit Department */
-#department-label{
+#department-label {
   font-size: var(--h3-font-size) !important;
   font-weight: var(--font-bold);
 }
 
 /* =======EMPLOYEE SECTION======== */
-.employee-title{
+.employee-title {
   font-size: var(--h3-font-size);
   background-color: #dadada70;
   padding: 1rem;
   border-radius: 3px;
 }
 
-.add-employee div{
+.add-employee div {
   margin-bottom: 0.6rem !important;
 }
-.profile-image{
+
+.profile-image {
   display: flex;
-  justify-content:center;
+  justify-content: center;
 }
-.profile-image img{
+
+.profile-image img {
   height: 120px;
   margin-top: 1rem;
   width: 120px;
@@ -275,7 +313,8 @@
   object-position: center;
 
 }
-.avtar img{
+
+.avtar img {
 
   height: 120px;
   margin-top: 1rem;
@@ -283,14 +322,16 @@
   object-fit: cover;
   object-position: center;
 }
-.profile-side{
+
+.profile-side {
   height: 120px;
   width: 120px;
   object-fit: cover;
   object-position: center;
   border-radius: 5px;
 }
-.profile-pic{
+
+.profile-pic {
   height: 50px;
   width: 50px;
   object-fit: cover;
@@ -298,19 +339,67 @@
   border-radius: 50%;
 }
 
-.profile-title{
+.profile-title {
   font-weight: var(--font-bold);
   font-size: var(--normal-font);
 
 }
-.events-title{
-  font-size:var(--h3-font-size) ;
+
+.events-title {
+  font-size: var(--h3-font-size);
 }
+
 /* ========Attendance====== */
-.attendance-table{
+.attendance-table {
+  margin-bottom: 1rem;
   
 }
+.attendance-table tr {
+  /* background-color: royalblue; */
+  border: 1px solid rgb(45, 43, 43)  ;
+}
+.attendance-table td ,th{
+  
+  border: 1px solid rgb(45, 43, 43) ;
+  border-top: none;
+  border-bottom: none;
+}
+
+.attendance-table .sn{
+  padding: .5rem 1rem;
+  width: 70px;
+} 
+.attendance-table .name{
+  padding: .5rem 1rem;
+  width: 250px;
+} 
+.attendance-table .in-time{
+  padding: .5rem 1rem;
+  width: 120px;
+} 
+.attendance-table .out-time{
+  padding: .5rem 1rem;
+  width: 130px;
+} 
+.attendance-table .status{
+  padding: .5rem 1rem;
+  width: 140px;
+} 
+.attendance-table .date{
+  padding: .5rem 1rem;
+  width: 170px;
+} 
+.attendance-table .edit{
+  padding: .5rem 1rem;
+  width: 90px;
+  float:left;
+} 
+.attendance-table .delete{
+  padding: .5rem 1rem;
+  width: 110px;
+  margin: auto 0;
+} 
+
 .attedance-delete span {
   font-size: 16px !important;
 }
-

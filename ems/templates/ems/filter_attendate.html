@@ -24,7 +24,7 @@ width:8rem !important;
                     <span class="bg-secondary p-1 px-2 rounded text-light">Employee: {{employee}}</span>
                     {% endif %}
                 </div> 
-                <table class="table border border-1 border-dark my-2">
+                <table class="table table-bordered border-dark border-1 my-2">
                     <tr>
                         <th>SN</th>
                         <th>Name</th>
@@ -41,17 +41,19 @@ width:8rem !important;
                         <td>{{item.employee.name}}</td>
                         {% if item.is_late == True %}
                         
-                        <td ><span class="bg-danger text-light p-1 py-2">{{item.intime | time}}</span></td>
+                        <td  class="bg-danger text-light">{{item.intime | time}}</td>
                         {% elif item.nocolor == True %}
-                        <td><span class=" text-dark p-1 py-2">{{item.intime | time}} </span></td>
+                        <td class=" text-dark p-1 py-2">{{item.intime | time}}</td>
                         {% elif item.intime %}
-                        <td><span class="bg-success text-dark p-1 py-2">{{item.intime | time}} </span></td>
+                        <td class="bg-success text-dark ">{{item.intime | time}}</td>
                         {% else %}
                         <td></td>
                         {% endif %}
                          
                         {% if item.lightPurple == True %}
-                        <td><span class="light-purple p-1 py-2">{{item.outtime | time}}</span></td>
+                        <td class="light-purple p-1 py-2">{{item.outtime | time}}</td>
+                        {% elif item.OnionPurple %}
+                        <td class="onion-purple">{{item.outtime | time}}</td>
                         {% else %}
                         <td>{{item.outtime | time}} </td>
                         {% endif %}
