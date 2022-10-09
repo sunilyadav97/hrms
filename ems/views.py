@@ -1065,7 +1065,14 @@ def allocatedLeave(request):
         try:
             employees=Employee.objects.filter(status='Working')
             allocated_leaves=AllocatedLeave.objects.all()
-            context['allocated_leaves']=allocated_leaves
+            
+            paginator=Paginator(allocated_leaves,10)
+            page_no=request.GET.get('page')
+
+            total_pages=paginator.page_range
+            allocatedleavespages=paginator.get_page(page_no) 
+            context['allocated_leaves']=allocatedleavespages
+            context['pages']=total_pages
             context['employees']=employees
             if request.method == 'POST':
                 empid=request.POST['empid']
