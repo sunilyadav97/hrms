@@ -248,6 +248,17 @@ class AllocatedLeave(models.Model):
     def __str__(self):
         return self.employee.name
 
+class ReducedLeaves(models.Model):
+    employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
+    attendance=models.ForeignKey(Attendance,on_delete=models.CASCADE)
+    is_late=models.BooleanField(default=False)
+    absent=models.BooleanField(default=False)
+    date=models.DateField()
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.attendance.employee.name
 
 class ReimbursementTransport(models.Model):
     employee=models.ForeignKey(Employee ,on_delete=models.CASCADE)
