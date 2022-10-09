@@ -94,7 +94,7 @@ Allocated Leaves
                         <select class="form-select" aria-label="Default select editAllocatedLeave" name="empid"
                             id="employee" required>
                             <option selected disabled>Please Select Employee</option>
-                            {% for employee in allocated_leaves %}
+                            {% for employee in employees %}
                             <option value="{{employee.empid}}">{{employee.name}}</option>
                             {% endfor %}
                         </select>

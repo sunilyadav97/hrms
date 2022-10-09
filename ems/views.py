@@ -22,7 +22,8 @@ def dashboard(request):
     context={}
     try:
         expireConnect()
-        AllocatedLeaveOperation()
+        reassignAllocatedLeave()
+        # AllocatedLeaveOperation()
         if request.user.is_authenticated:
             employees=list(Employee.objects.all())
             birthdays=[]
@@ -1063,7 +1064,7 @@ def allocatedLeave(request):
     context={}
     if request.user.is_superuser:
         try:
-            employees=Employee.objects.filter(status='Working')
+            employees=Employee.objects.all()
             allocated_leaves=AllocatedLeave.objects.all()
             
             paginator=Paginator(allocated_leaves,10)
@@ -1080,6 +1081,10 @@ def allocatedLeave(request):
                 end_date=request.POST['end-date']
                 earn=request.POST['earn']
                 employee_obj=Employee.objects.get(empid=empid)
+                check=AllocatedLeave.objects.filter(employee=employee_obj).exists()
+                if check:
+                    messages.warning(request,'This Employee has Already Allocated Leaves! Please try another.')
+                    return redirect('allocated-leaves')
                 obj=AllocatedLeave.objects.create(
                     employee=employee_obj,
                     start_date=start_date,

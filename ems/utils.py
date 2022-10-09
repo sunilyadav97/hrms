@@ -1,5 +1,6 @@
 import random
 import string
+
 from .models import *
 import datetime
 from datetime import timedelta,timezone
@@ -111,9 +112,9 @@ def AllocatedLeaveOperation():
         year=item.start_date.year
 
         all_attendance=Attendance.objects.filter(employee=employee)
-        print('Allocated Leaves Attedance : ',all_attendance)
-        print('Allocated Leaves Employee : ',employee)
-        print('Allocated Leaves Year : ',year)
+        # print('Allocated Leaves Attedance : ',all_attendance)
+        # print('Allocated Leaves Employee : ',employee)
+        # print('Allocated Leaves Year : ',year)
         year_attendance=[]
         for i in all_attendance:
             if i.get_year() == year:
@@ -130,3 +131,39 @@ def AllocatedLeaveOperation():
         x=int(item.allocated)
         # item.allocated=x-late
         # item.save()
+
+def reassignAllocatedLeave():
+    allocatedLeaves=AllocatedLeave.objects.all()
+    current_date=datetime.datetime.now().date()
+    Year=current_date.year
+    leapyear=False
+    if Year % 400 == 0 or Year % 100 != 0 and  Year % 4 == 0:   
+         leapyear=True
+        
+    for item in allocatedLeaves:
+        start_date=item.start_date
+        delta=current_date-start_date
+        days=delta.days
+        if not leapyear:
+            if current_date.year > item.start_date.year or days >= 365:
+                next_date=item.end_date+datetime.timedelta(days=1)
+                end_date=next_date+datetime.timedelta(days=365)
+                print('Next Date ',next_date)
+                print('End Date ',end_date)
+                item.start_date=next_date
+                item.end_date=end_date
+                item.allocated=18
+                item.earn=0
+                item.save()
+        else:
+            if current_date.year > item.start_date.year or days >= 366:
+                next_date=item.end_date+datetime.timedelta(days=1)
+                end_date=next_date+datetime.timedelta(days=366)
+                print('Next Date ',next_date)
+                print('End Date ',end_date)
+                item.start_date=next_date
+                item.end_date=end_date
+                item.allocated=18
+                item.earn=0
+                item.save()
+

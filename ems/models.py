@@ -237,7 +237,7 @@ class Appreciation(models.Model):
         return self.message
 
 class AllocatedLeave(models.Model):
-    employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
+    employee=models.OneToOneField(Employee,on_delete=models.CASCADE)
     allocated=models.IntegerField(default=18)
     earn=models.IntegerField(null=True,blank=True)
     start_date=models.DateField(null=True,blank=True)
