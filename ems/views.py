@@ -1055,8 +1055,30 @@ def allocatedLeave(request):
     context={}
     if request.user.is_superuser:
         try:
-            pass
-            
+            employees=Employee.objects.filter(status='Working')
+            allocated_leaves=AllocatedLeave.objects.all()
+            context['allocated_leaves']=allocated_leaves
+            context['employees']=employees
+            if request.method == 'POST':
+                empid=request.POST['empid']
+                start_date=request.POST['start-date']
+                end_date=request.POST['end-date']
+                earn=request.POST['earn']
+                employee_obj=Employee.objects.get(empid=empid)
+                obj=AllocatedLeave.objects.create(
+                    employee=employee_obj,
+                    start_date=start_date,
+                    end_date=end_date,
+                    earn=earn
+                )
+                print(obj)
+                if obj:
+                    messages.success(request,'Added Successfully!')
+                    return redirect('ems:allocated-leaves')
+                else:
+                    messages.warning(request,'Something went wrong! Please try Again')
+                    return redirect('ems:allocated-leaves')
+
         except Exception as e:
             print('Allocated Leave Exception : ',e)
         return render(request,'ems/allocated_leave.html',context)

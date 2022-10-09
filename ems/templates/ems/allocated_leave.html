@@ -5,13 +5,148 @@ Allocated Leaves
 {% block css%}
 {% endblock css%}
 {% block body %}
-<section class="py-5" >
+<section class="py-5">
     <div class="container">
         <div class="row d-flex align-items-center justify-content-center">
             <div class="col-8">
-                
+                <h3 class="my-3 derpartment-title">All Allocated Leaves</h3>
+                <div class="d-grid mb-4">
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addAppreciation">Allocate
+                        Leave</button>
+                </div>
+                <table class="table table-bordered border-dark">
+                    <tr>
+                        <th>SN</th>
+                        <th>Employee</th>
+                        <th>Leaves</th>
+                        <th>Earn</th>
+                        <th>Start Year</th>
+                        <th>End Year</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    {% for item in allocated_leaves %}
+                    <tr>
+                        <td>{{forloop.counter}}.</td>
+                        <td>{{item.employee.name}}</td>
+                        <td>{{item.allocated}}</td>
+                        {% if item.earn == None %}
+                        <td>0</td>
+                        {% else %}
+                        <td>{{item.earn}}</td>
+                        {% endif %}
+                        <td>{{item.start_date | date:'d-M-Y'}}</td>
+                        <td>{{item.end_date|date:'d-M-Y'}}</td>
+                        <td><a href="#" class="delete" data-bs-toggle="modal"
+                                data-bs-target="#editAllocatedLeaveModal" onclick="editAllocateLeave('{{item.id}}','{{item.employee.name}}','{{item.allocated}}','{{item.earn}}','{{item.start_date}}','{{item.end_date}}')"><span
+                                    class="material-symbols-outlined">edit</span></a></td>
+                        <td><a href="#" class="delete"><span class="material-symbols-outlined">delete</span></a></td>
+                    </tr>
+                    {% endfor %}
             </div>
         </div>
     </div>
 </section>
+<!-- Add Appreciation Modal -->
+<div class="modal fade " id="addAppreciation" tabindex="-1" aria-labelledby="addAppreciationLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Appreciation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="employee">Employee</label>
+                        <select class="form-select" aria-label="Default select editAllocatedLeave" name="empid"
+                            id="employee" required>
+                            <option selected disabled>Please Select Employee</option>
+                            {% for employee in employees %}
+                            <option value="{{employee.empid}}">{{employee.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="start-date" class="form-label">Start Year</label>
+                        <input type="date" class="form-control" id="start-date" name="start-date">
+                    </div>
+                    <div class="mb-3">
+                        <label for="end-date" class="form-label">End Date</label>
+                        <input type="date" class="form-control" id="end-date" name="end-date">
+                    </div>
+                    <div class="mb-3">
+                        <label for="earn" class="form-label">Earn</label>
+                        <input type="number" class="form-control" id="earn" name="earn" value="0">
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Allocate</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- Edit Allocated Modal -->
+<div class="modal fade" id="editAllocatedLeaveModal" tabindex="-1" aria-labelledby="editAllocatedLeaveModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="editAllocatedLeaveModalLabel">Edit</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="mb-1 ">
+                        <h6 class="fw-semibold text-center">Name <span id="eemployee"></span></h6>
+                    </div>
+                    <div class="mb-3">
+                        <label for="eleaves" class="form-label">Leaves</label>
+                        <input type="number" class="form-control" id="eleaves" name="leaves">
+                    </div>
+                    <div class="mb-3">
+                        <label for="eearn" class="form-label">Earned</label>
+                        <input type="number" class="form-control" id="eearn" name="earn">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="eearn" class="form-label">Start Date</label>
+                        <input type="text" class="form-control" id="estart-date" name="start-date">
+                    </div>
+                    <div class="mb-3">
+                        <label for="eend-date" class="form-label">End Date</label>
+                        <input type="text" class="form-control" id="eend-date" name="end-date">
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="button" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function editAllocateLeave(id, employee, leaves, earn, startDate, endDate){
+        console.log(id)
+        console.log(employee)
+        console.log(leaves)
+        console.log(earn)
+        console.log(startDate)
+        console.log(endDate)
+        document.getElementById('eemployee').innerHTML=employee
+        document.getElementById('eleaves').value=leaves
+        document.getElementById('eearn').value=earn
+        document.getElementById('estart-date').value=startDate
+        document.getElementById('eend-date').value=endDate
+    }
+</script>
 {% endblock body %}
