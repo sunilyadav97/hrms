@@ -959,9 +959,17 @@ def createLeave(request):
             profile_obj=Employee.objects.get(user=request.user)
             context['profile']=profile_obj
             
-        em_obj=Employee.objects.get(user=request.user)
-        leaves=Leave.objects.filter(employee=em_obj).order_by('-id')
-        context['leaves']=leaves
+            em_obj=Employee.objects.get(user=request.user)
+            leaves=Leave.objects.filter(employee=em_obj).order_by('-id')
+            try:
+                allocated_leaves=AllocatedLeave.objects.get(employee=profile_obj)
+                print('Allocated Leaves',allocated_leaves)
+            except Exception as e:
+                print("Create Leave inside Exception : ",e)
+                allocated_leaves=''
+            
+            context['allocated_leaves']=allocated_leaves    
+            context['leaves']=leaves
         if request.method == 'POST':
             date_from=request.POST['date-from']
             date_to=request.POST['date-to']
@@ -1050,7 +1058,7 @@ def allLeaves(request):
         
     return render(request,'ems/all_leaves.html',context)
 
-
+@login_required()
 def allocatedLeave(request):
     context={}
     if request.user.is_superuser:
@@ -1086,6 +1094,34 @@ def allocatedLeave(request):
         messages.warning(request,"You don't have access!")
         return redirect('ems:ems')
 
+@login_required()
+def editAllocatedLeave(request):
+    try:
+        if request.method == 'POST':
+            id=request.POST['id']
+            leaves=int(request.POST['leaves'])
+            earn=int(request.POST['earn'])
+            obj=AllocatedLeave.objects.get(id=id)
+            obj.allocated=leaves
+            obj.earn=earn
+            obj.save()
+            messages.success(request,'Updated Successfully!')
+            return redirect('ems:allocated-leaves')
+    except Exception as e:
+        print("Edit Allocated Leave Exception : ",e)
+        messages.warning(request,'Something went wrong!')
+        return redirect('ems:allocated-leaves')
+
+@login_required()
+def deleteAllocatedLeave(request,id):
+    obj=AllocatedLeave.objects.get(id=id).delete()
+    if obj:
+        messages.success(request,'Deleted Successfully!')
+    else:
+        messages.warning(request,'Something went wrong!')
+        
+    return redirect('ems:allocated-leaves')
+    
 
 @login_required()    
 def createEvent(request):

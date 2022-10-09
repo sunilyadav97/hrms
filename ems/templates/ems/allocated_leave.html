@@ -40,7 +40,7 @@ Allocated Leaves
                         <td><a href="#" class="delete" data-bs-toggle="modal"
                                 data-bs-target="#editAllocatedLeaveModal" onclick="editAllocateLeave('{{item.id}}','{{item.employee.name}}','{{item.allocated}}','{{item.earn}}','{{item.start_date}}','{{item.end_date}}')"><span
                                     class="material-symbols-outlined">edit</span></a></td>
-                        <td><a href="#" class="delete"><span class="material-symbols-outlined">delete</span></a></td>
+                        <td><a href="{% url 'ems:allocated-leaves-delete' item.id %}" class="delete"><span class="material-symbols-outlined">delete</span></a></td>
                     </tr>
                     {% endfor %}
             </div>
@@ -102,8 +102,9 @@ Allocated Leaves
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form action="" method="post">
+                <form action="{% url 'ems:edit-allocated-leaves' %}" method="post">
                     {% csrf_token %}
+                    <input type="text" id="allocated-id" name="id" hidden >
                     <div class="mb-1 ">
                         <h6 class="fw-semibold text-center">Name <span id="eemployee"></span></h6>
                     </div>
@@ -116,17 +117,17 @@ Allocated Leaves
                         <input type="number" class="form-control" id="eearn" name="earn">
                     </div>
 
-                    <div class="mb-3">
+                    <!-- <div class="mb-3">
                         <label for="eearn" class="form-label">Start Date</label>
                         <input type="text" class="form-control" id="estart-date" name="start-date">
                     </div>
                     <div class="mb-3">
                         <label for="eend-date" class="form-label">End Date</label>
                         <input type="text" class="form-control" id="eend-date" name="end-date">
-                    </div>
+                    </div> -->
 
                     <div class="d-grid">
-                        <button type="button" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </form>
             </div>
@@ -136,12 +137,8 @@ Allocated Leaves
 
 <script>
     function editAllocateLeave(id, employee, leaves, earn, startDate, endDate){
-        console.log(id)
-        console.log(employee)
-        console.log(leaves)
-        console.log(earn)
-        console.log(startDate)
-        console.log(endDate)
+        
+        document.getElementById('allocated-id').value=id
         document.getElementById('eemployee').innerHTML=employee
         document.getElementById('eleaves').value=leaves
         document.getElementById('eearn').value=earn
