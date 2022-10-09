@@ -1,0 +1,81 @@
+{% extends './base.html' %}
+{% block title%}
+Attendance
+{% endblock title%}
+{% block css%}
+
+.editinput-width{
+width:8rem !important;
+}
+{% endblock css%}
+{% block body %}
+
+<section class="py-4">
+
+    <div class="container">
+        <div class="row d-flex justify-content-center">
+            <div class="col-7">
+                <a href="{% url 'ems:attendance' %}" class="btn btn-dark my-3">Back</a>
+                <form action="{% url 'ems:attendance' %}" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="date" class="form-label">Date</label>
+                        <input type="date" id="date" class="form-control" name="date" required>
+                    </div>
+                    <table class="table table-borderless">
+                        <tr>
+                            <th>SN.</th>
+                            <th>Name</th>
+                            <th>In-Time</th>
+                            <th>Out-Time</th>
+                            <th>Present</th>
+                        </tr>
+
+                        {% if department == True %}
+                          
+                        {% for item in employees %}
+                        <tr>
+                            <input type="text" hidden name="empid{{forloop.counter}}" value="{{item.empid}}">
+                            <td>{{forloop.counter}}</td>
+                            <td>{{item.name}}</td>
+                            <td><input type="time" name="intime{{forloop.counter}}" class="form-control"></td>
+                            <td><input type="time" name="outtime{{forloop.counter}}" class="form-control"></td>
+                            <td>
+                                <select class="form-select" aria-label="Default select example"
+                                name="attendance-status{{forloop.counter}}">
+                                <option value="True">Yes</option>
+                                <option value="False">No</option>
+                            </select>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    <input type="text" value="{{employees.count}}" name="number_of_length" hidden>
+                    {% else %}
+                    
+                    <tr>
+                        <input type="text" hidden name="empid1" value="{{employee.empid}}">
+                        <td>1</td>
+                        <td>{{employee.name}}</td>
+                        <td><input type="time" name="intime1" class="form-control"></td>
+                        <td><input type="time" name="outtime1" class="form-control"></td>
+                        <td>
+                            <select class="form-select" aria-label="Default select example"
+                            name="attendance-status1">
+                            <option value="True">Yes</option>
+                            <option value="False">No</option>
+                        </select>
+                    </td>
+                </tr>
+                <input type="text" value="1" name="number_of_length" hidden>
+                {% endif %}
+                    </table>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-success">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock body %}

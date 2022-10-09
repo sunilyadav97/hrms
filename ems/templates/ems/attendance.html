@@ -16,11 +16,48 @@ width:8rem !important;
         <div class="row d-flex justify-content-center">
             <div class="col-sm-8 col-md-10 my-3 col-12 overflow-auto">
                 <h3 class="derpartment-title my-3">All Attendance</h3>
-                <div class="d-grid my-2 mb-3">
-                    <button type="button" class="btn btn-success float-end" data-bs-toggle="modal"
+                <div class="d-flex my-2 mb-5 align-items-center justify-content-between">
+                    <button type="button" class="btn btn-success float-end me-2" data-bs-toggle="modal"
                         data-bs-target="#exampleModal">
-                        Add New Attendance
+                        Add All Attendance
                     </button>
+                    
+                    <form action="{% url 'ems:add-attendance-filter' %}" method="post">
+                        {% csrf_token %}
+                        
+                        
+                        <div class="d-flex ">
+                            <div>
+                        <select class="form-select" aria-label="Default select example" name="department" id="department" required>
+                            <option value="" disabled selected>Select Department</option>
+                            {% for item in departments  %}
+                            <option value="{{item.id}}">{{item.name}}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                          <div class="ms-2">
+                              <button class="btn btn-success" type="submit">Add Department Attendance</button>
+                            </div>
+                        </div>
+                    </form>
+                    <form action="{% url 'ems:add-attendance-filter' %}" method="post">
+                        {% csrf_token %}
+                        
+                        
+                        <div class="d-flex ms-2">
+                            <div>
+                        <select class="form-select" aria-label="Default select example" name="employee" id="employee" required>
+                            <option value="" disabled selected>Select Employee</option>
+                            {% for item in employees  %}
+                            <option value="{{item.empid}}">{{item.name}}</option>
+                            {% endfor %}
+                          </select>
+                        </div>
+                          <div class="ms-2">
+                              <button class="btn btn-success" type="submit">Add Employee Attendance</button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
                 
                 <div class="d-flex align-items-center justify-content-between">
@@ -29,7 +66,7 @@ width:8rem !important;
                             {% csrf_token %}
                             <label for="date" class="form-label">Filter Date</label><small><button type="submit"
                                     class="btn btn-primary float-end mb-1 btn-sm">Submit</button></small>
-                                    <input type="date" class="form-control  form-control-sm" id="filter-date" name="filter-date">
+                                    <input type="date" class="form-control  form-control-sm" id="filter-date" name="filter-date" required>
                             
                         </form>
                     </div>
@@ -39,7 +76,8 @@ width:8rem !important;
                             <label for="filter-department" class="form-label">Filter Department</label><small><button type="submit"
                                     class="btn btn-primary float-end mb-1 btn-sm">Submit</button></small>
                             
-                            <select class="form-select" aria-label="Default select example" name="filter-department" id="filter-department">
+                            <select class="form-select" aria-label="Default select example" name="filter-department" id="filter-department" required>
+                                <option value="" disabled selected>Select Department</option>
                                 {% for item in departments  %}
                                 <option value="{{item.id}}">{{item.name}}</option>
                                 {% endfor %}
@@ -51,7 +89,8 @@ width:8rem !important;
                             {% csrf_token %}
                             <label for="date" class="form-label">Filter Employee</label><small><button type="submit"
                                     class="btn btn-primary float-end mb-1 btn-sm">Submit</button></small>
-                                    <select class="form-select" aria-label="Default select example" name="empid" id="filter-employee">
+                                    <select class="form-select" aria-label="Default select example" name="empid" id="filter-employee" required>
+                                        <option value="" disabled selected>Select Employee</option>
                                         {% for item in filter_employees  %}
                                         <option value="{{item.empid}}">{{item.name}}</option>
                                         {% endfor %}
@@ -94,7 +133,7 @@ width:8rem !important;
                         {% elif item.nocolor == True %}
                         <td class=" text-dark in-time">{{item.intime | time}} </td>
                         {% elif item.intime %}
-                        <td class="bg-success text-dark in-time">{{item.intime | time}} </td>
+                        <td class="bg-success text-white in-time">{{item.intime | time}} </td>
                         {% else %}
                         <td class="in-time"></td>
                         {% endif %}
@@ -210,7 +249,7 @@ width:8rem !important;
                             </td>
                         </tr>
                         {% endfor %}
-
+                        <input type="text" value="{{employees |length}}" name="number_of_length" hidden>
                     </table>
                     <div class="d-grid">
                         <button type="submit" class="btn btn-success">Save</button>
@@ -281,13 +320,16 @@ width:8rem !important;
 
 
 <script>
+    x="{{employees}}"
+    console.log('hello x',x)
+
+
     function editAttendance(name, intime, outtime, status, date, id) {
         console.log(status)
         console.log(date)
         console.log(id)
         document.getElementById('emName').innerHTML = name
-        //document.getElementById('emintime').value = intime
-        //document.getElementById('emouttime').value = outtime
+        
         document.getElementById('edit-date').value = date
         document.getElementById('edit-id').value = id
         if (status == 'True') {

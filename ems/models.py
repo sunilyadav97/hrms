@@ -68,6 +68,9 @@ class Employee(models.Model):
         except:
             url=''
         return url
+    
+    class Meta:
+        ordering = ('name',)
 
 class Document(models.Model):
     employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
@@ -149,6 +152,8 @@ class Leave(models.Model):
     def days(self):
         difference=self.date_to-self.date_from
         return difference.days
+
+
 
 class Events(models.Model):
     title=models.CharField(max_length=150)

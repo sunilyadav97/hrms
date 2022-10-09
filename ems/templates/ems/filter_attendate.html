@@ -103,6 +103,7 @@ width:8rem !important;
                             <th>In-Time</th>
                             <th>Out-Time</th>
                             <th>Present</th>
+                            <th>Late</th>
                         </tr>
                         <tr>
                             <td id="emName"></td>
@@ -115,6 +116,13 @@ width:8rem !important;
                                     name="attendance-status">
                                     <option value="True" id="status-true">Yes</option>
                                     <option value="False" id="status-false">No</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select class="form-select" aria-label="Default select example"
+                                    name="is-late">
+                                    <option value="False" id="status-false">No</option>
+                                    <option value="True" id="status-true">Yes</option>
                                 </select>
                             </td>
                         </tr>

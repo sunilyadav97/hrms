@@ -130,3 +130,7 @@ def AllocatedLeaveOperation():
         x=int(item.allocated)
         # item.allocated=x-late
         # item.save()
+
+def myfun(e):
+    print(e)
+    return e['empid']

@@ -714,6 +714,7 @@ def attendance(request):
         employees=Employee.objects.all()
         departments=Department.objects.all()
         attendances_objs=Attendance.objects.all().order_by('-date')
+        attendances_objs.order_by('employee')
 
         # Getting All Attendance Dates
         for attend in attendances_objs:
@@ -725,9 +726,9 @@ def attendance(request):
          
         # Getting Particular Date QuerySets        
         for i in attendance_dates:
-            obj=Attendance.objects.filter(date=i).order_by('date')
+            obj=Attendance.objects.filter(date=i).order_by('employee')
             nested_attendance.append(obj)
-            
+
         
         # Getting working Employee for make attendance
         for item in employees:
@@ -748,8 +749,11 @@ def attendance(request):
        
         if request.method == 'POST':
             date=request.POST['date']
+            length=request.POST['number_of_length']
+            print('THis is test ', length)
             print(date)
-            for i in range(1,len(em_list)+1):
+            for i in range(1,int(length)+1):
+                print('attendance Iteration ',i)
                 is_late=False
                 empid=request.POST['empid'+str(i)]
                 intime=request.POST['intime'+str(i)]
@@ -771,7 +775,7 @@ def attendance(request):
                     outtime=None
                 
 
-                
+              
                      
                 emp_obj=Employee.objects.get(empid=empid)
                 att_obj=Attendance.objects.create(
@@ -782,18 +786,49 @@ def attendance(request):
                     present=attendance_status,
                     is_late=is_late
                     )
-                if att_obj:
-                    messages.success(request,'Attendance Added successfully!')
-                    return redirect('ems:attendance')
-                else:
-                    messages.warning(request,'Something went wrong Please try Again!')
-                    return redirect('ems:attendance')
-                    
+                print('Attendance Object ',att_obj)    
+                
+
+            messages.success(request,'Attendance Added successfully!')
+            return redirect('ems:attendance')        
     except Exception as e:
         print('Attendance Exception ',e)
         
     return render(request,'ems/attendance.html',context)
 
+# Department filter for adding attending. 
+
+@login_required()
+def addAttendanceFilter(request):
+    context={}
+    try:
+        if request.method == 'POST':
+            try:
+                department=request.POST['department']
+            except:
+                department=''
+
+            try:
+                employee=request.POST['employee']
+            except:
+                employee=''
+
+            if department != '':
+                department_obj=Department.objects.get(id=department)
+                employees=Employee.objects.filter(department=department_obj)
+                print("Department Employee : ",employees)
+                context['employees']=employees
+                context['department']=True
+
+            else:
+                employee_obj=Employee.objects.get(empid=employee)
+                context['employee']=employee_obj
+                context['department']=False
+                print('Filter Employee')
+
+    except Exception as e:
+        print('Add Attendance Department Filter Exception : ',e)
+    return render(request,'ems/add_attendance_filter.html',context)
 
 @login_required()
 def attendanceDateFilter(request):
@@ -801,7 +836,7 @@ def attendanceDateFilter(request):
     try:
         filter_date=request.GET['filter-date']
         print('filter date ',filter_date)
-        attendances=Attendance.objects.filter(date=filter_date)
+        attendances=Attendance.objects.filter(date=filter_date).order_by('employee')
         context['attendances']=attendances
         context['date']=True
     except Exception as e:
@@ -834,7 +869,7 @@ def attendanceEmployeeFilter(request):
     try:
         empid=request.POST['empid']
         obj=Employee.objects.get(empid=empid)
-        attendances=Attendance.objects.filter(employee=obj)
+        attendances=Attendance.objects.filter(employee=obj).order_by('-date')
         context['attendances']=attendances
         context['employee']=obj
     except Exception as e:
