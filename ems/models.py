@@ -129,7 +129,16 @@ class Attendance(models.Model):
         return False
 
 
+class Permission(models.Model):
+    employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
+    permission_feature=models.CharField(max_length=100)
+    view=models.BooleanField()
+    edit=models.BooleanField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
+    def __str__(self):
+        return f"{self.employee} {self.permission_feature}"
 
 
         
