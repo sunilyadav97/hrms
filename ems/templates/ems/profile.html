@@ -82,8 +82,8 @@
             <div class="col-4 ">
                 <div class="row gy-4">
                     {% if birthday or anniversary %}
-                    <div class="col-11 border rounded-5 border-danger  py-3 px-2 d-flex justify-content-center flex-column align-items-center bg-danger">
-                        <h3 class="events-title text-center mb-3 text-uppercase">Celebrations</h3>
+                    <div class="col-11">
+                        <!-- <h3 class="events-title text-center mb-3 text-uppercase">Celebrations</h3>
                         <ul class="style-none" style="list-style:none ;">
                             {% if birthday %}
                             <li class=" text-success text-center my-2 fw-semibold text-white fst-italic">Happy Birthday {{name}} 🎂🎉</li>
@@ -91,17 +91,36 @@
                             {% if anniversary %}
                             <li class="text-success text-center my-2 fw-semibold text-white fst-italic">Congratulations {{anniversary.name}} You Have Completed {{anniversary.completed_years}} {% if anniversary.completed_years > 1 %}Years {% else %} Year {% endif %} 👏</li>
                             {% endif %}
-                        </ul>
+                        </ul> -->
+                        <div class="card">
+                            <div class="card-header nav-bg text-white">
+                                <i class="fa fa-area-chart"></i><span class="fw-semibold text-uppercase">Celebrations</span>
+                            </div>
+                            <div class="card-body">
+                                <ul class="style-none" style="list-style:none ;">
+                                    {% if birthday %}
+                                    <li class=" text-success text-center my-2 fw-semibold text-dark fst-italic">Happy Birthday {{name}} 🎂🎉</li>
+                                    {% endif %}
+                                    {% if anniversary %}
+                                    <li class="text-success text-center my-2 fw-semibold text-dark fst-italic">Congratulations {{anniversary.name}} You Have Completed {{anniversary.completed_years}} {% if anniversary.completed_years > 1 %}Years {% else %} Year {% endif %} 👏</li>
+                                    {% endif %}
+                            </ul>
+                            </div>
+                            <div class="card-footer small text-white nav-bg"></div>
+                        </div>
+
                     </div> 
                     {% endif %}
-                    <div class="col-11 border rounded-5 border-danger  py-4 px-2 d-flex justify-content-center flex-column align-items-center bg-danger">
-                        <h6 class="events-title text-center mb-2 fw-semibold text-uppercase">Upcoming Events</h6>
+                    {% comment %} <div class="col-11 border rounded-5 border-danger  py-4 px-2 d-flex justify-content-center flex-column align-items-center nav-bg">
+                        <h6 class="events-title text-center mb-2 fw-semibold text-uppercase text-white">Upcoming Events</h6>
                         <ul class="my-4">
                             {% for event in events  %}
+                            
                             <li><a href="{% url 'ems:event' event.id %}" class="fw-semibold text-light fst-italic">{{event.title}}</a></li>
                             {% endfor %}
                             
-                        </ul>
+                        </ul> {% endcomment %}
+                        
                         <!-- <ul class="style-none" style="list-style:none ;">
                             <li class="text-center  fw-semibold">Birthday</li>
                             {% if birthday %}
@@ -112,8 +131,23 @@
                             <li class="text-white text-center my-2 fw-semibold">Congratulations {{anniversary.name}} You Have Completed {{anniversary.completed_years}} {% if anniversary.completed_years > 1 %}Years {% else %} Year {% endif %} 👏</li>
                             {% endif %}
                         </ul> -->
+                    {% comment %} </div> {% endcomment %}
+                    <div class="col-11 ">
+                    <div class="card">
+                        <div class="card-header nav-bg text-white">
+                            <i class="fa fa-area-chart"></i><span class="fw-semibold text-uppercase">Upcoming Events</span>
+                        </div>
+                        <div class="card-body">
+                            <ul class="">
+                            {% for event in events  %}
+                            
+                            <li ><a href="{% url 'ems:event' event.id %}" class="fw-semibold text-dark fst-italic">{{event.title}}</a></li>
+                            {% endfor %}
+                        </ul>
+                        </div>
+                        <div class="card-footer small text-white nav-bg"></div>
                     </div>
-                    
+                    </div>
                 </div>
             </div>
         </div>

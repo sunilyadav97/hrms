@@ -30,13 +30,15 @@
                         {% for connect in connects %}
                         <div class="card mb-3">
                             <div class="card-header nav-bg text-white">
-                                <i class="fa fa-area-chart fw-semibold"></i><span class="fw-semibold">Connect Notification</span> 
+                                <i class="fa fa-area-chart fw-semibold"></i><span class="fw-semibold">Connect
+                                    Notification</span>
                                 <small class="bg-success text-white float-end py-1 px-2 rounded">New</small>
                             </div>
                             <div class="card-body ">
                                 <p class="connect-messages">{{connect.message}}</p>
                             </div>
-                            <div class="card-footer small nav-bg text-white">Time : {{connect.created_at | timesince}} Ago
+                            <div class="card-footer small nav-bg text-white">Time : {{connect.created_at | timesince}}
+                                Ago
                             </div>
                         </div>
                         {% endfor %}
@@ -45,14 +47,15 @@
 
                         <div class="card mb-3">
                             <div class="card-header nav-bg text-white">
-                                <i class="fa fa-area-chart fw-semibold"></i><span class="fw-semibold">Newsletter Notification</span> 
+                                <i class="fa fa-area-chart fw-semibold"></i><span class="fw-semibold">Newsletter
+                                    Notification</span>
                             </div>
                             <div class="card-body ">
-                            <ul>
-                                {% for item in newsletters  %}
-                                  <li>{{item.message}}</li>
-                                {% endfor %}
-                            </ul>
+                                <ul>
+                                    {% for item in newsletters %}
+                                    <li>{{item.message}}</li>
+                                    {% endfor %}
+                                </ul>
                             </div>
                             <div class="card-footer small nav-bg text-white">
                             </div>
@@ -63,17 +66,18 @@
                         {% for item in appreciations %}
                         <div class="card mb-3">
                             <div class="card-header nav-bg text-white">
-                                <i class="fa fa-area-chart fw-semibold"></i><span class="fw-semibold">Appreciation Notification 👏</span> 
+                                <i class="fa fa-area-chart fw-semibold"></i><span class="fw-semibold">Appreciation
+                                    Notification 👏</span>
                             </div>
                             <div class="card-body ">
-                                <p >{{item.message}}</p>
+                                <p>{{item.message}}</p>
                             </div>
                             <div class="card-footer small nav-bg text-white">Time : {{item.created_at | timesince}} Ago
                             </div>
                         </div>
                         {% endfor %}
                     </div>
-                    
+
 
 
                     <!-- {% for birthday in birthdays %}
@@ -108,38 +112,48 @@
                         </div>
                     </div>
                     {% endfor %} -->
-                    
+
                 </div>
             </div>
             <div class="col-4">
                 <div class="row d-flex align-items-center justify-content-center py-4">
-                    
-                   <div class="col-12 my-2 nav-bg text-white rounded p-2">
-                       <h5 class="text-center text-uppercase text-dark fw-semibold my-2">Celebrations</h5>
-                    <div class="birthday my-3">
-                        <h6 class="text-center text-light fw-semibold">Birthdays</h6>
-                        <hr>
-                        <ul>
-                            {% for birthday in birthdays  %}
-                              <li>Happy Birthday {{birthday.name}} 🎂🎉</li>
-                              <hr>
-                            {% endfor %}
-                        </ul>
+
+                    <div class="col-12 my-2 anniversary">
+                        <!-- <h5 class="text-center text-uppercase text-dark fw-semibold my-2">Celebrations</h5> -->
+                        
+                         <div class="card mb-3">
+                            <div class="card-header nav-bg text-white">
+                                <i class="fa fa-area-chart"></i><span class="fw-semibold text-uppercase text-center">Celebrations</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="birthday my-3">
+                            <h6 class="text-center  fw-semibold">Birthdays</h6>
+                            <ul>
+                                {% for birthday in birthdays %}
+                                <li>Happy Birthday {{birthday.name}} 🎂🎉</li>
+                                <hr>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="anniversarys">
+                            <h6 class="text-center  fw-semibold">Anniversary</h6>
+                            <ul>
+                                {% for anniversary in anniversaries %}
+                                <li class="my-1">
+                                    Congratulations {{anniversary.employee.name}}
+                                    👏 You Have successfully completed {{anniversary.completed_years}} 
+                                    {% if anniversary.completed_years > 1 %}Years {% else %} Year {% endif %}
+                                </li>
+                                <hr>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        
+                            </div>
+                            <div class="card-footer small text-white nav-bg">
+                            </div>
+                        </div>
                     </div>
-                    <div class="anniversarys">
-                        <h6 class="text-center text-light fw-semibold">Anniversary</h6>
-                        <hr>
-                        <ul>
-                            {% for anniversary in anniversaries %}
-                            <li class="my-1">
-                                Congratulations {{anniversary.employee.name}}
-                                    👏 You Have successfully completed {{anniversary.completed_years}} {% if anniversary.completed_years > 1 %}Years {% else %} Year {% endif %}
-                            </li>
-                            <hr>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                   </div>
 
                     {% for event in events %}
                     <div class="col-12 my-2 anniversary">
@@ -159,7 +173,8 @@
                                 <hr>
                                 <p>{{event.description}}</p>
                             </div>
-                            <div class="card-footer small text-white nav-bg">Posted: {{event.created_at|timesince}} Ago</div>
+                            <div class="card-footer small text-white nav-bg">Posted: {{event.created_at|timesince}} Ago
+                            </div>
                         </div>
                     </div>
                     {% endfor %}
