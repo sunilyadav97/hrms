@@ -1,0 +1,81 @@
+{% extends './base.html' %}
+{% block title %} {{request.user | title}} | Attendance {% endblock title %}
+{% block css %}
+.delete span {
+font-size: 16px !important;
+}
+{% endblock css%}
+{% block body %}
+<section class="py-5">
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-7">
+                <h3 class="derpartment-title my-3">Track Permoformance</h3>
+                <a href="{% url 'ems:all-attendance' %}" class="btn btn-dark">Back</a>
+                {% if data == True %}
+                  <h4 class="text-warning my-3 text-center">We don't have any data to show</h4>
+                {% endif %}
+                <div class="chart my-4 d-flex justify-content-center">
+                    <canvas id="myChart" style="width:100%;max-width:700px">
+                    </canvas>
+                </div>
+                <div class="summary my-5 fw-semibold mx-5 ">
+                    <h5 class="fw-semibold my-3 text-center">SUMMARY</h5>
+                    <div class="d-flex align-items-center border justify-content-between p-1 px-3">
+                        <p class="ps-2">Total Attendance</p>
+                        <p class="">{{attendacnes.count}}</p>
+                    </div>
+                    <div class="d-flex align-items-center border justify-content-between p-1 text-danger px-3">
+                        <p class=" ps-2">Total Absent</p>
+                        <p class="">{{total_absent}}</p>
+                    </div>
+                    <div class="d-flex align-items-center border justify-content-between p-1 text-warning px-3">
+                        <p class=" ps-2">Total Late</p>
+                        <p class="">{{total_late}}</p>
+                    </div>
+                    <div class="d-flex align-items-center border justify-content-between p-1 text-success px-3">
+                        <p class="ps-2">Total Present</p>
+                        <p class="">{{total_present}}</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    var year="{{year}}"
+    var month="{{month}}"
+    var absent=parseInt("{{total_absent}}")*10
+    var late=parseInt("{{total_late}}")*10
+    var present=parseInt("{{total_present}}")*10
+    var yValues = [];
+    var xValues = ["Absent", "Late", "Present"];
+    yValues[0]=absent
+    yValues[1]=late
+    yValues[2]=present
+    yValues[3]=0
+    yValues[4]=10
+    var barColors = ["red","orange",  "green",];
+
+    new Chart("myChart", {
+        type: "bar",
+        data: {
+            labels: xValues,
+            datasets: [{
+                backgroundColor: barColors,
+                data: yValues
+            }]
+        },
+        options: {
+            legend: { display: false },
+            title: {
+                display: true,
+                text: "Attendance "+month+" "+year
+            }
+        }
+    });
+</script>
+
+{% endblock body %}

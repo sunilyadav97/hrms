@@ -11,6 +11,10 @@ font-size: 16px !important;
         <div class="row d-flex justify-content-center">
             <div class="col-12 col-sm-10">
                 <h3 class="derpartment-title my-3">All Attendance</h3>
+                <div class="d-grid my-3">
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#reportModal">Get
+                        Report</button>
+                </div>
                 <table class="table table-bordered border-dark border-1 ">
                     <tr>
                         <th>SN</th>
@@ -25,10 +29,10 @@ font-size: 16px !important;
                     <tr>
                         <td>{{forloop.counter}}.</td>
                         <td>{{item.employee.name}}</td>
-                       
+
 
                         {% if item.is_late == True %}
-                        
+
                         <td class="bg-danger text-light ">{{item.intime | time}}</td>
                         {% elif item.nocolor == True %}
                         <td class="text-dark ">{{item.intime | time}}</td>
@@ -37,7 +41,7 @@ font-size: 16px !important;
                         {% else %}
                         <td></td>
                         {% endif %}
-                         
+
                         {% if item.lightPurple == True %}
                         <td class="light-purple ">{{item.outtime | time}}</td>
                         {% elif item.OnionPurple %}
@@ -54,7 +58,7 @@ font-size: 16px !important;
                     </tr>
                     {% endfor %}
                 </table>
-                <nav aria-label="Page navigation example">
+                <nav aria-label="Page navigation report">
                     <ul class="pagination justify-content-end">
                         {% if attendances.has_previous %}
                         <li class="page-item ">
@@ -87,4 +91,72 @@ font-size: 16px !important;
         </div>
     </div>
 </section>
+
+
+<!-- Modal -->
+<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="reportModalLabel">Get Report</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="{% url 'ems:get-report' %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="month" class="form-label">Month</label>
+                        <select class="form-select" aria-label="Default select example" required name="month">
+                            <option selected disabled>Select Month</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">Novmber</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="year" class="form-label">Year</label>
+                        <select class="form-select" aria-label="Default select example" required name="year">
+                            <option selected disabled id="year-option">Select Year</option>
+                           
+                        </select>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Get</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var joining_date = "{{profile.joining_date}}"
+
+    function getYears() {
+        split = joining_date.split(',')
+        joining_year = parseInt(split[1]);
+        const d = new Date();
+        current_year = d.getFullYear();
+        var element=document.getElementById('year-option')
+        while (current_year + 1 > joining_year) {
+            let html=`<option value="${joining_year}">${joining_year}</option>`
+            element.insertAdjacentHTML("afterend", html)
+            joining_year++
+        }
+    }
+
+    getYears()
+</script>
+
 {% endblock %}

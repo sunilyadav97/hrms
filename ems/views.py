@@ -1874,3 +1874,46 @@ def adminReimbursementFood(request):
     except Exception as e:
         print('Admin Reimbursement Food Exception : ',e)
     return render(request,'ems/admin_reimbursement_food.html',context)
+
+# Generating Attendance Report For Employee 
+@login_required()
+def generateReport(request):
+    context={}
+    if not request.user.is_superuser:
+        try:
+            profile_obj=Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
+            if request.method == 'POST':
+                data=False
+                month=request.POST['month']
+                year=request.POST['year']
+                context['month']=month
+                context['year']=year
+                
+                
+                allattendances=Attendance.objects.filter(employee=profile_obj)
+                yearAttendances=allattendances.filter(date__year=year)
+                monthAttendances=yearAttendances.filter(date__month=month)
+                a=allattendances.count()
+                y=yearAttendances.count()
+                m=monthAttendances.count()
+                if m == 0:
+                    print('data ',m)
+                    data=True
+                context['attendacnes']=monthAttendances
+                context['data']=data
+                total_absent=monthAttendances.filter(present=False).count()
+                total_late=monthAttendances.filter(is_late=True).count()
+                total_present=monthAttendances.filter(present=True).count()
+                context['total_absent']=total_absent
+                context['total_late']=total_late
+                context['total_present']=total_present
+                
+        except Exception as e:
+            print('Generate Report Exception : ',e)
+            messages.warning(request,'something went wrong! Please try Again.')
+            return redirect('ems:all-attendance')
+        return render(request,'ems/generate_report.html',context)
+    else:
+        messages.warning(request,"You don't Have permissions")
+        return redirect('/')
