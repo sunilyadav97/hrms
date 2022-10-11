@@ -9,23 +9,35 @@
             <div class="col-8 ">
                 <h3 class="derpartment-title my-3">Permission</h3>
                 
-                <form method="post" action="">
-                    {% csrf_token %}
                     <div class="mb-3">
                         <label for="exampleInputEmail1" class="form-label">Employee</label>
-                        <select class="form-select" aria-label="Default select example" required name="empid">
+                        <select class="form-select" aria-label="Default select example" required name="empid" id="employee" >
                             <option selected disabled>Select Employee</option>
                             {% for item in employees %}
 
-                            <option value="{{item.empid}}">{{item.name}}</option>
+                            <option value="{{item.empid}}" >{{item.name}}</option>
                             {% endfor %}
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Next</button>
-                </form>
-                
+                    <a href="#" class="btn btn-primary" id="btn" onclick="changeUrl()">Next</a>           
             </div>
         </div>
     </div>
 </section>
+<script>
+    function changeUrl()
+    {
+        var btn=document.getElementById('btn')
+        let x= document.getElementById('employee').value
+        if (x!='Select Employee')
+        {
+            var url="/ems/permission-get/"+x
+            btn.href=url
+
+        }
+        console.log(x)
+       
+        console.log("Chnage Url test")
+    }
+</script>
 {% endblock body %}

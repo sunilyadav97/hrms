@@ -1,31 +1,43 @@
 {% extends './base.html' %}
 
-{% block title %} Permissions | EMS {% endblock title %}
+{% block title %} {{employee}}'s Permissions | EMS {% endblock title %}
 
 {% block body %}
-<section class="py-5">
+<section class="py-3">
     <div class="container">
         <div class="row d-flex align-items-center justify-content-center">
             <div class="col-8 ">
                 <h3 class="derpartment-title my-3">All Permissions</h3>
                 <div class="d-grid">
-                    <button class="btn btn-success">Give Permission</button>
+                    <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#permissionModal">Give Permission</button>
                 </div>
-                <div>
+                <div class="my-3">
+                    <a class="btn btn-dark mb-2" href="{% url 'ems:permission' %}">Back</a>
                     <table class="table table-dark table-striped">
                         <tr>
                             <th>SN.</th>
                             <th>Features</th>
                             <th>Veiw</th>
                             <th>Edit</th>
+                            <th>Delete</th>
                         </tr>
                         {% for item in permissions %}
-                          <tr>
+                        <tr>
                             <td>{{forloop.counter}}.</td>
                             <td>{{item.permission_feature}}</td>
-                            <td>{{item.view}}</td>
-                            <td>{{item.edit}}</td>
-                          </tr>
+                            {% if item.view == True %}
+                            <td>✔</td>
+                            {%else %}
+                            <td>❌</td>
+                            {% endif %}
+                            {% if item.edit == True %}
+                            <td>✔</td>
+                            {%else %}
+                            <td>❌</td>
+                            {% endif %}
+                            <td><a href="{% url 'ems:permission-delete' item.id employee.empid%}" class="delete"><span class="material-symbols-outlined">delete</span></a>
+                            </td>
+                        </tr>
                         {% endfor %}
                     </table>
                 </div>
@@ -33,4 +45,47 @@
         </div>
     </div>
 </section>
+
+<!-- Give Permission Modal -->
+<div class="modal fade" id="permissionModal" tabindex="-1" aria-labelledby="permissionModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="permissionModalLabel">Give Permission</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            
+            <div class="modal-body">
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="select-permission" class="form-label">Permission</label>
+                        <select class="form-select" aria-label="Default select example" required id="select-permission" name="p_id">
+                            <option selected disabled>Select Permission</option>
+                            {% for item in allpermission %}
+                            <option value="{{item.id}}">{{item.name}}</option>
+                            {% endfor %}
+                          </select>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-evenly mb-3">
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="view" name="view">
+                            <label class="form-check-label" for="view">View</label>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="edit" name="edit">
+                            <label class="form-check-label" for="edit">Edit</label>
+                        </div>
+                    </div>
+                    <div class="d-grid">
+                        <button class="btn btn-success" type="submit">Save</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+
 {% endblock body %}

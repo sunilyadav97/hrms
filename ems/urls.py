@@ -70,4 +70,6 @@ urlpatterns=[
     path('reimbursement-food-admin',adminReimbursementFood,name='reimbursement-food-admin'),
     path('get-report',generateReport,name='get-report'),
     path('permission',permission,name='permission'),
+    path('permission-get/<empid>',Getpermission,name='permission-get'),
+    path('permission-delete/<id>/<empid>/',deletePermission,name='permission-delete'),
 ]

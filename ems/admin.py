@@ -22,6 +22,6 @@ admin.site.register(ReimbursementTransport)
 admin.site.register(ReimbursementFood)
 admin.site.register(ReimbursementFoodEmployee)
 admin.site.register(ReducedLeaves)
-# admin.site.register(Permission)
-# admin.site.register(PermissionFeature)
+admin.site.register(EmployeePermission)
+admin.site.register(P_Feature)
 

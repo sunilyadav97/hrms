@@ -1933,16 +1933,73 @@ def permission(request):
         try:
             employees=Employee.objects.all()
             context['employees']=employees
-            if request.method == 'POST':
-                empid=request.POST['empid']
-                obj=Employee.objects.get(empid=empid)
-                # permissions=Permission.objects.filter(employee=obj)
-                # context['permissions']=permissions
-                return render(request,'ems/permission.html',context)
-
         except Exception as e:
             print('Permission Exception : ',e)
         return render(request,'ems/permission_first_page.html',context)
     else:
         messages.warning(request,"You don't have access!")
         return redirect('/')
+
+@login_required()
+def Getpermission(request,empid):
+    if request.user.is_superuser:
+        context={}
+        try:
+            emp_obj=Employee.objects.get(empid=empid)
+            permissions=EmployeePermission.objects.filter(employee=emp_obj)
+            allpermission=P_Feature.objects.all()
+            context['allpermission']=allpermission
+            context['permissions']=permissions
+            context['employee']=emp_obj
+            if request.method == 'POST':
+                p_id=request.POST['p_id']
+                p_obj=P_Feature.objects.get(id=p_id)
+
+                try:
+                    view=request.POST['view']
+                    view=True
+                except:
+                    view=False
+
+                try:
+                    edit=request.POST['edit']
+                    edit=True
+                except:
+                    edit=False
+                
+                permission_obj=EmployeePermission.objects.create(
+                    employee=emp_obj,
+                    permission_feature=p_obj,
+                    edit=edit,
+                    view=view,
+                )
+                p_entries=EmployeePermission.objects.filter(employee=emp_obj)
+                for i in p_entries:
+                    if i.permission_feature == p_obj:
+                        i.edit=edit
+                        i.view=view
+                        i.save()
+                        messages.success(request,'Updated successfully!!')
+                        return redirect('ems:permission-get',empid)
+                if permission_obj:
+                    messages.success(request,'Permission Given successfully!')
+                    return redirect('ems:permission-get',empid)
+        except Exception as e:
+            print('Permission Exception : ',e)
+        return render(request,'ems/permission.html',context)
+    else:
+        messages.warning(request,"You don't have access!")
+        return redirect('/')
+
+
+
+
+def deletePermission(request,id,empid):
+    try:
+        obj=EmployeePermission.objects.get(id=id).delete()
+        if obj:
+            messages.success(request,'Deleted Successfully!')
+        return redirect('ems:permission-get',empid)
+    except Exception as e:
+        print('Delete Permission Exception : ',e)
+

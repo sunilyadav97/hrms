@@ -134,7 +134,7 @@ class P_Feature(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.feature_name
+        return self.name
 
 class EmployeePermission(models.Model):
     employee=models.ForeignKey(Employee,on_delete=models.CASCADE)

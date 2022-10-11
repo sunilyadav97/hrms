@@ -203,7 +203,7 @@ def reassignAllocatedLeave():
 
 
 def checkPermission(employee,feature):
-    entries=Permission.objects.filter(employee=employee)
+    entries=EmployeePermission.objects.filter(employee=employee)
     if entries.count == 0:
         return 'no'
     for item in entries:
