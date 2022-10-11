@@ -135,7 +135,19 @@ class P_Feature(models.Model):
 
     def __str__(self):
         return self.feature_name
-        
+
+class EmployeePermission(models.Model):
+    employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
+    permission_feature=models.ForeignKey(P_Feature,on_delete=models.CASCADE)
+    view=models.BooleanField()
+    edit=models.BooleanField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.employee.name}"
+
+
 # class PermissionFeature(models.Model):
 #     feature_name=models.CharField(max_length=100)
 #     created_at = models.DateTimeField(auto_now_add=True)
