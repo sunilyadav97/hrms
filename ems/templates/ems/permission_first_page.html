@@ -1,0 +1,31 @@
+{% extends './base.html' %}
+
+{% block title %} Employe Permission | EMS {% endblock title %}
+
+{% block body %}
+<section class="py-5">
+    <div class="container">
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="col-8 ">
+                <h3 class="derpartment-title my-3">Permission</h3>
+                
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Employee</label>
+                        <select class="form-select" aria-label="Default select example" required name="empid">
+                            <option selected disabled>Select Employee</option>
+                            {% for item in employees %}
+
+                            <option value="{{item.empid}}">{{item.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Next</button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock body %}

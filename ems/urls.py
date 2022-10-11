@@ -68,5 +68,6 @@ urlpatterns=[
     path('reimbursement-food-all',reimbursementFoodAll,name='reimbursement-food-all'),
     path('reimbursement-see-employee/<id>/',reimbursementEmployee   ,name='reimbursement-see-employee'),
     path('reimbursement-food-admin',adminReimbursementFood,name='reimbursement-food-admin'),
-    path('get-report',generateReport,name='get-report')
+    path('get-report',generateReport,name='get-report'),
+    path('permission',permission,name='permission'),
 ]

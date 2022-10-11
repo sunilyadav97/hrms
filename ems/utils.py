@@ -200,3 +200,22 @@ def reassignAllocatedLeave():
                 item.allocated = 18
                 item.earn = 0
                 item.save()
+
+
+def checkPermission(employee,feature):
+    entries=Permission.objects.filter(employee=employee)
+    if entries.count == 0:
+        return 'no'
+    for item in entries:
+        if item.permission_feature == feature:
+            if item.view == True or item.edit == True:
+                if item.edit:
+                    return 'edit'
+                else:
+                    return 'view'
+            else:
+                return 'no'
+    return 'no'
+            
+            
+            

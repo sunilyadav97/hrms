@@ -368,6 +368,14 @@ def createDepartment(request):
     if not request.user.is_superuser:
         profile_obj=Employee.objects.get(user=request.user)
         context['profile']=profile_obj
+        permission=Permission.objects.filter(Q(employee=profile_obj) & Q(permission_feature='Department'))
+        print('permission , ',permission)
+        
+        if permission:
+            print('Pm ',permission)
+        else:
+            messages.warning(request,"You Don't have View Permission")
+            return redirect('ems/ems')
     if request.method == 'POST':
         department_name = request.POST['department-name']
         department_description = request.POST['department-description']
@@ -1916,4 +1924,25 @@ def generateReport(request):
         return render(request,'ems/generate_report.html',context)
     else:
         messages.warning(request,"You don't Have permissions")
+        return redirect('/')
+
+@login_required()
+def permission(request):
+    if request.user.is_superuser:
+        context={}
+        try:
+            employees=Employee.objects.all()
+            context['employees']=employees
+            if request.method == 'POST':
+                empid=request.POST['empid']
+                obj=Employee.objects.get(empid=empid)
+                # permissions=Permission.objects.filter(employee=obj)
+                # context['permissions']=permissions
+                return render(request,'ems/permission.html',context)
+
+        except Exception as e:
+            print('Permission Exception : ',e)
+        return render(request,'ems/permission_first_page.html',context)
+    else:
+        messages.warning(request,"You don't have access!")
         return redirect('/')
