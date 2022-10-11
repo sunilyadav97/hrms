@@ -204,18 +204,24 @@ def reassignAllocatedLeave():
 
 def checkPermission(employee,feature):
     entries=EmployeePermission.objects.filter(employee=employee)
-    if entries.count == 0:
+    if entries.count() == 0:
         return 'no'
-    for item in entries:
-        if item.permission_feature == feature:
-            if item.view == True or item.edit == True:
-                if item.edit:
-                    return 'edit'
+    else:
+        try:
+            f_obj=P_Feature.objects.get(name=feature)
+        except:
+            f_obj=None
+        print('F obje ',f_obj)
+        for item in entries:
+            if item.permission_feature == f_obj:
+                if item.view == True or item.edit == True:
+                    if item.edit:
+                        return 'edit'
+                    else:
+                        return 'view'
                 else:
-                    return 'view'
-            else:
-                return 'no'
-    return 'no'
+                    return 'no'
+        return 'no'
             
             
             
