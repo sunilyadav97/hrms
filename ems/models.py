@@ -148,27 +148,6 @@ class EmployeePermission(models.Model):
         return f"{self.employee.name}"
 
 
-# class PermissionFeature(models.Model):
-#     feature_name=models.CharField(max_length=100)
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-
-#     def __str__(self):
-#         return self.feature_name
-
-# class Permission(models.Model):
-#     employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
-#     permission_feature=models.ForeignKey(PermissionFeature,on_delete=models.CASCADE)
-#     view=models.BooleanField()
-#     edit=models.BooleanField()
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-
-#     def __str__(self):
-#         return f"{self.employee}  --  {self.permission_feature}"
-
-
-
     
 class Leave(models.Model):
     employee=models.ForeignKey(Employee,on_delete=models.CASCADE)
