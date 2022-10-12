@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% load static %}
-<html lang="en"> 
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -22,10 +22,11 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <!-- ===============JQUERY CDN============ -->
-    <script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.1.js"
+        integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
 
-   <!-- ================Chart Js CDN=============== -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <!-- ================Chart Js CDN=============== -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
 
     <style>
         {
@@ -48,10 +49,10 @@
 <body>
 
 
-    <header class="shadow-sm header" >
+    <header class="shadow-sm header">
         <nav class="navbar navbar-expand-lg nav-bg navbar-dark shadow-sm fixed-top">
             <div class="container d-flex align-items-center justify-content-start">
-                
+
                 <a class="navbar-brand" href="{% url 'home:home' %}">TechInterio</a>
                 <a class="cursor-pointer float-end active " data-bs-toggle="offcanvas" data-bs-target="#staticBackdrop"
                     aria-controls="staticBackdrop"><span class="navbar-toggler-icon"></span></a>
@@ -156,25 +157,30 @@
                 <div id="payroll-nav" class="accordion-collapse collapse">
                     <li class="nav-item sub-nav"><a href="{% url 'ems:create-payroll' %}" class="nav-link">Add
                             PayRoll</a></li>
-                    <li class="nav-item sub-nav"><a href="{% url 'ems:view-payrolls' %}" class="nav-link">View PayRolls</a>
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:view-payrolls' %}" class="nav-link">View
+                            PayRolls</a>
                     </li>
                 </div>
                 <li class="nav-item accordion-button collapsed sub-arrow-forward" data-bs-toggle="collapse"
-                    data-bs-target="#reimbursement-nav" aria-expanded="false" aria-controls="reimbursement-nav" onclick="rotate()">
+                    data-bs-target="#reimbursement-nav" aria-expanded="false" aria-controls="reimbursement-nav"
+                    onclick="rotate()">
                     <a class="nav-link w-100 arrow" href="#">Reimbursement</a><span
                         class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
                 </li>
                 <div id="reimbursement-nav" class="accordion-collapse collapse">
-                    <li class="nav-item sub-nav"><a href="{% url 'ems:admin-transport-reimbursement' %}" class="nav-link">View Transport</a></li>
-                    <li class="nav-item sub-nav"><a href="{% url 'ems:reimbursement-food-admin' %}" class="nav-link">View Food</a>
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:admin-transport-reimbursement' %}"
+                            class="nav-link">View Transport</a></li>
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:reimbursement-food-admin' %}"
+                            class="nav-link">View Food</a>
                     </li>
                 </div>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:all-queries' %}">Queries</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:connect' %}">Connect</a></li>
-                <li class="nav-item"><a class="nav-link" href="{% url 'ems:allocated-leaves' %}">Allocated Leave</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'ems:allocated-leaves' %}">Allocated Leave</a>
+                </li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:appreciation' %}">Appreciation</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:news-letter' %}">NewsLetter</a></li>
-                
+
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:permission' %}">Permissions</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Hirings</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">IT</a></li>
@@ -199,32 +205,117 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:all-queries' %}">Queries</a></li>
                 {% else %}
                 <li class="nav-item accordion-button collapsed sub-arrow-forward" data-bs-toggle="collapse"
-                    data-bs-target="#query-nav" aria-expanded="false" aria-controls="query-nav"
-                    onclick="rotate()"><a class="nav-link w-100" href="#">Query</a><span
-                        class="material-symbols-outlined arrow-forward " id="arrow">
+                    data-bs-target="#query-nav" aria-expanded="false" aria-controls="query-nav" onclick="rotate()"><a
+                        class="nav-link w-100" href="#">Query</a><span class="material-symbols-outlined arrow-forward "
+                        id="arrow">
                         arrow_forward_ios</span></li>
                 <div id="query-nav" class="accordion-collapse collapse">
-                    <li class="sub-nav nav-item"><a class="nav-link" href="{% url 'ems:create-query' %}">Create Query</a></li>
+                    <li class="sub-nav nav-item"><a class="nav-link" href="{% url 'ems:create-query' %}">Create
+                            Query</a></li>
                     <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:queries' %}">All Query</a></li>
                 </div>
                 {% endif %}
                 <!-- <li class="nav-item"><a class="nav-link" href="{% url 'ems:reimbursement' %}">Reimbursement</a></li> -->
                 <li class="nav-item accordion-button collapsed sub-arrow-forward" data-bs-toggle="collapse"
-                    data-bs-target="#reimbursement-nav" aria-expanded="false" aria-controls="reimbursement-nav" onclick="rotate()">
+                    data-bs-target="#reimbursement-nav" aria-expanded="false" aria-controls="reimbursement-nav"
+                    onclick="rotate()">
                     <a class="nav-link w-100 arrow" href="#">Reimbursement</a><span
                         class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
                 </li>
                 <div id="reimbursement-nav" class="accordion-collapse collapse">
-                    <li class="nav-item sub-nav"><a href="{% url 'ems:reimbursement' %}" class="nav-link">Request </a></li>
-                    <li class="nav-item sub-nav"><a href="{% url 'ems:reimbursement-transport-all' %}" class="nav-link">All Transport </a></li>
-                    <li class="nav-item sub-nav"><a href="{% url 'ems:reimbursement-food-all' %}" class="nav-link">All Food </a></li>
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:reimbursement' %}" class="nav-link">Request </a>
+                    </li>
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:reimbursement-transport-all' %}"
+                            class="nav-link">All Transport </a></li>
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:reimbursement-food-all' %}" class="nav-link">All
+                            Food </a></li>
                 </div>
                 <li class="nav-item"><a class="nav-link" href="#">Awards</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Reviews</a></li>
+
+                <!-- ======Permissions For Employee=========== -->
+                <li class="nav-item "><a class="nav-link fw-semibold" href="#">Admin Permissions</a></li>
+
+                <li class="nav-item accordion-button collapsed sub-arrow-forward admin_nav" data-bs-toggle="collapse"
+                data-bs-target="#department-nav" aria-expanded="false" aria-controls="department-nav"
+                onclick="rotate()"><a class="nav-link w-100" href="#">Department</a>
+                <span class="material-symbols-outlined arrow-forward ">
+                    arrow_forward_ios</span>
+            </li>
+            <div id="department-nav" class="accordion-collapse collapse">
+                <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:create-department' %}">Create
+                        Department</a></li>
+                <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:view-department' %}">View
+                        Departments</a></li>
+
+            </div>
+
+            <li class="nav-item accordion-button collapsed sub-arrow-forward admin_nav" data-bs-toggle="collapse"
+                data-bs-target="#role-nav" aria-expanded="false" aria-controls="role-nav" onclick="rotate()">
+                <a class="nav-link w-100 arrow" href="#">Role</a><span
+                    class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
+            </li>
+
+            <div class="accordion-collapse collapse" id="role-nav">
+                <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:create-role' %}">Create Role</a>
+                </li>
+                <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:view-role' %}">View Roles</a>
+                </li>
+            </div>
+
+           
+                <li class="nav-item admin_nav"><a class="nav-link" href="{% url 'ems:employee-view' %}">Employee</a></li>
+
+            <li class="nav-item accordion-button collapsed sub-arrow-forward admin_nav" data-bs-toggle="collapse"
+                data-bs-target="#event-nav" aria-expanded="false" aria-controls="event-nav" onclick="rotate()">
+                <a class="nav-link w-100 arrow" href="#">Event</a><span
+                    class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
+            </li>
+            <div id="event-nav" class="accordion-collapse collapse">
+                <li class="nav-item sub-nav"><a href="{% url 'ems:create-event' %}" class="nav-link">Create
+                        Event</a></li>
+                <li class="nav-item sub-nav"><a href="{% url 'ems:view-events' %}" class="nav-link">View Events</a>
+                </li>
+            </div>
+
+            <li class="nav-item admin_nav"><a class="nav-link" href="{% url 'ems:attendance' %}">Clockify</a></li>
+
+            <li class="nav-item accordion-button collapsed sub-arrow-forward admin_nav" data-bs-toggle="collapse"
+                data-bs-target="#payroll-nav" aria-expanded="false" aria-controls="payroll-nav" onclick="rotate()">
+                <a class="nav-link w-100 arrow" href="#">PayRoll</a><span
+                    class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
+            </li>
+            <div id="payroll-nav" class="accordion-collapse collapse">
+                <li class="nav-item sub-nav"><a href="{% url 'ems:create-payroll' %}" class="nav-link">Add
+                        PayRoll</a></li>
+                <li class="nav-item sub-nav"><a href="{% url 'ems:view-payrolls' %}" class="nav-link">View
+                        PayRolls</a>
+                </li>
+            </div>
+            <li class="nav-item accordion-button collapsed sub-arrow-forward admin_nav" data-bs-toggle="collapse"
+                data-bs-target="#reimbursement-nav" aria-expanded="false" aria-controls="reimbursement-nav"
+                onclick="rotate()">
+                <a class="nav-link w-100 arrow" href="#">Reimbursement</a><span
+                    class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
+            </li>
+            <div id="reimbursement-nav" class="accordion-collapse collapse">
+                <li class="nav-item sub-nav"><a href="{% url 'ems:admin-transport-reimbursement' %}"
+                        class="nav-link">View Transport</a></li>
+                <li class="nav-item sub-nav"><a href="{% url 'ems:reimbursement-food-admin' %}"
+                        class="nav-link">View Food</a>
+                </li>
+            </div>
+            <li class="nav-item admin_nav"><a class="nav-link" href="{% url 'ems:connect' %}">Connect</a></li>
+            <li class="nav-item admin_nav"><a class="nav-link" href="{% url 'ems:appreciation' %}">Appreciation</a></li>
+                <li class="nav-item admin_nav"><a class="nav-link" href="{% url 'ems:news-letter' %}">NewsLetter</a></li>
+                <li class="nav-item admin_nav"><a class="nav-link" href="{% url 'ems:dashboard-leaves' %}">Leaves</a></li>
+                <!-- ===========End Permission for Employee============ -->
+
                 {% endif %}
                 {% if request.user.is_authenticated %}
                 <li class="nav-item"><a class="nav-link active" href="{% url 'home:logout' %}">Logout</a></li>
                 {% endif %}
+
             </ul>
         </div>
     </div>
@@ -233,7 +324,8 @@
     <main class="my-5 pt-3">
 
         {% for message in messages %}
-        <div id="notification" class="alert alert-{{ message.tags }} alert-dismissible fade show w-50 m-auto mb-2 mt-1 " role="alert" >
+        <div id="notification" class="alert alert-{{ message.tags }} alert-dismissible fade show w-50 m-auto mb-2 mt-1 "
+            role="alert">
             <strong>Message: </strong> {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </button>
@@ -244,31 +336,33 @@
         {% block body %}{% endblock body %}
 
     </main>
-    
-    <!-- =============BOOSTRAP CDN JS LINK============== -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 
-      <!-- =============SCROLL JS CDN=============== -->
-    <script src="https://unpkg.com/scrollreveal"></script> 
+    <!-- =============BOOSTRAP CDN JS LINK============== -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+        crossorigin="anonymous"></script>
+
+    <!-- =============SCROLL JS CDN=============== -->
+    <script src="https://unpkg.com/scrollreveal"></script>
 
     <!-- ============CUSTOM JS========= -->
     <script src="{% static 'js/main.js' %}"></script>
 
-    
+
     <script>
         console.log("Hello")
         ScrollReveal().reveal(`.header`);
-        const sr=ScrollReveal({
-            origin:'top',
-            distance:'60px',
-            duration:2500,
-            delay:500,
+        const sr = ScrollReveal({
+            origin: 'top',
+            distance: '60px',
+            duration: 2500,
+            delay: 500,
         })
-        sr.reveal('.header',{delay:500})
-        sr.reveal('#connect',{delay:700})
-        sr.reveal('#birthday',{delay:700, origin:'right'})
-        sr.reveal('.anniversary',{delay:800, origin:'bottom'})
-        sr.reveal('#notification',{delay:700, origin:'top', distance:'150px'})
+        sr.reveal('.header', { delay: 500 })
+        sr.reveal('#connect', { delay: 700 })
+        sr.reveal('#birthday', { delay: 700, origin: 'right' })
+        sr.reveal('.anniversary', { delay: 800, origin: 'bottom' })
+        sr.reveal('#notification', { delay: 700, origin: 'top', distance: '150px' })
     </script>
 </body>
 

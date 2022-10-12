@@ -78,6 +78,9 @@ def dashboard(request):
                     context['appreciations'] = Appreciation.objects.all()
                     context['newsletters'] = NewsLetter.objects.all()
                     context['connects'] = connects
+                    global template_permissions
+                    template_permissions=EmployeePermission.objects.filter(employee=profile_obj).exists()
+                    
                     return render(request, 'ems/ems_home.html', context)
             else:
                 departments = Department.objects.all()
@@ -1311,6 +1314,7 @@ def createEvent(request):
     try:
         if not request.user.is_superuser:
             profile_obj = Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
             res = checkPermission(profile_obj, 'Event')
             print('response ', res)
             if res != 'edit':
@@ -1347,6 +1351,7 @@ def viewEvents(request):
     try:
         if not request.user.is_superuser:
             profile_obj = Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
             res = checkPermission(profile_obj, 'Event')
             print('response ', res)
             if res == 'no':
@@ -1442,6 +1447,7 @@ def createPayRoll(request):
     try:
         if not request.user.is_superuser:
             profile_obj = Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
             res = checkPermission(profile_obj, 'Payrolls')
             print('response ', res)
             if res != 'edit':
@@ -1477,6 +1483,7 @@ def viewPayRoll(request):
     try:
         if not request.user.is_superuser:
             profile_obj = Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
             res = checkPermission(profile_obj, 'Payrolls')
             print('response ', res)
             if res == 'no':
@@ -1690,6 +1697,7 @@ def connect(request):
     try:
         if not request.user.is_superuser:
             profile_obj = Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
             res = checkPermission(profile_obj, 'Connect')
             print('response ', res)
             if res == 'no':
@@ -1728,6 +1736,7 @@ def connectStatus(request):
     try:
         if not request.user.is_superuser:
             profile_obj = Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
             res = checkPermission(profile_obj, 'Connect')
             print('response ', res)
             if res != 'edit':
@@ -1758,6 +1767,7 @@ def appreciation(request):
     try:
         if not request.user.is_superuser:
             profile_obj = Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
             res = checkPermission(profile_obj, 'Appreciation')
             print('response ', res)
             if res == 'no':
@@ -1794,6 +1804,7 @@ def editAppreciation(request):
     try:
         if not request.user.is_superuser:
             profile_obj = Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
             res = checkPermission(profile_obj, 'Appreciation')
             print('response ', res)
             if res != 'edit':
@@ -1843,6 +1854,7 @@ def newsletter(request):
     try:
         if not request.user.is_superuser:
             profile_obj = Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
             res = checkPermission(profile_obj, 'News Letter')
             print('response ', res)
             if res == 'no':
@@ -1874,6 +1886,7 @@ def editNewsLetter(request):
     try:
         if not request.user.is_superuser:
             profile_obj = Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
             res = checkPermission(profile_obj, 'News Letter')
             print('response ', res)
             if res != 'edit':
@@ -2018,6 +2031,7 @@ def adminTransportReimbursement(request):
     try:
         if not request.user.is_superuser:
             profile_obj = Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
             res = checkPermission(profile_obj, 'Reimbursement')
             print('response ', res)
             if res == 'no':
@@ -2181,6 +2195,7 @@ def adminReimbursementFood(request):
     try:
         if not request.user.is_superuser:
             profile_obj = Employee.objects.get(user=request.user)
+            context['profile']=profile_obj
             res = checkPermission(profile_obj, 'Reimbursement')
             print('response ', res)
             if res == 'no':

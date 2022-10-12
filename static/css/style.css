@@ -82,7 +82,9 @@ textarea:focus {
   border: 1px solid black !important;
 
 }
-
+.admin_nav{
+  color: #ffffffb8;
+}
 h1,
 h2,
 h3 {
