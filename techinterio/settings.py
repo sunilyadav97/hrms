@@ -29,11 +29,11 @@ MESSAGE_TAGS ={
 SECRET_KEY = 'django-insecure-9oqqd481=6x8c-y$2t#t4p&gzw4_fl+y5(z0_&1c3)mmm+og4&'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
-DEBUG = False
+DEBUG = True
+# DEBUG = False
 
-ALLOWED_HOSTS = ['*']
-# ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -83,7 +83,6 @@ SITE_ID = 1
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -91,7 +90,17 @@ DATABASES = {
     }
 }
 
-
+'''
+DATABASES={
+    'default':{
+        'ENGINE':'django.db.backends.postgresql',
+        'NAME':'techinterio',
+        'USER':'postgres',
+        'PASSWORD':'admin',
+        'HOST':'localhost',
+        'PORT':'5432',
+    }
+}'''
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -135,7 +144,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-STATIC_ROOT=os.path.join(BASE_DIR,'static/')
+# STATIC_ROOT=os.path.join(BASE_DIR,'static/')
 STATICFILES_DIRS=[
     BASE_DIR/'static'
 ]
