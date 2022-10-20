@@ -145,7 +145,7 @@ class EmployeePermission(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"{self.employee.name}"
+        return f"{self.employee.name} "
 
 
     

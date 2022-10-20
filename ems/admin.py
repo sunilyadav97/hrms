@@ -5,7 +5,7 @@ admin.site.register(Department)
 admin.site.register(Role)
 admin.site.register(Employee)
 admin.site.register(Address)
-
+ 
 admin.site.register(Attendance)
 admin.site.register(Leave)
 admin.site.register(Events)
@@ -22,6 +22,9 @@ admin.site.register(ReimbursementTransport)
 admin.site.register(ReimbursementFood)
 admin.site.register(ReimbursementFoodEmployee)
 admin.site.register(ReducedLeaves)
-admin.site.register(EmployeePermission)
 admin.site.register(P_Feature)
+
+class EmployeePermissionAdmin(admin.ModelAdmin):
+    list_display=['employee','permission_feature','view','edit']
+admin.site.register(EmployeePermission,EmployeePermissionAdmin)
 
