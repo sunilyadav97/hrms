@@ -262,6 +262,10 @@ class AllocatedLeave(models.Model):
 
     def __str__(self):
         return self.employee.name
+    
+    @property
+    def totalLeave(self):
+        return self.allocated+self.earn
 
 class ReducedLeaves(models.Model):
     employee=models.ForeignKey(Employee,on_delete=models.CASCADE)

@@ -20,6 +20,7 @@ Allocated Leaves
                         <th>Employee</th>
                         <th>Leaves</th>
                         <th>Earn</th>
+                        <th>Total</th>
                         <th>Start Year</th>
                         <th>End Year</th>
                         <th>Edit</th>
@@ -34,6 +35,7 @@ Allocated Leaves
                         <td>0</td>
                         {% else %}
                         <td>{{item.earn}}</td>
+                        <td>{{item.totalLeave}}</td>
                         {% endif %}
                         <td>{{item.start_date | date:'d-M-Y'}}</td>
                         <td>{{item.end_date|date:'d-M-Y'}}</td>

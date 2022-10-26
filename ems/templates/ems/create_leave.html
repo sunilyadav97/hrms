@@ -11,7 +11,7 @@
         <div class="col-12 col-sm-8">
             <h3 class=" my-3 derpartment-title">Leave form</h3>
             {% if allocated_leaves != '' %}
-            <p class="text-success text-center">Available Leaves {{allocated_leaves.allocated}}</p>
+            <p class="text-success text-center">Available Leaves {{allocated_leaves.totalLeave}}</p>
             {% else %}
             <p class="text-warning text-center">You have not been Allocated Leaves! Please Contact to Admin</p>
             {% endif %}
