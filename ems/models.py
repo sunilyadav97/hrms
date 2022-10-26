@@ -258,6 +258,7 @@ class AllocatedLeave(models.Model):
     end_date=models.DateField(null=True,blank=True)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
+    total_leaves=models.FloatField(null=True,blank=True)
 
     def __str__(self):
         return self.employee.name
