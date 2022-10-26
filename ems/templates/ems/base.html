@@ -182,7 +182,7 @@
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:news-letter' %}">NewsLetter</a></li>
 
                 <li class="nav-item"><a class="nav-link" href="{% url 'ems:permission' %}">Permissions</a></li>
-                
+
                 {% else %}
 
                 <li class="nav-item accordion-button collapsed sub-arrow-forward" data-bs-toggle="collapse"
@@ -227,84 +227,90 @@
                     <li class="nav-item sub-nav"><a href="{% url 'ems:reimbursement-food-all' %}" class="nav-link">All
                             Food </a></li>
                 </div>
-                
+
 
                 <!-- ======Permissions For Employee=========== -->
-                <li class="nav-item "><a class="nav-link fw-semibold" href="#">Admin Permissions</a></li>
+                <li class="nav-item sub-arrow-forward"><a class="nav-link fw-semibold"  data-bs-toggle="collapse" href="#permisions">Admin Permissions</a><span class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span></li>
+                <div class="collapse" id="permisions">
 
                 <li class="nav-item accordion-button collapsed sub-arrow-forward admin_nav" data-bs-toggle="collapse"
-                data-bs-target="#department-nav" aria-expanded="false" aria-controls="department-nav"
-                onclick="rotate()"><a class="nav-link w-100" href="#">Department</a>
-                <span class="material-symbols-outlined arrow-forward ">
-                    arrow_forward_ios</span>
-            </li>
-            <div id="department-nav" class="accordion-collapse collapse">
-                <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:create-department' %}">Create
-                        Department</a></li>
-                <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:view-department' %}">View
-                        Departments</a></li>
-
-            </div>
-
-            <li class="nav-item accordion-button collapsed sub-arrow-forward admin_nav" data-bs-toggle="collapse"
-                data-bs-target="#role-nav" aria-expanded="false" aria-controls="role-nav" onclick="rotate()">
-                <a class="nav-link w-100 arrow" href="#">Role</a><span
-                    class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
-            </li>
-
-            <div class="accordion-collapse collapse" id="role-nav">
-                <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:create-role' %}">Create Role</a>
+                    data-bs-target="#department-nav" aria-expanded="false" aria-controls="department-nav"
+                    onclick="rotate()"><a class="nav-link w-100" href="#">Department</a>
+                    <span class="material-symbols-outlined arrow-forward ">
+                        arrow_forward_ios</span>
                 </li>
-                <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:view-role' %}">View Roles</a>
-                </li>
-            </div>
+                <div id="department-nav" class="accordion-collapse collapse">
+                    <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:create-department' %}">Create
+                            Department</a></li>
+                    <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:view-department' %}">View
+                            Departments</a></li>
 
-           
-                <li class="nav-item admin_nav"><a class="nav-link" href="{% url 'ems:employee-view' %}">Employee</a></li>
+                </div>
 
-            <li class="nav-item accordion-button collapsed sub-arrow-forward admin_nav" data-bs-toggle="collapse"
-                data-bs-target="#event-nav" aria-expanded="false" aria-controls="event-nav" onclick="rotate()">
-                <a class="nav-link w-100 arrow" href="#">Event</a><span
-                    class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
-            </li>
-            <div id="event-nav" class="accordion-collapse collapse">
-                <li class="nav-item sub-nav"><a href="{% url 'ems:create-event' %}" class="nav-link">Create
-                        Event</a></li>
-                <li class="nav-item sub-nav"><a href="{% url 'ems:view-events' %}" class="nav-link">View Events</a>
+                <li class="nav-item accordion-button collapsed sub-arrow-forward admin_nav" data-bs-toggle="collapse"
+                    data-bs-target="#role-nav" aria-expanded="false" aria-controls="role-nav" onclick="rotate()">
+                    <a class="nav-link w-100 arrow" href="#">Role</a><span
+                        class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
                 </li>
-            </div>
 
-            <li class="nav-item admin_nav"><a class="nav-link" href="{% url 'ems:attendance' %}">Clockify</a></li>
+                <div class="accordion-collapse collapse" id="role-nav">
+                    <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:create-role' %}">Create Role</a>
+                    </li>
+                    <li class="nav-item sub-nav"><a class="nav-link" href="{% url 'ems:view-role' %}">View Roles</a>
+                    </li>
+                </div>
 
-            <li class="nav-item accordion-button collapsed sub-arrow-forward admin_nav" data-bs-toggle="collapse"
-                data-bs-target="#payroll-nav" aria-expanded="false" aria-controls="payroll-nav" onclick="rotate()">
-                <a class="nav-link w-100 arrow" href="#">PayRoll</a><span
-                    class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
-            </li>
-            <div id="payroll-nav" class="accordion-collapse collapse">
-                <li class="nav-item sub-nav"><a href="{% url 'ems:create-payroll' %}" class="nav-link">Add
-                        PayRoll</a></li>
-                <li class="nav-item sub-nav"><a href="{% url 'ems:view-payrolls' %}" class="nav-link">View
-                        PayRolls</a>
+
+                <li class="nav-item admin_nav"><a class="nav-link" href="{% url 'ems:employee-view' %}">Employee</a>
                 </li>
-            </div>
-            <li class="nav-item accordion-button collapsed sub-arrow-forward admin_nav" data-bs-toggle="collapse"
-                data-bs-target="#reimbursement-nav" aria-expanded="false" aria-controls="reimbursement-nav"
-                onclick="rotate()">
-                <a class="nav-link w-100 arrow" href="#">Reimbursement</a><span
-                    class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
-            </li>
-            <div id="reimbursement-nav" class="accordion-collapse collapse">
-                <li class="nav-item sub-nav"><a href="{% url 'ems:admin-transport-reimbursement' %}"
-                        class="nav-link">View Transport</a></li>
-                <li class="nav-item sub-nav"><a href="{% url 'ems:reimbursement-food-admin' %}"
-                        class="nav-link">View Food</a>
+
+                <li class="nav-item accordion-button collapsed sub-arrow-forward admin_nav" data-bs-toggle="collapse"
+                    data-bs-target="#event-nav" aria-expanded="false" aria-controls="event-nav" onclick="rotate()">
+                    <a class="nav-link w-100 arrow" href="#">Event</a><span
+                        class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
                 </li>
-            </div>
-            <li class="nav-item admin_nav"><a class="nav-link" href="{% url 'ems:connect' %}">Connect</a></li>
-            <li class="nav-item admin_nav"><a class="nav-link" href="{% url 'ems:appreciation' %}">Appreciation</a></li>
-                <li class="nav-item admin_nav"><a class="nav-link" href="{% url 'ems:news-letter' %}">NewsLetter</a></li>
-                <li class="nav-item admin_nav"><a class="nav-link" href="{% url 'ems:dashboard-leaves' %}">Leaves</a></li>
+                <div id="event-nav" class="accordion-collapse collapse">
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:create-event' %}" class="nav-link">Create
+                            Event</a></li>
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:view-events' %}" class="nav-link">View Events</a>
+                    </li>
+                </div>
+
+                <li class="nav-item admin_nav"><a class="nav-link" href="{% url 'ems:attendance' %}">Clockify</a></li>
+
+                <li class="nav-item accordion-button collapsed sub-arrow-forward admin_nav" data-bs-toggle="collapse"
+                    data-bs-target="#payroll-nav" aria-expanded="false" aria-controls="payroll-nav" onclick="rotate()">
+                    <a class="nav-link w-100 arrow" href="#">PayRoll</a><span
+                        class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
+                </li>
+                <div id="payroll-nav" class="accordion-collapse collapse">
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:create-payroll' %}" class="nav-link">Add
+                            PayRoll</a></li>
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:view-payrolls' %}" class="nav-link">View
+                            PayRolls</a>
+                    </li>
+                </div>
+                <li class="nav-item accordion-button collapsed sub-arrow-forward admin_nav" data-bs-toggle="collapse"
+                    data-bs-target="#reimbursement-nav" aria-expanded="false" aria-controls="reimbursement-nav"
+                    onclick="rotate()">
+                    <a class="nav-link w-100 arrow" href="#">Reimbursement</a><span
+                        class="material-symbols-outlined arrow-forward ">arrow_forward_ios</span>
+                </li>
+                <div id="reimbursement-nav" class="accordion-collapse collapse">
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:admin-transport-reimbursement' %}"
+                            class="nav-link">View Transport</a></li>
+                    <li class="nav-item sub-nav"><a href="{% url 'ems:reimbursement-food-admin' %}"
+                            class="nav-link">View Food</a>
+                    </li>
+                </div>
+                <li class="nav-item admin_nav"><a class="nav-link" href="{% url 'ems:connect' %}">Connect</a></li>
+                <li class="nav-item admin_nav"><a class="nav-link" href="{% url 'ems:appreciation' %}">Appreciation</a>
+                </li>
+                <li class="nav-item admin_nav"><a class="nav-link" href="{% url 'ems:news-letter' %}">NewsLetter</a>
+                </li>
+                <li class="nav-item admin_nav"><a class="nav-link" href="{% url 'ems:dashboard-leaves' %}">Leaves</a>
+                </li>
+                </div>
                 <!-- ===========End Permission for Employee============ -->
 
                 {% endif %}
