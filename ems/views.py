@@ -252,40 +252,50 @@ def changePassword(request):
 
 @login_required()
 def newUsers(request):
-    if request.user.is_superuser:
-        context = {}
-        try:
-            newusers = Newuser.objects.filter(completed=False)
-            context['newusers'] = newusers
-        except Exception as e:
-            print("New Users Exception : ", e)
-        return render(request, 'ems/new_users.html', context)
-    else:
-        messages.warning(request, "You don't have Permissions!")
-        return redirect("ems:ems")
+    context={}
+    res=''
+    if not request.user.is_superuser:
+            profile_obj = Employee.objects.get(user=request.user)
+            context['profile'] = profile_obj
+            res = checkPermission(profile_obj, 'New Users')
+            print('response ', res)
+            if res == 'no':
+                messages.warning(request, 'Sorry, You are not authorised!')
+                return redirect('/') 
+    try:
+        newusers = Newuser.objects.filter(completed=False)
+        context['newusers'] = newusers
+    except Exception as e:
+        print("New Users Exception : ", e)
+    return render(request, 'ems/new_users.html', context)
+    
 
 
 @login_required()
 def sendVerificationMail(request, username):
-    if request.user.is_superuser:
-        context = {}
-        try:
-            current_site = Site.objects.get_current()
-            print("current site domain ", current_site)
-            print(current_site.domain)
-            domain = request.get_host()
-            print('Host : ', request.get_host())
+    context = {}
+    res=''
+    if not request.user.is_superuser:
+            profile_obj = Employee.objects.get(user=request.user)
+            context['profile'] = profile_obj
+            res = checkPermission(profile_obj, 'New Users')
+            print('response ', res)
+            if res == 'no':
+                messages.warning(request, 'Sorry, You are not authorised!')
+                return redirect('/')
+    try:
+        current_site = Site.objects.get_current()
+        print("current site domain ", current_site)
+        print(current_site.domain)
+        domain = request.get_host()
+        print('Host : ', request.get_host())
 
-            res = sendMail(username, domain)
-            if res == True:
-                messages.success(request, 'Email Sended Successfully!')
-        except Exception as e:
-            print("Send Verification Mail Exception : ", e)
-        return redirect('ems:new-users')
-    else:
-        messages.warning(request, "You don't have Permissions!")
-        return redirect("ems:ems")
-
+        res = sendMail(username, domain)
+        if res == True:
+            messages.success(request, 'Email Sended Successfully!')
+    except Exception as e:
+        print("Send Verification Mail Exception : ", e)
+    return redirect('ems:new-users')
 
 def verifyLink(request, token):
     try:
