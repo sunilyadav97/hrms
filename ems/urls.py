@@ -23,6 +23,7 @@ urlpatterns=[
     path('add-attendance-filter/',addAttendanceFilter,name='add-attendance-filter'),
     path('attendance-edit/',editAttendance,name='edit-attendance'),
     path('attendance-delete/<pk>/',deleteAttendance,name='attendance-delete'),
+    path('admin-attendance-report',adminReport,name='admin-report'),
     path('leave-create/',createLeave,name='leave-create'),
     path('leave-delete/<pk>/',deleteLeave,name='leave-delete'),
     path('leaves/',dashboardLeaves,name='dashboard-leaves'),

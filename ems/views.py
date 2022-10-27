@@ -1108,8 +1108,50 @@ def allAttendances(request):
 
     return render(request, 'ems/all_attendances.html', context)
 
-# Leave Functions
+# Admin Attendance Report
 
+def adminReport(request):
+    context={}
+    try:
+        employees=Employee.objects.all()
+        context['employees']=employees
+
+        if request.method == 'POST':
+            data=False
+            month=request.POST['month']
+            year=request.POST['year']
+            empid=request.POST['employee']
+            print('month ',month)
+            print('year ',year)
+            print('employee id',empid)
+            employee_obj=Employee.objects.get(empid=empid)
+            print('EMployee obj ',employee_obj)
+            allattendances = Attendance.objects.filter(employee=employee_obj)
+            print('All attendance ',allattendances)
+            yearAttendances = allattendances.filter(date__year=year)
+            print('year attendances : ',yearAttendances)
+            monthAttendances = yearAttendances.filter(date__month=month)
+            print('Month attendances : ',monthAttendances)
+            a = allattendances.count()
+            y = yearAttendances.count()
+            m = monthAttendances.count()
+            if m == 0:
+                print('data ', m)
+                data = True
+            context['attendacnes'] = monthAttendances
+            context['data'] = data
+            total_absent = monthAttendances.filter(present=False).count()
+            total_late = monthAttendances.filter(is_late=True).count()
+            total_present = monthAttendances.filter(present=True).count()
+            context['total_absent'] = total_absent
+            context['total_late'] = total_late
+            context['total_present'] = total_present
+    except Exception as e:
+        print("Admin Attendance Report Exception :",e)
+    return render(request,'ems/admin_report.html',context)    
+
+
+# Leave Functions
 
 @login_required()
 def createLeave(request):

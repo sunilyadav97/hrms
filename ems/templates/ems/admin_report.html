@@ -1,0 +1,103 @@
+{% extends './base.html' %}
+{% block title %} Employee Attendance Report {% endblock title %}
+{% block css %}
+.delete span {
+font-size: 16px !important;
+}
+{% endblock css%}
+{% block body %}
+<section class="py-5">
+    <div class="container">
+        <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-7">
+                <h3 class="derpartment-title my-3">Month Report</h3>
+                <div>
+                    <a href="{% url 'ems:attendance' %}" class="btn btn-dark">Back</a>
+                    <button type="button" class="btn btn-warning float-end" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">Get Report</button>
+                </div>
+
+                {% if data == True %}
+                <h4 class="text-warning my-3 text-center">We don't have any data to show</h4>
+                {% elif data == False %}
+                <div class="summary my-5 fw-semibold mx-5 ">
+                    <h5 class="fw-semibold my-3 text-center">SUMMARY</h5>
+                    <div class="d-flex align-items-center border justify-content-between p-1 px-3">
+                        <p class="ps-2">Total Attendance</p>
+                        <p class="">{{attendacnes.count}}</p>
+                    </div>
+                    <div class="d-flex align-items-center border justify-content-between p-1 text-danger px-3">
+                        <p class=" ps-2">Total Absent</p>
+                        <p class="">{{total_absent}}</p>
+                    </div>
+                    <div class="d-flex align-items-center border justify-content-between p-1 text-warning px-3">
+                        <p class=" ps-2">Total Late</p>
+                        <p class="">{{total_late}}</p>
+                    </div>
+                    <div class="d-flex align-items-center border justify-content-between p-1 text-success px-3">
+                        <p class="ps-2">Total Present</p>
+                        <p class="">{{total_present}}</p>
+                    </div>
+
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Report</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="employee" class="form-label">Employee</label>
+                        <select class="form-select" aria-label="Default select example" id="employee" name="employee">
+                            <option selected disabled>Select Employee</option>
+                            {% for item in employees %}
+                            <option value="{{item.empid}}">{{item.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="month" class="form-label">Month</label>
+                        <select class="form-select" aria-label="Default select example" name="month" id="month">
+                            <option selected disabled>Select</option>
+                            <option value="1">January</option>
+                            <option value="2">February</option>
+                            <option value="3">March</option>
+                            <option value="4">April</option>
+                            <option value="5">May</option>
+                            <option value="6">June</option>
+                            <option value="7">July</option>
+                            <option value="8">August</option>
+                            <option value="9">September</option>
+                            <option value="10">October</option>
+                            <option value="11">November</option>
+                            <option value="12">December</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="year" class="form-label">Year</label>
+                        <input type="number" class="form-control" id="year" name="year">
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock body %}
