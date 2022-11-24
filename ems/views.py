@@ -1677,7 +1677,6 @@ def queryDetail(request, id):
 
 # Getting All the Queries For the Manager
 
-
 @login_required()
 def quriesManger(request):
     context = {}
